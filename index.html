@@ -1,0 +1,2393 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Trajetória Acadêmica</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=STIX+Two+Text:ital,wght@0,500;0,600;1,500&family=Source+Sans+3:wght@400;600&family=JetBrains+Mono:wght@400;500&display=swap">
+<style>
+/* Layout: cabeçalho com a torre Graduação ⊂ Mestrado ⊂ Doutorado (clicável), próximos passos + mapa das ligações, barra de filtros, frentes em grade, painel de detalhe */
+:root {
+  --bg: #f4f6f9; --surface: #ffffff; --ink: #18202e; --muted: #5d6779; --line: #dce1ea;
+  --accent: #2b5a8c; --accent-soft: #e3ecf6;
+  --doing: #b7791f; --doing-soft: #fbefd9; --done: #2f7d5b; --done-soft: #ddf1e7;
+  --hl: #fff3c4;
+  --k1: #2b5a8c; --k2: #6a4fb3; --k3: #b4507a; --k4: #c0612b; --k5: #2f8a8a; --k6: #4f7d2f; --k7: #8a6d1f; --k8: #34495e; --k9: #a33a2c; --k10: #8a5a3c;
+  --d1: #2f63c9; --d2: #c03f78; --d3: #2c8752; --d4: #c96f12; --d5: #7a4fc4; --d6: #12838c; --d7: #8a7614; --d8: #5a6b7d;
+  --font-display: "STIX Two Text", "Times New Roman", serif;
+  --font-body: "Source Sans 3", "Segoe UI", system-ui, sans-serif;
+  --font-data: "JetBrains Mono", ui-monospace, "SFMono-Regular", monospace;
+  color-scheme: light;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #11151c; --surface: #1a202b; --ink: #e6eaf1; --muted: #9aa4b5; --line: #2c3442;
+    --accent: #7fb0e6; --accent-soft: #1f2f44; --doing: #e7b45e; --doing-soft: #3a2f1a; --done: #6fcf9f; --done-soft: #1b3428;
+    --hl: #4a3f17;
+    --k1: #7fb0e6; --k2: #a993e6; --k3: #e58bb0; --k4: #ec9a68; --k5: #6fcfcf; --k6: #9ccf6f; --k7: #d9bc63; --k8: #a9b8c8; --k9: #f0907f; --k10: #d6a47f;
+    --d1: #82a8f0; --d2: #ee8ab5; --d3: #78cf9b; --d4: #f2a95e; --d5: #b49af0; --d6: #6fd0d6; --d7: #dcc463; --d8: #a9b8c8;
+    color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --bg: #11151c; --surface: #1a202b; --ink: #e6eaf1; --muted: #9aa4b5; --line: #2c3442;
+  --accent: #7fb0e6; --accent-soft: #1f2f44; --doing: #e7b45e; --doing-soft: #3a2f1a; --done: #6fcf9f; --done-soft: #1b3428;
+  --hl: #4a3f17;
+  --k1: #7fb0e6; --k2: #a993e6; --k3: #e58bb0; --k4: #ec9a68; --k5: #6fcfcf; --k6: #9ccf6f; --k7: #d9bc63; --k8: #a9b8c8; --k9: #f0907f; --k10: #d6a47f;
+    --d1: #82a8f0; --d2: #ee8ab5; --d3: #78cf9b; --d4: #f2a95e; --d5: #b49af0; --d6: #6fd0d6; --d7: #dcc463; --d8: #a9b8c8;
+  color-scheme: dark;
+}
+* { box-sizing: border-box; }
+html { -webkit-text-size-adjust: 100%; }
+body {
+  margin: 0; background: var(--bg); color: var(--ink); font: 16px/1.5 var(--font-body);
+  padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px));
+  padding-block: 32px 64px;
+}
+.wrap { max-width: 1160px; margin: 0 auto; display: grid; grid-template-columns: minmax(0, 1fr); gap: 28px; }
+header, .tower, .panel { grid-template-columns: minmax(0, 1fr); }
+h1, h2, h3 { font-family: var(--font-display); font-weight: 600; text-wrap: balance; margin: 0; }
+h1 { font-size: clamp(1.9rem, 4vw, 2.6rem); line-height: 1.15; }
+h2 { font-size: 1.3rem; }
+h3 { font-size: 1.12rem; line-height: 1.3; }
+.eyebrow { font: 500 0.72rem/1.2 var(--font-data); letter-spacing: 0.08em; text-transform: uppercase; color: var(--muted); }
+.muted { color: var(--muted); }
+button, input, select, textarea { font: inherit; color: inherit; }
+button { cursor: pointer; }
+:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; border-radius: 4px; }
+.linklike { border: 0; background: none; padding: 0; text-align: left; color: inherit; }
+.linklike:hover { color: var(--accent); text-decoration: underline; text-underline-offset: 3px; }
+.dot { display: inline-block; width: 9px; height: 9px; border-radius: 50%; background: var(--c, var(--accent)); flex: none; }
+
+/* Cabeçalho */
+header { display: grid; gap: 20px; }
+.head-row { display: flex; flex-wrap: wrap; gap: 16px 32px; align-items: end; justify-content: space-between; }
+.head-row > div { min-width: 0; }
+.overall { display: grid; gap: 6px; min-width: 220px; border: 1px solid var(--line); background: var(--surface); border-radius: 10px; padding: 12px 14px; text-align: left; }
+.overall:hover { border-color: var(--accent); }
+.overall strong { font: 500 1.6rem/1 var(--font-data); font-variant-numeric: tabular-nums; }
+.bar { height: 6px; background: var(--line); border-radius: 3px; overflow: hidden; }
+.bar > span { display: block; height: 100%; background: var(--done); width: 0; transition: width .3s; }
+
+.tower { background: var(--surface); border: 1px solid var(--line); border-radius: 10px; padding: 16px 18px 12px; display: grid; gap: 10px; }
+.tower-label { font-family: var(--font-display); font-style: italic; font-size: 1.05rem; color: var(--muted); }
+.tower-label b { font-style: normal; color: var(--ink); font-weight: 600; }
+.track { position: relative; height: 42px; display: flex; border-radius: 6px; overflow: visible; }
+.seg { display: flex; align-items: center; gap: 6px; padding: 0 10px; font: 500 0.78rem/1.1 var(--font-data); white-space: nowrap; overflow: hidden; min-width: 0; border: 2px solid transparent; }
+.seg:first-child { border-radius: 6px 0 0 6px; } .seg:nth-child(3) { border-radius: 0 6px 6px 0; }
+.seg.grad { background: var(--accent-soft); color: var(--accent); }
+.seg.mest { background: var(--doing-soft); color: var(--doing); }
+.seg.dout { background: var(--done-soft); color: var(--done); }
+.seg:hover { filter: brightness(0.97); }
+.seg[aria-pressed="true"] { border-color: currentColor; }
+.seg small { font-size: 0.7rem; opacity: .8; }
+.now { position: absolute; top: -5px; bottom: -5px; width: 2px; background: var(--ink); pointer-events: none; }
+.now::after { content: "hoje"; position: absolute; top: 8px; left: 5px; font: 0.68rem/1 var(--font-data); color: var(--ink); }
+.years { position: relative; height: 16px; font: 0.72rem/1 var(--font-data); color: var(--muted); }
+.years span { position: absolute; transform: translateX(-50%); }
+.years span:first-child { transform: none; }
+
+/* Próximos passos + mapa */
+.duo { display: grid; grid-template-columns: minmax(0, 3fr) minmax(0, 2fr); gap: 16px; align-items: start; }
+@media (max-width: 860px) { .duo { grid-template-columns: 1fr; } }
+.panel { background: var(--surface); border: 1px solid var(--line); border-radius: 10px; padding: 16px; display: grid; gap: 12px; min-width: 0; }
+.panel-head { display: flex; justify-content: space-between; align-items: baseline; gap: 8px; flex-wrap: wrap; }
+.next { list-style: none; margin: 0; padding: 0; display: grid; gap: 6px; }
+.next li button { width: 100%; display: grid; grid-template-columns: auto 1fr auto; gap: 10px; align-items: center; border: 1px solid var(--line); background: var(--bg); border-radius: 8px; padding: 8px 10px; text-align: left; }
+.next li button:hover { border-color: var(--accent); }
+.next .t { min-width: 0; overflow-wrap: anywhere; }
+.next .t small { display: block; color: var(--muted); font-size: 0.8rem; }
+.next .when { font: 0.72rem/1.2 var(--font-data); color: var(--muted); white-space: nowrap; text-align: right; }
+.map svg { width: 100%; height: auto; display: block; }
+.map .edge { stroke: var(--line); stroke-linecap: round; }
+.map .edge.on { stroke: var(--accent); }
+.map .node circle { fill: var(--surface); stroke-width: 3; }
+.map .node text { fill: var(--ink); font: 600 11px var(--font-body); }
+.map .node .cnt { fill: var(--muted); font: 10px var(--font-data); }
+.map .node { cursor: pointer; }
+.map .node.sel circle { fill: var(--accent-soft); }
+.map .node:focus-visible circle { stroke-dasharray: 3 2; }
+.map .edge-label { fill: var(--muted); font: 10px var(--font-data); }
+
+/* Filtros */
+.filters { display: grid; gap: 10px; position: sticky; top: env(safe-area-inset-top, 0px); z-index: 5; background: var(--bg); padding-block: 10px; border-bottom: 1px solid var(--line); }
+body::before { content: ""; position: fixed; inset: 0 0 auto; height: env(safe-area-inset-top, 0px); z-index: 10; background: var(--bg); }
+.chips { display: flex; flex-wrap: wrap; gap: 6px; align-items: center; }
+.chip { display: inline-flex; align-items: center; gap: 6px; border: 1px solid var(--line); background: var(--surface); border-radius: 999px; padding: 4px 12px; font-size: 0.88rem; }
+.chip:hover { border-color: var(--accent); }
+.chip[aria-pressed="true"] { background: var(--ink); color: var(--bg); border-color: var(--ink); }
+.chip .n { font: 0.72rem/1 var(--font-data); opacity: .75; }
+.filter-row { display: flex; flex-wrap: wrap; gap: 8px 16px; align-items: center; justify-content: space-between; }
+.search { flex: 1 1 200px; max-width: 320px; border: 1px solid var(--line); background: var(--surface); border-radius: 8px; padding: 5px 10px; }
+.status-line { font-size: 0.88rem; color: var(--muted); display: flex; gap: 10px; align-items: center; flex-wrap: wrap; }
+
+/* Frentes */
+.fronts { display: grid; grid-template-columns: repeat(auto-fill, minmax(340px, 1fr)); gap: 16px; align-items: start; }
+.fronts.single { grid-template-columns: 1fr; }
+.front { background: var(--surface); border: 1px solid var(--line); border-top: 4px solid var(--c); border-radius: 10px; padding: 16px 18px; display: grid; gap: 12px; min-width: 0; }
+.front-head { display: grid; gap: 4px; }
+.front-head h3 button { font: inherit; }
+.front-head p { margin: 0; font-size: 0.9rem; color: var(--muted); }
+.front-meta { display: flex; align-items: center; gap: 10px; font: 0.78rem/1 var(--font-data); color: var(--muted); font-variant-numeric: tabular-nums; }
+.front-meta .bar { flex: 1; }
+.items { list-style: none; margin: 0; padding: 0; display: grid; gap: 2px; }
+.item { display: grid; grid-template-columns: 28px 1fr auto; gap: 8px; align-items: start; padding: 6px 4px; border-radius: 6px; transition: background .6s; }
+.item:hover { background: var(--bg); }
+.item.flash { background: var(--hl); }
+.item .body { min-width: 0; display: grid; gap: 4px; }
+.item .open { overflow-wrap: anywhere; }
+.item.done .open { color: var(--muted); text-decoration: line-through; text-decoration-color: var(--line); }
+.item .when { font: 0.72rem/1.6 var(--font-data); color: var(--muted); white-space: nowrap; }
+.links { display: flex; flex-wrap: wrap; gap: 4px; }
+.lk { display: inline-flex; align-items: center; gap: 5px; border: 1px solid var(--line); border-radius: 999px; padding: 1px 8px; font-size: 0.75rem; background: var(--surface); color: var(--muted); max-width: 100%; }
+.lk:hover { border-color: var(--c); color: var(--ink); }
+.lk span { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.note-mark { font-size: 0.75rem; color: var(--accent); }
+.st { width: 22px; height: 22px; border-radius: 50%; border: 2px solid var(--muted); background: transparent; padding: 0; margin-top: 1px; position: relative; }
+.st:hover { transform: scale(1.08); }
+.st[data-s="doing"] { border-color: var(--doing); background: linear-gradient(90deg, var(--doing) 50%, transparent 50%); }
+.st[data-s="done"] { border-color: var(--done); background: var(--done); }
+.st[data-s="done"]::after { content: ""; position: absolute; left: 6px; top: 2px; width: 5px; height: 10px; border: solid var(--surface); border-width: 0 2px 2px 0; transform: rotate(45deg); }
+.add { display: flex; gap: 6px; flex-wrap: wrap; }
+.add input[type="text"] { flex: 1 1 160px; min-width: 0; }
+.add input { border: 1px solid var(--line); background: var(--bg); border-radius: 6px; padding: 5px 8px; font-size: 0.9rem; }
+.add input[type="month"] { flex: 0 0 auto; font-family: var(--font-data); font-size: 0.8rem; }
+.btn { border: 1px solid var(--accent); color: var(--accent); background: transparent; border-radius: 6px; padding: 5px 12px; font-size: 0.9rem; }
+.btn:hover { background: var(--accent-soft); }
+.btn.danger { border-color: var(--k3); color: var(--k3); }
+.empty { font-size: 0.9rem; color: var(--muted); padding: 4px; }
+.legend { display: flex; gap: 14px; flex-wrap: wrap; font-size: 0.82rem; color: var(--muted); align-items: center; }
+.legend span { display: inline-flex; gap: 6px; align-items: center; }
+.legend .st { width: 14px; height: 14px; pointer-events: none; }
+.legend .st[data-s="done"]::after { display: none; }
+
+/* Painel de detalhe */
+dialog { border: 1px solid var(--line); border-radius: 12px; padding: 0; width: min(560px, calc(100vw - 32px)); max-height: calc(100vh - 48px); background: var(--surface); color: var(--ink); }
+dialog::backdrop { background: rgba(10, 14, 22, 0.45); }
+.dlg { display: grid; gap: 16px; padding: 20px; }
+.dlg-head { display: flex; justify-content: space-between; gap: 12px; align-items: start; }
+.dlg label { display: grid; gap: 4px; font-size: 0.85rem; color: var(--muted); }
+.dlg input[type="text"], .dlg input[type="month"], .dlg textarea, .dlg select { border: 1px solid var(--line); background: var(--bg); border-radius: 6px; padding: 6px 8px; color: var(--ink); width: 100%; }
+.dlg textarea { min-height: 110px; resize: vertical; line-height: 1.45; }
+.dlg #dTitle { font-family: var(--font-display); font-size: 1.15rem; font-weight: 600; }
+.seg3 { display: flex; border: 1px solid var(--line); border-radius: 8px; overflow: hidden; }
+.seg3 button { flex: 1; border: 0; background: var(--bg); padding: 6px 4px; font-size: 0.88rem; display: inline-flex; gap: 6px; align-items: center; justify-content: center; }
+.seg3 button + button { border-left: 1px solid var(--line); }
+.seg3 button[aria-pressed="true"][data-s="todo"] { background: var(--accent-soft); color: var(--accent); font-weight: 600; }
+.seg3 button[aria-pressed="true"][data-s="doing"] { background: var(--doing-soft); color: var(--doing); font-weight: 600; }
+.seg3 button[aria-pressed="true"][data-s="done"] { background: var(--done-soft); color: var(--done); font-weight: 600; }
+.dlinks { list-style: none; margin: 0; padding: 0; display: grid; gap: 4px; }
+.dlinks li { display: grid; grid-template-columns: auto 1fr auto; gap: 8px; align-items: center; border: 1px solid var(--line); border-radius: 6px; padding: 6px 8px; }
+.dlinks li .linklike { min-width: 0; overflow-wrap: anywhere; }
+.x { border: 0; background: none; color: var(--muted); font-size: 1rem; line-height: 1; padding: 2px 6px; }
+.x:hover { color: var(--k3); }
+.row { display: flex; gap: 8px; flex-wrap: wrap; align-items: center; }
+.row select { flex: 1 1 220px; min-width: 0; }
+.two { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+@media (max-width: 480px) { .two { grid-template-columns: 1fr; } }
+
+/* Objetivos */
+.goals { display: grid; gap: 14px; }
+.goals-top { display: flex; flex-wrap: wrap; gap: 10px 16px; align-items: center; justify-content: space-between; }
+.tabs { display: inline-flex; border: 1px solid var(--line); border-radius: 8px; overflow: hidden; background: var(--bg); }
+.tabs button { border: 0; background: transparent; padding: 6px 14px; font-size: 0.9rem; }
+.tabs button + button { border-left: 1px solid var(--line); }
+.tabs button[aria-selected="true"] { background: var(--ink); color: var(--bg); }
+.pnav { display: inline-flex; align-items: center; gap: 6px; }
+.pnav .lbl { font-family: var(--font-display); font-size: 1.15rem; font-weight: 600; min-width: 13ch; text-align: center; }
+.pnav button { border: 1px solid var(--line); background: var(--surface); border-radius: 6px; padding: 3px 10px; }
+.pnav button:hover { border-color: var(--accent); }
+.gsum { display: flex; flex-wrap: wrap; gap: 6px 16px; align-items: center; font-size: 0.88rem; color: var(--muted); }
+.gsum button { font-size: 0.88rem; }
+.glist { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 10px; }
+.goal { border: 1px solid var(--line); background: var(--bg); border-radius: 8px; padding: 10px 12px; display: grid; grid-template-columns: 40px minmax(0, 1fr); gap: 4px 10px; align-items: start; }
+.goal.done { opacity: .78; }
+.goal.done .gt { text-decoration: line-through; text-decoration-color: var(--line); color: var(--muted); }
+.goal .gt { font-weight: 600; overflow-wrap: anywhere; }
+.goal .gmeta { font: 0.72rem/1.4 var(--font-data); color: var(--muted); }
+.goal .links { grid-column: 2; }
+.ring { width: 36px; height: 36px; border: 0; background: none; padding: 0; position: relative; }
+.ring svg { width: 36px; height: 36px; transform: rotate(-90deg); display: block; }
+.ring .trk { fill: none; stroke: var(--line); stroke-width: 4; }
+.ring .val { fill: none; stroke: var(--doing); stroke-width: 4; stroke-linecap: round; transition: stroke-dasharray .3s; }
+.ring.done .val { stroke: var(--done); }
+.ring span { position: absolute; inset: 0; display: grid; place-items: center; font: 500 0.62rem/1 var(--font-data); color: var(--ink); }
+.gadd { display: flex; gap: 6px; flex-wrap: wrap; }
+.gadd input { flex: 1 1 220px; min-width: 0; border: 1px solid var(--line); background: var(--bg); border-radius: 6px; padding: 5px 8px; font-size: 0.9rem; }
+.due { display: grid; gap: 6px; }
+.due .links { gap: 6px; }
+.gdlg-items { list-style: none; margin: 0; padding: 0; display: grid; gap: 4px; }
+.gdlg-items li { display: grid; grid-template-columns: auto auto 1fr auto; gap: 8px; align-items: center; border: 1px solid var(--line); border-radius: 6px; padding: 6px 8px; }
+.gdlg-items li .linklike { min-width: 0; overflow-wrap: anywhere; }
+.check { display: inline-flex !important; grid-auto-flow: column; gap: 8px; align-items: center; color: var(--ink) !important; font-size: 0.9rem !important; }
+@media (prefers-reduced-motion: reduce) { .ring .val { transition: none; } }
+details.backup { background: var(--surface); border: 1px solid var(--line); border-radius: 10px; padding: 14px 18px; }
+details.backup summary { cursor: pointer; font-weight: 600; }
+details.backup p { max-width: 65ch; }
+details.backup textarea { width: 100%; min-height: 110px; font: 0.78rem/1.4 var(--font-data); background: var(--bg); color: var(--ink); border: 1px solid var(--line); border-radius: 6px; padding: 8px; }
+@media (prefers-reduced-motion: reduce) { .bar > span, .item { transition: none; } }
+@media (max-width: 420px) { .fronts { grid-template-columns: 1fr; } .item { grid-template-columns: 28px 1fr; } .item .when { grid-column: 2; } }
+
+[hidden] { display: none !important; }
+/* ===== App: barra superior e navegação ===== */
+.appbar { display: flex; flex-wrap: wrap; gap: 10px 24px; align-items: center; justify-content: space-between; }
+.brand { display: grid; gap: 2px; text-decoration: none; color: inherit; }
+.brand b { font-family: var(--font-display); font-size: 1.35rem; font-weight: 600; line-height: 1.1; }
+.nav { display: inline-flex; gap: 4px; background: var(--surface); border: 1px solid var(--line); border-radius: 999px; padding: 4px; }
+.nav a { text-decoration: none; color: var(--muted); padding: 6px 16px; border-radius: 999px; font-weight: 600; font-size: 0.95rem; display: inline-flex; gap: 8px; align-items: center; }
+.nav a:hover { color: var(--ink); }
+.nav a[aria-current="page"] { background: var(--ink); color: var(--bg); }
+.nav svg { width: 16px; height: 16px; flex: none; }
+.view { display: grid; grid-template-columns: minmax(0, 1fr); gap: 28px; }
+a { color: var(--accent); }
+.small { font-size: 0.85rem; }
+.mono { font-family: var(--font-data); font-size: 0.85em; }
+.btn.solid { background: var(--accent); color: var(--surface); }
+.btn.solid:hover { filter: brightness(1.08); background: var(--accent); }
+a.btn { text-decoration: none; display: inline-flex; align-items: center; }
+.none { color: var(--muted); font-size: 0.88rem; list-style: none; padding: 2px 0; }
+.warn { color: var(--k3); } .ok { color: var(--done); }
+.danger-t { color: var(--k3) !important; font-size: 0.85rem; }
+@media (max-width: 700px) {
+  body { padding-bottom: calc(84px + env(safe-area-inset-bottom, 0px)); }
+  .nav { position: fixed; z-index: 20; left: 0; right: 0; bottom: 0; border-radius: 0; border-width: 1px 0 0; justify-content: space-around;
+    padding: 6px max(8px, env(safe-area-inset-right, 0px)) calc(6px + env(safe-area-inset-bottom, 0px)) max(8px, env(safe-area-inset-left, 0px)); }
+  .nav a { flex-direction: column; gap: 2px; font-size: 0.75rem; padding: 6px 10px; border-radius: 10px; flex: 1; justify-content: center; }
+  .nav svg { width: 20px; height: 20px; }
+}
+
+/* ===== Dia a dia ===== */
+.day-top { display: grid; grid-template-columns: minmax(0, 3fr) minmax(0, 2fr); gap: 16px; align-items: start; }
+@media (max-width: 860px) { .day-top { grid-template-columns: minmax(0, 1fr); } }
+.today h1 { font-size: clamp(1.8rem, 4vw, 2.4rem); }
+.evs { list-style: none; margin: 0; padding: 0; display: grid; gap: 4px; }
+.evs .sub { list-style: none; font: 500 0.7rem/1 var(--font-data); letter-spacing: .08em; text-transform: uppercase; color: var(--muted); margin-top: 6px; }
+.ev { display: grid; grid-template-columns: 20px minmax(0, 1fr); gap: 6px; align-items: start; border-left: 3px solid var(--c); background: var(--bg); border-radius: 4px 6px 6px 4px; padding: 5px 6px 5px 6px; }
+.ev.rt { background: transparent; border-left-style: dashed; opacity: .75; }
+.ev.gc { border-left-style: dotted; background: transparent; }
+.ev.eval { background: color-mix(in srgb, var(--c) 12%, var(--surface)); }
+.ev.late { background: var(--doing-soft); }
+.ev.done .ev-t { text-decoration: line-through; text-decoration-color: var(--muted); color: var(--muted); }
+.ev-open { border: 0; background: none; padding: 0; text-align: left; display: grid; gap: 1px; min-width: 0; color: inherit; text-decoration: none; }
+.ev-open:hover .ev-t { color: var(--accent); }
+.ev-time { font: 0.7rem/1.3 var(--font-data); color: var(--muted); font-variant-numeric: tabular-nums; }
+.ev-t { font-size: 0.9rem; line-height: 1.3; overflow-wrap: anywhere; }
+.badge { display: inline-block; font: 600 0.62rem/1 var(--font-data); letter-spacing: .04em; text-transform: uppercase; color: var(--c); border: 1px solid currentColor; border-radius: 4px; padding: 2px 4px; margin-right: 6px; vertical-align: 1px; }
+.ck { width: 18px; height: 18px; border-radius: 5px; border: 2px solid var(--c); background: transparent; padding: 0; margin-top: 2px; position: relative; }
+.ck.ghost { border: 0; width: 18px; }
+.ck[aria-pressed="true"] { background: var(--c); }
+.ck[aria-pressed="true"]::after { content: ""; position: absolute; left: 4px; top: 0; width: 5px; height: 10px; border: solid var(--surface); border-width: 0 2px 2px 0; transform: rotate(45deg); }
+.countdown { list-style: none; margin: 0; padding: 0; display: grid; gap: 6px; }
+.countdown li { display: grid; grid-template-columns: 52px minmax(0, 1fr); gap: 10px; align-items: center; border: 1px solid var(--line); border-left: 4px solid var(--c); border-radius: 8px; padding: 6px 10px; background: var(--bg); }
+.countdown .cd { display: grid; justify-items: center; line-height: 1; }
+.countdown .cd b { font: 500 1.35rem/1 var(--font-data); color: var(--c); }
+.countdown .cd small { font: 0.65rem/1.4 var(--font-data); color: var(--muted); }
+.countdown .linklike { min-width: 0; overflow-wrap: anywhere; }
+.countdown small { display: block; color: var(--muted); font-size: 0.78rem; }
+
+.quick { gap: 8px; }
+.quick .row input { flex: 1 1 260px; min-width: 0; border: 1px solid var(--line); background: var(--bg); border-radius: 8px; padding: 8px 12px; font-size: 1rem; }
+.quick .row input:focus { border-color: var(--accent); outline: none; box-shadow: 0 0 0 3px var(--accent-soft); }
+.qprev { font-size: 0.88rem; color: var(--muted); min-height: 1.3em; }
+.qprev b { color: var(--ink); }
+
+.dtabs-row { display: flex; flex-wrap: wrap; gap: 10px 16px; align-items: center; justify-content: space-between; }
+.dtabs-row .tabs { flex-wrap: wrap; }
+.toggles { display: flex; gap: 14px; flex-wrap: wrap; }
+.week { display: grid; grid-template-columns: repeat(7, minmax(0, 1fr)); gap: 8px; }
+.wday { border: 1px solid var(--line); border-radius: 8px; padding: 8px; display: grid; gap: 6px; align-content: start; min-width: 0; min-height: 140px; transition: background .6s; }
+.wday.is-today { border-color: var(--accent); box-shadow: inset 0 3px 0 var(--accent); }
+.wday.flash { background: var(--hl); }
+.wday header { display: flex; align-items: baseline; gap: 6px; }
+.wday header b { font: 500 1.2rem/1 var(--font-data); }
+.wday .plus { margin-left: auto; border: 1px solid var(--line); background: var(--surface); border-radius: 6px; width: 24px; height: 24px; padding: 0; line-height: 1; color: var(--muted); }
+.wday .plus:hover { color: var(--accent); border-color: var(--accent); }
+@media (max-width: 1000px) { .week { grid-template-columns: repeat(4, minmax(0, 1fr)); } }
+@media (max-width: 700px) { .week { grid-template-columns: minmax(0, 1fr); } .wday { min-height: 0; } }
+
+.month { display: grid; grid-template-columns: repeat(7, minmax(0, 1fr)); gap: 4px; }
+.mh { font: 500 0.7rem/1 var(--font-data); text-transform: uppercase; color: var(--muted); text-align: center; padding: 4px 0; }
+.mc { border: 1px solid var(--line); background: var(--surface); border-radius: 6px; min-height: 92px; padding: 4px; display: flex; flex-direction: column; gap: 2px; align-items: stretch; text-align: left; min-width: 0; overflow: hidden; }
+.mc:hover { border-color: var(--accent); }
+.mc.out { opacity: .45; }
+.mc.is-today { border-color: var(--accent); box-shadow: inset 0 3px 0 var(--accent); }
+.mn { font: 500 0.8rem/1 var(--font-data); margin-bottom: 2px; }
+.mi { font-size: 0.72rem; line-height: 1.25; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; border-left: 3px solid var(--c); padding-left: 4px; }
+.mi.eval { font-weight: 600; color: var(--c); }
+.mi.done { text-decoration: line-through; opacity: .6; }
+.more, .sdots { font: 0.65rem/1 var(--font-data); color: var(--muted); }
+@media (max-width: 600px) {
+  .mc { min-height: 52px; flex-direction: row; flex-wrap: wrap; align-content: flex-start; gap: 3px; }
+  .mn { width: 100%; }
+  .mi { font-size: 0; width: 7px; height: 7px; border: 0; border-radius: 50%; background: var(--c); padding: 0; }
+  .sdots, .more { display: none; }
+}
+
+.disc-top { display: flex; flex-wrap: wrap; gap: 8px 18px; align-items: center; }
+.inline { display: inline-flex; gap: 6px; align-items: center; font-size: 0.88rem; color: var(--muted); }
+.inline input, .inline select { border: 1px solid var(--line); background: var(--bg); border-radius: 6px; padding: 3px 6px; font-family: var(--font-data); font-size: 0.85rem; color: var(--ink); width: auto; }
+.discs { display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 14px; }
+@media (max-width: 420px) { .discs { grid-template-columns: minmax(0, 1fr); } }
+.disc { border: 1px solid var(--line); border-top: 4px solid var(--c); border-radius: 10px; padding: 12px 14px; display: grid; gap: 10px; min-width: 0; background: var(--surface); }
+.disc header { display: grid; grid-template-columns: auto minmax(0, 1fr) auto; gap: 8px; align-items: center; }
+.dname { border: 1px solid transparent; background: transparent; font-family: var(--font-display); font-size: 1.1rem; font-weight: 600; padding: 2px 4px; border-radius: 4px; min-width: 0; width: 100%; }
+.dname:hover, .dname:focus { border-color: var(--line); background: var(--bg); }
+.avg { font: 500 1.4rem/1 var(--font-data); color: var(--c); font-variant-numeric: tabular-nums; }
+.tscroll { overflow-x: auto; }
+.evt { width: 100%; border-collapse: collapse; font-size: 0.88rem; }
+.evt th { text-align: left; font: 500 0.68rem/1 var(--font-data); text-transform: uppercase; letter-spacing: .05em; color: var(--muted); padding: 4px 4px 6px; border-bottom: 1px solid var(--line); }
+.evt td { padding: 4px; border-bottom: 1px solid var(--line); vertical-align: middle; }
+.evt td:first-child { overflow-wrap: anywhere; }
+.evt input { width: 4.2em; border: 1px solid var(--line); background: var(--bg); border-radius: 5px; padding: 3px 5px; font-family: var(--font-data); font-size: 0.85rem; text-align: right; }
+.evt tr.graded td:last-child input { border-color: var(--c); }
+.need { margin: 0; font-size: 0.85rem; color: var(--muted); }
+.need b { color: var(--ink); font-family: var(--font-data); }
+.dadd { display: grid; grid-template-columns: auto minmax(0, 1fr) auto 3.4em auto; gap: 4px; }
+.dadd input, .dadd select, .dnew input { border: 1px solid var(--line); background: var(--bg); border-radius: 6px; padding: 4px 6px; font-size: 0.85rem; min-width: 0; color: var(--ink); }
+.dadd input[type="date"] { font-family: var(--font-data); font-size: 0.78rem; }
+@media (max-width: 420px) { .dadd { grid-template-columns: 1fr 1fr; } .dadd input[name="title"] { grid-column: 1 / -1; grid-row: 1; } }
+.dnew { display: flex; flex-wrap: wrap; gap: 6px; }
+.dnew input { flex: 1 1 180px; padding: 6px 8px; font-size: 0.9rem; }
+.swatch { width: 18px; height: 18px; border-radius: 50%; border: 2px solid var(--surface); background: var(--c); padding: 0; box-shadow: 0 0 0 1px var(--line); }
+.swatch[aria-pressed="true"] { box-shadow: 0 0 0 2px var(--ink); }
+.row.small { gap: 6px; }
+.tg { font-family: var(--font-body); font-size: 0.8rem; font-weight: 600; text-transform: uppercase; letter-spacing: .06em; margin-top: 8px; }
+.evs.flat { max-width: 720px; }
+.tdone summary { cursor: pointer; color: var(--muted); font-size: 0.9rem; margin-top: 8px; }
+.gframe { position: relative; width: 100%; aspect-ratio: 4 / 3; max-height: 75vh; border: 1px solid var(--line); border-radius: 8px; overflow: hidden; background: #fff; }
+.gframe iframe { position: absolute; inset: 0; width: 100%; height: 100%; border: 0; }
+@media (max-width: 600px) { .gframe { aspect-ratio: 3 / 4; } }
+.gempty { display: grid; gap: 8px; max-width: 640px; }
+.gempty p { margin: 0; }
+
+/* Painel de entrada */
+.three { display: grid; grid-template-columns: 1.4fr 1fr 1fr; gap: 10px; }
+@media (max-width: 480px) { .three { grid-template-columns: 1fr 1fr; } .three label:first-child { grid-column: 1 / -1; } }
+.dlg input[type="date"], .dlg input[type="time"], .dlg input[type="number"] { border: 1px solid var(--line); background: var(--bg); border-radius: 6px; padding: 6px 8px; color: var(--ink); width: 100%; font-family: var(--font-data); font-size: 0.9rem; }
+.days { display: flex; flex-wrap: wrap; gap: 4px 12px; }
+#eKind { --c: var(--accent); }
+#eKind::before { content: ""; width: 9px; height: 9px; border-radius: 50%; background: var(--c); }
+fieldset.plain { border: 1px solid var(--line); border-radius: 8px; padding: 10px; margin: 0; display: grid; gap: 8px; }
+fieldset.plain legend { padding: 0 4px; font-size: 0.85rem; color: var(--muted); }
+
+/* ===== Claude e agenda ===== */
+.connect { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 420px), 1fr)); gap: 16px; align-items: start; }
+.panel p { margin: 0; max-width: 68ch; }
+.panel textarea.io { width: 100%; min-height: 120px; font: 0.8rem/1.45 var(--font-data); background: var(--bg); color: var(--ink); border: 1px solid var(--line); border-radius: 6px; padding: 8px; resize: vertical; }
+.panel select.full, .panel input.full { width: 100%; border: 1px solid var(--line); background: var(--bg); border-radius: 6px; padding: 6px 8px; color: var(--ink); }
+.panel label.stack { display: grid; gap: 4px; font-size: 0.85rem; color: var(--muted); }
+.steps { margin: 0; padding-left: 1.3em; display: grid; gap: 4px; font-size: 0.9rem; }
+.ops { list-style: none; margin: 0; padding: 0; display: grid; gap: 4px; }
+.ops li { border: 1px solid var(--line); border-radius: 6px; padding: 6px 8px; background: var(--bg); }
+.claude-mark { display: inline-grid; place-items: center; width: 28px; height: 28px; border-radius: 8px; background: var(--k4); color: var(--surface); font-family: var(--font-display); font-weight: 600; }
+details.more-info summary { cursor: pointer; font-weight: 600; }
+details.more-info[open] summary { margin-bottom: 8px; }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<nav class="appbar" aria-label="Áreas do app">
+  <a class="brand" href="#dia"><span class="eyebrow">João Vinícius Zuaretch · UEPG</span><b>Trajetória</b></a>
+  <div class="nav">
+    <a href="#dia" data-view="dia"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M3 10h18M8 3v4M16 3v4"/></svg>Dia a dia</a>
+    <a href="#objetivos" data-view="objetivos"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="5"/><circle cx="12" cy="12" r="1.5" fill="currentColor"/></svg>Objetivos</a>
+    <a href="#conectar" data-view="conectar"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M10 14a4 4 0 0 0 5.7 0l3-3a4 4 0 0 0-5.7-5.7l-1 1"/><path d="M14 10a4 4 0 0 0-5.7 0l-3 3a4 4 0 0 0 5.7 5.7l1-1"/></svg>Claude e agenda</a>
+  </div>
+</nav>
+
+<section class="view" id="view-dia" aria-label="Dia a dia">
+  <div class="day-top">
+    <section class="panel today">
+      <div><div class="eyebrow" id="tdWeekday"></div><h1 id="tdDate"></h1></div>
+      <ul class="evs" id="tdList"></ul>
+    </section>
+    <section class="panel">
+      <div class="panel-head"><h2>Provas e entregas</h2><span class="muted small">próximos 30 dias</span></div>
+      <ol class="countdown" id="tdNext"></ol>
+    </section>
+  </div>
+
+  <form class="panel quick" id="quick" autocomplete="off">
+    <label for="qIn" class="eyebrow">Adicionar rápido</label>
+    <div class="row">
+      <input id="qIn" type="text" placeholder="prova cálculo 30/11 · trabalho PO 23/11 peso 2 · ler Fulton sex 14h · reunião IC qui">
+      <button class="btn solid" type="submit">Adicionar</button>
+      <button class="btn" type="button" id="qMore">Com detalhes…</button>
+    </div>
+    <div class="qprev" id="qPrev" aria-live="polite"></div>
+  </form>
+
+  <section class="panel">
+    <div class="dtabs-row">
+      <div class="tabs" role="tablist" id="dTabs" aria-label="Visão">
+        <button type="button" role="tab" data-dsub="semana">Semana</button>
+        <button type="button" role="tab" data-dsub="mes">Mês</button>
+        <button type="button" role="tab" data-dsub="disc">Disciplinas e notas</button>
+        <button type="button" role="tab" data-dsub="tarefas">Tarefas</button>
+        <button type="button" role="tab" data-dsub="google">Google Agenda</button>
+      </div>
+      <div class="pnav" id="dNav">
+        <button type="button" id="dPrev" aria-label="Anterior">‹</button>
+        <span class="lbl" id="dLabel"></span>
+        <button type="button" id="dNext" aria-label="Próximo">›</button>
+        <button type="button" id="dToday">Hoje</button>
+      </div>
+      <div class="toggles">
+        <label class="check small"><input type="checkbox" id="showRoutine"> Mostrar aulas</label>
+        <label class="check small" id="gToggleWrap" hidden><input type="checkbox" id="showGoogle"> Eventos do Google</label>
+      </div>
+    </div>
+    <div id="dBody" style="display:grid;gap:10px"></div>
+  </section>
+
+  <section class="panel" id="trajMonth"></section>
+</section>
+
+<section class="view" id="view-objetivos" aria-label="Objetivos e trajetória" hidden>
+
+<header>
+  <div class="head-row">
+    <div>
+      <div class="eyebrow">João Vinícius Zuaretch · Matemática Aplicada · UEPG</div>
+      <h1>Trajetória Acadêmica</h1>
+      <p class="muted" style="margin:6px 0 0;max-width:62ch">Clique no círculo para mudar o status, no texto para abrir o item com notas e ligações, e nas etiquetas para pular para o item ligado.</p>
+    </div>
+    <button class="overall" type="button" id="overallBtn" title="Mostrar o que falta">
+      <span class="eyebrow">Concluído no total</span>
+      <strong id="overallPct">0%</strong>
+      <span class="bar"><span id="overallBar"></span></span>
+      <span class="muted" style="font-size:.85rem" id="overallCount"></span>
+    </button>
+  </div>
+
+  <div class="tower">
+    <div class="tower-label"><b>Graduação</b> ⊂ <b>Mestrado</b> ⊂ <b>Doutorado</b> <span>· uma torre de extensões; clique numa etapa para filtrar</span></div>
+    <div class="track" id="track">
+      <button type="button" class="seg grad" data-phase="grad" style="flex:4" aria-pressed="false">Graduação · UEPG <small id="ph-grad"></small></button>
+      <button type="button" class="seg mest" data-phase="mest" style="flex:2" aria-pressed="false">Mestrado <small id="ph-mest"></small></button>
+      <button type="button" class="seg dout" data-phase="dout" style="flex:1" aria-pressed="false">Doutorado <small id="ph-dout"></small></button>
+      <div class="now" id="nowMark"></div>
+    </div>
+    <div class="years" id="years"></div>
+  </div>
+</header>
+
+<section class="panel goals" aria-labelledby="goalsTitle">
+  <div class="goals-top">
+    <h2 id="goalsTitle">Objetivos</h2>
+    <div class="tabs" role="tablist" aria-label="Horizonte" id="gTabs">
+      <button type="button" role="tab" data-h="month" aria-selected="true">Mês</button>
+      <button type="button" role="tab" data-h="sem" aria-selected="false">Semestre</button>
+      <button type="button" role="tab" data-h="year" aria-selected="false">Ano</button>
+      <button type="button" role="tab" data-h="stage" aria-selected="false">Etapa</button>
+    </div>
+    <div class="pnav">
+      <button type="button" id="gPrev" aria-label="Período anterior">‹</button>
+      <span class="lbl" id="gLabel"></span>
+      <button type="button" id="gNext" aria-label="Próximo período">›</button>
+      <button type="button" id="gNow">Atual</button>
+    </div>
+  </div>
+  <div class="gsum" id="gSum"></div>
+  <ul class="glist" id="gList"></ul>
+  <form class="gadd" id="gAdd">
+    <input type="text" id="gNew" placeholder="Novo objetivo para este período" aria-label="Novo objetivo" required>
+    <button class="btn" type="submit">Adicionar objetivo</button>
+  </form>
+  <div class="due" id="gDue"></div>
+</section>
+
+<div class="duo">
+  <section class="panel">
+    <div class="panel-head"><h2>Próximos passos</h2><span class="muted" style="font-size:.85rem" id="nextScope"></span></div>
+    <ol class="next" id="nextList"></ol>
+  </section>
+  <section class="panel map">
+    <div class="panel-head"><h2>Mapa das ligações</h2><span class="muted" style="font-size:.85rem">clique numa área</span></div>
+    <svg id="map" viewBox="0 0 440 318" role="group" aria-label="Áreas e quantas ligações há entre elas"></svg>
+  </section>
+</div>
+
+<section class="filters" aria-label="Filtros">
+  <div class="chips" id="areaChips" role="group" aria-label="Área"></div>
+  <div class="filter-row">
+    <div class="chips" role="group" aria-label="Status" id="statusChips">
+      <button class="chip" data-f="all" aria-pressed="true" type="button">Tudo</button>
+      <button class="chip" data-f="open" aria-pressed="false" type="button">Pendentes</button>
+      <button class="chip" data-f="doing" aria-pressed="false" type="button">Em andamento</button>
+      <button class="chip" data-f="done" aria-pressed="false" type="button">Feitos</button>
+    </div>
+    <input class="search" id="search" type="search" placeholder="Buscar (ex.: Galois, cartas, inglês)" aria-label="Buscar itens">
+  </div>
+  <div class="status-line"><span id="showing"></span><button class="btn" type="button" id="clearAll" hidden>Limpar filtros</button>
+    <span class="legend"><span><i class="st" data-s="todo"></i>A fazer</span><span><i class="st" data-s="doing"></i>Em andamento</span><span><i class="st" data-s="done"></i>Feito</span></span>
+  </div>
+</section>
+
+<div class="fronts" id="fronts"></div>
+
+</section>
+
+<section class="view" id="view-conectar" aria-label="Claude e agenda" hidden>
+  <div>
+    <h1>Claude e agenda</h1>
+    <p class="muted" style="margin:6px 0 0;max-width:68ch">O app funciona sozinho, sem internet. Esta tela é a ponte: você manda o contexto para o Claude, ele devolve as mudanças num bloco que o app entende, e daqui as coisas vão para a Google Agenda.</p>
+  </div>
+  <div class="connect">
+    <section class="panel">
+      <div class="panel-head"><h2><span class="claude-mark" aria-hidden="true">C</span> Pedir ao Claude</h2></div>
+      <ol class="steps">
+        <li>Escolha o pedido e clique em <b>Copiar pedido</b>. Ele já leva as próximas 3 semanas, as notas, os itens da trajetória e os objetivos.</li>
+        <li>Cole numa conversa com o Claude (<a href="https://claude.ai/new" target="_blank" rel="noopener">abrir o Claude</a>).</li>
+        <li>Copie a resposta inteira, cole no campo de baixo e clique em <b>Ler resposta</b>. Você confere antes de aplicar.</li>
+      </ol>
+      <label class="stack">Pedido<select id="cTpl" class="full">
+        <option value="semana">Planejar a semana</option>
+        <option value="revisao">Revisão da semana</option>
+        <option value="prova">Plano para uma prova</option>
+        <option value="texto">Transformar texto em itens (plano de ensino, edital, e-mail)</option>
+        <option value="traj">Passos que faltam na trajetória</option>
+        <option value="agenda">Conferir com a Google Agenda</option>
+      </select></label>
+      <label class="stack" id="cProvaWrap" hidden>Prova<select id="cProva" class="full"></select></label>
+      <label class="stack" id="cTextoWrap" hidden>Texto para converter<textarea id="cTexto" class="io" placeholder="Cole aqui o plano de ensino, o edital ou o e-mail…"></textarea></label>
+      <label class="stack">Algo a mais (opcional)<input id="cExtra" class="full" type="text" placeholder="Ex.: nesta semana tenho menos tempo na terça"></label>
+      <div class="row">
+        <button type="button" class="btn solid" id="cCopy">Copiar pedido</button>
+        <button type="button" class="btn" id="cShow">Ver o texto</button>
+        <span class="muted small" id="cMsg" aria-live="polite"></span>
+      </div>
+      <textarea id="cOut" class="io" hidden readonly aria-label="Pedido para o Claude"></textarea>
+      <label class="stack">Resposta do Claude<textarea id="cIn" class="io" placeholder="Cole aqui a resposta do Claude (com o bloco ```json)…"></textarea></label>
+      <div class="row"><button type="button" class="btn" id="cRead">Ler resposta</button></div>
+      <div id="cPreview" style="display:grid;gap:8px"></div>
+    </section>
+
+    <section class="panel">
+      <div class="panel-head"><h2>Google Agenda</h2></div>
+      <p><b>Mais simples:</b> peça direto no chat com o Claude. Ele tem acesso à sua Google Agenda e pode criar, mover ou ler eventos (“coloca minhas provas de dezembro na agenda”). Use o pedido “Conferir com a Google Agenda” ao lado para ele comparar a agenda com o app.</p>
+      <p><b>Por evento:</b> abra qualquer item no Dia a dia e clique em “Adicionar ao Google Agenda”. Abre a agenda já preenchida.</p>
+      <div style="display:grid;gap:6px">
+        <p><b>Em lote (.ics):</b> baixa um arquivo com o que ainda não está na agenda. Na Google Agenda: Configurações → Importar e exportar → Importar.</p>
+        <div class="row">
+          <label class="check small"><input type="checkbox" id="icsG"> Incluir o que já veio do Google</label>
+          <label class="check small"><input type="checkbox" id="icsR"> Incluir aulas (rotina)</label>
+        </div>
+        <div class="row"><button type="button" class="btn" id="icsBtn">Baixar .ics</button><span class="muted small" id="icsCount"></span><span class="muted small" id="icsMsg" aria-live="polite"></span></div>
+      </div>
+      <p><b>Ver a agenda dentro do app:</b> aba “Google Agenda” no Dia a dia.</p>
+      <details class="more-info">
+        <summary>Sincronização direta (opcional, para quando o app estiver no GitHub Pages)</summary>
+        <div style="display:grid;gap:8px">
+          <p class="muted small" id="syncWhere"></p>
+          <ol class="steps">
+            <li>No <a href="https://console.cloud.google.com/" target="_blank" rel="noopener">Google Cloud Console</a>, crie um projeto e ative a <b>Google Calendar API</b>.</li>
+            <li>Em “Tela de consentimento OAuth”, escolha Externo, modo de teste, e adicione o seu e-mail como usuário de teste.</li>
+            <li>Em Credenciais → Criar → ID do cliente OAuth → Aplicativo da Web. Em “Origens JavaScript autorizadas”, coloque o endereço do seu site (ex.: https://seu-usuario.github.io).</li>
+            <li>Cole o Client ID abaixo. Ele fica só neste navegador.</li>
+          </ol>
+          <label class="stack">Client ID<input id="cClientId" class="full" type="text" placeholder="1234…apps.googleusercontent.com" spellcheck="false"></label>
+          <div class="row">
+            <button type="button" class="btn" id="gPullBtn">Trazer eventos do Google</button>
+            <button type="button" class="btn" id="gPushBtn">Enviar os novos para o Google</button>
+            <button type="button" class="btn danger" id="gForget">Esquecer eventos lidos</button>
+          </div>
+          <span class="muted small" id="gCacheInfo"></span>
+          <span class="small" id="gSyncMsg" aria-live="polite"></span>
+        </div>
+      </details>
+    </section>
+
+    <section class="panel">
+      <div class="panel-head"><h2>Usar como app</h2></div>
+      <p><b>No computador, sem internet:</b> guarde este arquivo numa pasta fixa e abra pelo navegador (dá para pôr nos favoritos). Os dados ficam salvos no navegador, ligados ao endereço do arquivo.</p>
+      <p><b>Como app instalável (celular e computador):</b> publique a pasta <span class="mono">app/</span> que veio junto num repositório do GitHub Pages, como a sua página acadêmica. Abra o endereço no Chrome e escolha “Instalar app” (no celular: menu ⋮ → Adicionar à tela inicial). Depois da primeira visita ele abre sem internet.</p>
+      <p class="muted small">Mudou de endereço (do arquivo para o site, ou de navegador)? Os dados não vão sozinhos: use o backup abaixo para levar tudo.</p>
+    </section>
+
+    <details class="backup panel" style="display:block">
+      <summary>Backup de tudo (trajetória, objetivos e dia a dia)</summary>
+      <p class="muted">Status, notas, ligações, objetivos, disciplinas, notas de prova e tarefas ficam salvos neste navegador. Antes de trocar o arquivo de pasta, de navegador ou de computador, baixe ou copie o backup e restaure no outro lugar.</p>
+      <textarea id="backupBox" aria-label="Dados de backup" spellcheck="false"></textarea>
+      <div class="row" style="margin-top:8px">
+        <button class="btn" type="button" id="btnDown">Baixar backup (.json)</button>
+        <label class="btn" style="cursor:pointer">Carregar arquivo<input type="file" id="fileIn" accept=".json,application/json" hidden></label>
+        <button class="btn" type="button" id="btnCopy">Copiar texto</button>
+        <button class="btn" type="button" id="btnRestore">Restaurar do texto acima</button>
+        <button class="btn danger" type="button" id="btnReset">Voltar ao estado inicial</button>
+        <span class="muted" id="backupMsg" style="font-size:.9rem"></span>
+      </div>
+    </details>
+  </div>
+</section>
+
+</div>
+
+<dialog id="dlg" aria-labelledby="dTitle">
+  <form method="dialog" class="dlg" id="dlgForm">
+    <div class="dlg-head">
+      <button type="button" class="chip" id="dArea"></button>
+      <button type="submit" class="x" aria-label="Fechar">✕</button>
+    </div>
+    <input type="text" id="dTitle" aria-label="Título do item">
+    <div class="seg3" role="group" aria-label="Status" id="dStatus">
+      <button type="button" data-s="todo"><i class="st" data-s="todo" style="width:14px;height:14px"></i>A fazer</button>
+      <button type="button" data-s="doing"><i class="st" data-s="doing" style="width:14px;height:14px"></i>Em andamento</button>
+      <button type="button" data-s="done"><i class="st" data-s="done" style="width:14px;height:14px"></i>Feito</button>
+    </div>
+    <div class="two">
+      <label>Mês<input type="month" id="dWhen"></label>
+      <label>Etapa<input type="text" id="dPhase" readonly tabindex="-1"></label>
+    </div>
+    <label>Notas<textarea id="dNotes" placeholder="Prazos, links, o que o orientador disse, próximos passos…"></textarea></label>
+    <div style="display:grid;gap:8px">
+      <span class="eyebrow">Ligações</span>
+      <ul class="dlinks" id="dLinks"></ul>
+      <div class="row">
+        <select id="dLinkSel" aria-label="Ligar a outro item"></select>
+        <button type="button" class="btn" id="dLinkAdd">Ligar</button>
+      </div>
+    </div>
+    <div style="display:grid;gap:8px">
+      <span class="eyebrow">Objetivos que este item ajuda</span>
+      <ul class="dlinks" id="dGoals"></ul>
+      <div class="row">
+        <select id="dGoalSel" aria-label="Ligar a um objetivo"></select>
+        <button type="button" class="btn" id="dGoalAdd">Ligar</button>
+      </div>
+    </div>
+    <div class="row" style="justify-content:space-between">
+      <button type="button" class="btn danger" id="dDelete" hidden>Remover item</button>
+      <button type="button" class="btn" id="dReset">Restaurar texto e mês originais</button>
+    </div>
+  </form>
+</dialog>
+
+<dialog id="gdlg" aria-labelledby="gTitle">
+  <form method="dialog" class="dlg">
+    <div class="dlg-head">
+      <span class="chip" id="gHz"></span>
+      <button type="submit" class="x" aria-label="Fechar">✕</button>
+    </div>
+    <input type="text" id="gTitle" aria-label="Objetivo">
+    <div class="two">
+      <label>Horizonte<select id="gH">
+        <option value="month">Mês</option><option value="sem">Semestre</option><option value="year">Ano</option><option value="stage">Etapa</option>
+      </select></label>
+      <label>Período<span id="gPWrap"></span></label>
+    </div>
+    <div id="gStatusWrap" style="display:grid;gap:8px"></div>
+    <label>Notas<textarea id="gNotes" placeholder="Por que este objetivo, como medir, o que ficou de fora…"></textarea></label>
+    <div style="display:grid;gap:8px">
+      <span class="eyebrow">Itens que contam para este objetivo</span>
+      <ul class="gdlg-items" id="gItems"></ul>
+      <div class="row">
+        <select id="gItemSel" aria-label="Adicionar item ao objetivo"></select>
+        <button type="button" class="btn" id="gItemAdd">Adicionar</button>
+      </div>
+    </div>
+    <div class="row" style="justify-content:space-between">
+      <button type="button" class="btn danger" id="gDelete">Remover objetivo</button>
+    </div>
+  </form>
+</dialog>
+
+
+<dialog id="edlg" aria-labelledby="eTitle">
+  <form method="dialog" class="dlg">
+    <div class="dlg-head">
+      <span class="chip" id="eKind"></span>
+      <button type="submit" class="x" aria-label="Fechar">✕</button>
+    </div>
+    <input type="text" id="eTitle" aria-label="Título" placeholder="O que é? (ex.: Lista 5 de Probabilidade)">
+    <div class="two">
+      <label>Tipo<select id="eType"></select></label>
+      <label>Disciplina<select id="eDisc"></select></label>
+    </div>
+    <div class="three">
+      <label>Data<input type="date" id="eDate"></label>
+      <label>Início<input type="time" id="eStart"></label>
+      <label>Fim<input type="time" id="eEnd"></label>
+    </div>
+    <div class="two" id="eEvalRow">
+      <label>Peso<input type="text" inputmode="decimal" id="eWeight" placeholder="1"></label>
+      <label>Nota (0 a 10)<input type="text" inputmode="decimal" id="eGrade" placeholder="ainda não saiu"></label>
+    </div>
+    <label class="check" id="eDoneWrap"><input type="checkbox" id="eDone"> Feito</label>
+    <fieldset class="plain">
+      <legend>Repetição</legend>
+      <label class="check"><input type="checkbox" id="eWeekly"> Repete toda semana</label>
+      <div id="eDaysWrap" style="display:grid;gap:8px">
+        <div class="days" id="eDays"></div>
+        <label>Até (opcional)<input type="date" id="eUntil"></label>
+      </div>
+    </fieldset>
+    <div class="two">
+      <label>Área da trajetória<select id="eArea"></select></label>
+      <label>Item da trajetória<select id="eItem"></select></label>
+    </div>
+    <label>Notas<textarea id="eNotes" placeholder="Conteúdo da prova, sala, link, o que falta…"></textarea></label>
+    <div class="row" style="justify-content:space-between">
+      <div class="row">
+        <a class="btn" id="eGcal" target="_blank" rel="noopener">Adicionar ao Google Agenda</a>
+        <button type="button" class="btn" id="eItemGo" hidden>Abrir item da trajetória</button>
+        <button type="button" class="btn" id="eSkip" hidden></button>
+      </div>
+      <button type="button" class="btn danger" id="eDel">Excluir</button>
+    </div>
+  </form>
+</dialog>
+
+<script>
+const FRONTS = [
+  { id: "ic", short: "IC 2026", title: "IC 2026 · Grupos de Sylow e Extensões de Corpos", sub: "PIBIC/PROVIC, orientação do Prof. Giuliano La Guardia", c: "--k1", items: [
+    ["ic1","Relatório final: Resultados e Discussão com pelo menos 5 páginas","2026-11","doing"],
+    ["ic2","Resumo do XXXV EAIC (1 página, duas colunas)","2026-10"],
+    ["ic3","Apresentação no EAIC: 10 min, a ideia dos Teoremas de Sylow","2026-10"],
+    ["ic4","Slides em Beamer sobre os Teoremas de Sylow (Rotman, §5.2)","2026-10"],
+    ["ic5","Preencher o relatório no sistema (prazo 27/11)","2026-11"],
+    ["ic6","Apresentar a IC na reunião de quinta, 19/11","2026-11","doing"],
+    ["ic7","Certificados do EAIC e da IC no Lattes","2026-12"]
+  ]},
+  { id: "curvas", short: "IC 2027 · Curvas", title: "IC 2027 · Curvas algébricas", sub: "Fulton → Washington → Stichtenoth, rumo a corpos de funções e códigos AG", c: "--k2", items: [
+    ["cv1","Fulton, Cap. 1 com o Giuliano","2026-12","doing"],
+    ["cv2","Apresentação: Conjuntos Algébricos Afins (Fulton §§1.1–1.3)","2026-11","doing"],
+    ["cv3","Curvas Planas e Bézout: ensaio com o orientador (sexta) e J3M/UFPR (15 min)","2026-11"],
+    ["cv4","Proposta de plano de trabalho da IC 2027 para o Giuliano","2026-12"],
+    ["cv5","Washington, Elliptic Curves, por fora","2027-01","doing"],
+    ["cv6","Férias: Fulton Cap. 2 ou exercícios do Garcia & Lequain","2027-02"],
+    ["cv7","Stichtenoth: corpos de funções e códigos AG","2027-06"],
+    ["cv8","SageMath: refazer exemplos de curvas e códigos","2027-06"],
+    ["cv10","Caderno de IC: anotar leituras, dúvidas e resultados toda semana","2027-03"],
+    ["cv11","Washington, Cap. 1–2: forma de Weierstrass e lei de grupo","2027-03"],
+    ["cv9","Edital PIBIC/PROVIC 2027–28: submeter o projeto com o Giuliano (data a confirmar)","2027-04"],
+    ["cv12","Fulton, Cap. 3–5: pontos singulares e curvas projetivas","2027-05"],
+    ["cv13","Início da vigência da IC 2027–28","2027-08"],
+    ["cv16","Exemplo de código AG sobre um corpo finito no SageMath","2027-09"],
+    ["cv14","Relatório parcial da IC 2027–28","2028-02"],
+    ["cv15","Relatório final da IC 2027–28","2028-08"]
+  ]},
+  { id: "prod", short: "Produção", title: "Apresentações e produção", sub: "Eventos, pôsteres, minicurso, Lattes e página acadêmica", c: "--k3", items: [
+    ["pr1","IX SIGMAT: Teorema Fundamental da Teoria de Galois","2026-10"],
+    ["pr2","Torneio de Derivadas do SIGMAT","2026-10"],
+    ["pr3","Pôster \"Limite Inverso de Grupos\" no III ENCPOS-MTM/UFSC","2026-10"],
+    ["pr4","Minicurso \"Uma Introdução à Teoria de Galois\" com João Vitor Roseira: texto em LaTeX","2026-12","doing"],
+    ["pr5","Página acadêmica: página de detalhe do minicurso, com os PDFs","2026-12"],
+    ["pr6","Manter o Lattes atualizado","2026-12"],
+    ["pr7","Escolher o tema de 2027 para J3M, SIGMAT e IV ENCPOS (com o Giuliano)","2027-03"],
+    ["pr19","Minicurso de Galois: propor a oferta no PRÓ-PET ou no SIGMAT","2027-04"],
+    ["pr8","X SIGMAT: inscrição e envio do resumo (datas a confirmar com o DEMAT)","2027-05"],
+    ["pr9","IV ENCPOS-MTM/UFSC: inscrição e submissão do resumo do pôster","2027-06"],
+    ["pr10","J3M/UFPR 2027: inscrição e resumo da palestra de 15 min","2027-06"],
+    ["pr11","EAIC 2027: resumo da IC de curvas","2027-08"],
+    ["pr12","Preparar slides e pôster das apresentações do 2º semestre","2027-08"],
+    ["pr13","Apresentação no X SIGMAT","2027-10"],
+    ["pr14","Torneio de Derivadas do X SIGMAT","2027-10"],
+    ["pr15","Pôster no IV ENCPOS-MTM/UFSC","2027-10"],
+    ["pr16","Apresentação no EAIC 2027","2027-10"],
+    ["pr17","Palestra de 15 min no J3M/UFPR","2027-11"],
+    ["pr18","Lattes e página acadêmica com as apresentações de 2027","2027-12"],
+    ["pr21","Inscrições e resumos dos eventos de 2028 (SIGMAT, EAIC, J3M)","2028-06"],
+    ["pr20","Apresentar o TCC/IC nos eventos de 2028","2028-10"]
+  ]},
+  { id: "elon", short: "Elon Lages Lima", title: "Competição Elon Lages Lima", sub: "Olimpíada universitária, 1ª fase da OBMU", c: "--k4", items: [
+    ["el1","Preparação para a prova","2026-11","doing"],
+    ["el2","Fazer a prova da 1ª fase","2026-11"],
+    ["el3","Registrar o resultado no Lattes","2026-12"],
+    ["el4","Treino 2027: uma prova antiga por semana","2027-03"],
+    ["el5","Elon 2027: pedir a inscrição a um professor do DEMAT (data a confirmar)","2027-09"],
+    ["el6","Prova da Elon 2027","2027-11"],
+    ["el7","Elon 2028, a última na graduação","2028-11"]
+  ]},
+  { id: "verao", short: "Verão 2027", title: "Verões de pós", sub: "Disciplinas de verão de pós em matemática (2027 e 2028)", c: "--k5", items: [
+    ["vr1","Inscrição no verão do ICMC-USP","2026-10","done"],
+    ["vr2","Inscrição no verão da UFSCar","2026-10","done"],
+    ["vr3","Cobrar as cartas da UFSCar (Giuliano e Wanderley) antes do prazo","2026-11","doing"],
+    ["vr4","Pedir bolsa ou auxílio no ICMC","2026-12"],
+    ["vr5","Unicamp: enviar só se não passar em São Carlos (falta a carta do orientador)","2026-12"],
+    ["vr8","Resultado dos verões: confirmar a vaga","2026-12"],
+    ["vr9","Viagem e moradia para o verão","2026-12"],
+    ["vr6","Álgebra Linear de verão remota da UFU, de manhã","2027-01"],
+    ["vr7","Banner final do curso, com uma seção do Washington","2027-02"],
+    ["vr11","Certificado e nota do verão no Lattes","2027-03"],
+    ["vr10","Inscrições nos verões de 2028 (ICMC, IMPA, UFSC)","2027-11"]
+  ]},
+  { id: "ext", short: "Extensão e PET", title: "Extensão, PET e PIC", sub: "Projetos de extensão, PRÓ-PET e tutoria do PIC OBMEP", c: "--k6", items: [
+    ["ex1","PIC OBMEP (Ciclo 8, Grupo 2): app web dos exercícios no GitHub Pages","2026-12","doing"],
+    ["ex2","OPMAT: aplicação de provas","2026-11","doing"],
+    ["ex3","Pensamento Matemático e Computacional (Python)","2026-12","doing"],
+    ["ex4","PRÓ-PET: seminário sobre inteiros gaussianos","2026-09","done"],
+    ["ex5","PRÓ-PET: carta de intenção para bolsista/voluntário","2026-10","done"],
+    ["ex6","Relatório de Práticas Extensionistas II (LaTeX)","2026-12"],
+    ["ex7","PIC: preencher os formulários (prazo 16/11)","2026-11"],
+    ["ex13","Decidir os projetos de 2027: no máximo dois além do PRÓ-PET","2027-02"],
+    ["ex8","PIC 2027: nova turma (premiados da OBMEP 2026)","2027-03"],
+    ["ex9","PRÓ-PET: seminário do 1º semestre","2027-05"],
+    ["ex11","Relatório de extensão de 2027-1","2027-07"],
+    ["ex10","PRÓ-PET: seminário do 2º semestre","2027-10"],
+    ["ex12","Relatório de extensão de 2027-2","2027-12"]
+  ]},
+  { id: "lang", short: "Idiomas", title: "Inglês e idiomas", sub: "Inglês B2 em 2027; segunda língua conforme o país-alvo", c: "--k7", items: [
+    ["lg1","LEMI: Introduction to Propositional Logic (28/10 a 18/11)","2026-11","doing"],
+    ["lg2","Teste de nivelamento e turma do Paraná Fala Inglês","2027-03"],
+    ["lg3","Ler um texto de matemática em inglês por semana","2027-03"],
+    ["lg4","Escrever o resumo da IC em inglês","2027-11"],
+    ["lg5","Chegar ao inglês B2","2027-12"],
+    ["lg6","Começar a 2ª língua: francês ou alemão, conforme o país-alvo","2027-08"],
+    ["lg8","Simulado de TOEFL ou IELTS para medir o nível","2028-03"],
+    ["lg7","TOEFL ≥ 90 ou IELTS ≥ 6,5","2030-03"]
+  ]},
+  { id: "grad", short: "Graduação", title: "Graduação e monitorias", sub: "Disciplinas, médias, monitorias e formatura (dez/2028)", c: "--k10", items: [
+    ["gr1","Fechar 2026-2: Física 1, Cálculo 3, Probabilidades e Pesquisa Operacional","2026-12","doing"],
+    ["gr2","Matrícula de 2027: Anéis e Corpos, Análise Real, EDO, Variáveis Complexas","2027-02"],
+    ["gr3","Edital de monitoria 2027-1 (Álgebra Linear 1 ou Discreta)","2027-03"],
+    ["gr4","Monitoria 2027-1: relatório e certificado","2027-07"],
+    ["gr7","Fechar 2027-1 com média ≥ 9","2027-07"],
+    ["gr5","Edital de monitoria 2027-2","2027-08"],
+    ["gr6","Monitoria 2027-2: relatório e certificado","2027-12"],
+    ["gr8","Fechar 2027-2 com média ≥ 9","2027-12"],
+    ["gr9","Conferir horas complementares e de extensão que faltam para formar","2028-03"],
+    ["gr12","Declaração de provável formando para as inscrições do mestrado","2028-09"],
+    ["gr10","Últimas disciplinas e pedido de colação de grau","2028-11"],
+    ["gr11","Formatura","2028-12"]
+  ]},
+  { id: "tcc", short: "TCC 2028", title: "TCC · 2028", sub: "Continuação natural da IC: corpos de funções e códigos AG", c: "--k9", items: [
+    ["tc1","Conversar com o Giuliano: o TCC continua a IC de curvas e códigos AG?","2027-09"],
+    ["tc2","Definir tema, orientador e título provisório","2027-12"],
+    ["tc3","Ler o regulamento do TCC: prazos, formato, banca","2028-02"],
+    ["tc4","Matrícula no TCC e termo de orientação","2028-03"],
+    ["tc5","Projeto: objetivos, sumário e cronograma","2028-03"],
+    ["tc6","Revisão bibliográfica (Stichtenoth, Fulton, artigos)","2028-04"],
+    ["tc7","Capítulos 1–2: preliminares (corpos de funções, divisores, Riemann–Roch)","2028-05"],
+    ["tc8","Capítulo 3: códigos AG e exemplos","2028-08"],
+    ["tc9","Exemplos computacionais no SageMath","2028-08"],
+    ["tc10","Versão completa para o orientador","2028-09"],
+    ["tc11","Revisão e entrega à banca","2028-10"],
+    ["tc12","Slides da defesa e ensaio","2028-11"],
+    ["tc13","Defesa do TCC","2028-11"],
+    ["tc14","Versão final corrigida e depósito","2028-12"]
+  ]},
+  { id: "pos", short: "Mestrado e doutorado", title: "Rumo ao mestrado e ao doutorado", sub: "Mestrado 2029–2030; doutorado no exterior a partir de 2031", c: "--k8", items: [
+    ["ps1","E-mail ao Tizziotti (UFU) sobre curvas e códigos AG","2026-10","done"],
+    ["ps2","Conversar com o Herivelto: onde orienta em 2029, tema e grupo de fora","2026-12"],
+    ["ps3","Média ≥ 9,5 e ≥ 9 em Anéis e Corpos, Análise Real, EDO e Variáveis Complexas","2027-12"],
+    ["ps4","Prova Extramuros valendo","2027-11"],
+    ["ps5","Checar direito a cidadania de algum país da UE","2027-06"],
+    ["ps6","Verão 2028: uma disciplina de Álgebra de mestrado","2028-02"],
+    ["ps18","Levantar os editais de mestrado de 2029: datas, provas e documentos","2028-04"],
+    ["ps7","Fechar orientador e começar o projeto de bolsa FAPESP","2028-06"],
+    ["ps8","Três cartas de recomendação combinadas","2028-07"],
+    ["ps9","Inscrições: Unicamp, ICMC, IMPA e UFU","2028-10"],
+    ["ps19","Prova Extramuros 2028 (seleção)","2028-11"],
+    ["ps20","Resultados e escolha do mestrado","2028-12"],
+    ["ps21","Bolsa do mestrado: CAPES, CNPq ou FAPESP","2029-01"],
+    ["ps10","Matrícula no mestrado","2029-03"],
+    ["ps11","Chamada BEPE de mestrado da FAPESP","2029-06"],
+    ["ps12","Escrever a 3–5 possíveis orientadores de doutorado","2029-10"],
+    ["ps13","Estágio de 3 a 6 meses no grupo-alvo","2030-04"],
+    ["ps14","Preprint da dissertação no arXiv","2030-09"],
+    ["ps15","Candidaturas de doutorado (6 a 10 lugares)","2030-11"],
+    ["ps16","Defesa do mestrado","2031-02"],
+    ["ps17","Início do doutorado","2031-08"]
+  ]}
+];
+
+/* Ligações de partida (cada uma vale nos dois sentidos) */
+const BASE_LINKS = [
+  ["ic1","ic2"],["ic2","ic3"],["ic3","ic4"],["ic1","pr4"],["pr1","pr4"],["ic1","cv4"],
+  ["cv1","cv2"],["cv3","cv6"],["cv5","vr7"],["cv6","vr1"],["cv7","cv8"],["cv7","ps1"],["cv7","ps2"],["cv4","ps2"],["cv4","lg4"],
+  ["vr3","ps8"],["vr5","ps9"],["vr1","ps6"],["vr4","ps7"],
+  ["pr1","pr6"],["pr3","pr6"],["el3","pr6"],["pr4","pr5"],["ex1","pr5"],["ex4","pr6"],
+  ["lg1","lg5"],["lg2","lg5"],["lg5","lg7"],["lg6","ps5"],["lg6","ps12"],["lg7","ps15"],
+  ["ps3","ps9"],["ps4","ps9"],["ps7","ps11"],["ps10","ps11"],["ps11","ps13"],["ps12","ps13"],["ps13","ps15"],["ps14","ps15"],["ps15","ps17"],["ps16","ps17"],
+  ["el1","ps4"],
+  ["ic1","ic5"],["ic3","ic6"],["ic7","pr6"],
+  ["cv4","cv9"],["cv9","cv13"],["cv13","cv14"],["cv14","cv15"],["cv10","cv11"],["cv5","cv11"],["cv8","cv16"],["cv11","pr7"],["cv13","pr11"],
+  ["pr7","pr8"],["pr7","pr9"],["pr7","pr10"],["pr8","pr13"],["pr9","pr15"],["pr10","pr17"],["pr11","pr16"],["pr12","pr13"],["pr12","pr15"],["pr12","pr17"],["pr13","pr14"],["pr2","pr14"],
+  ["pr13","pr18"],["pr15","pr18"],["pr16","pr18"],["pr17","pr18"],["pr4","pr19"],["ex9","pr19"],["pr21","pr20"],["pr20","tc8"],["pr3","pr15"],["cv3","pr17"],["lg4","pr11"],
+  ["el4","el5"],["el5","el6"],["el6","ps4"],["el6","el7"],
+  ["vr8","vr4"],["vr8","vr9"],["vr9","vr6"],["vr10","ps6"],["vr7","vr11"],
+  ["ex7","ex1"],["ex8","ex1"],["ex11","ex12"],["ex13","ex8"],["ex6","ex11"],
+  ["gr1","ps3"],["gr7","ps3"],["gr8","ps3"],["gr2","ps3"],["gr3","gr4"],["gr5","gr6"],["gr12","ps9"],["gr10","gr11"],["gr9","ex12"],
+  ["tc1","cv13"],["tc1","tc2"],["tc2","ps7"],["tc2","tc5"],["tc3","tc4"],["tc4","tc5"],["tc5","tc6"],["tc6","tc7"],["tc7","tc8"],["tc8","tc9"],["tc9","cv16"],["tc8","tc10"],["tc10","tc11"],["tc11","tc13"],["tc12","tc13"],["tc13","tc14"],["tc14","gr11"],["cv15","tc8"],
+  ["ps18","ps9"],["ps19","ps9"],["ps9","ps20"],["ps20","ps10"],["ps21","ps10"],["gr11","ps10"]
+];
+
+const KEY = "trajetoria-jvz-v1";
+const MONTHS = ["jan","fev","mar","abr","mai","jun","jul","ago","set","out","nov","dez"];
+const LABEL = { todo: "A fazer", doing: "Em andamento", done: "Feito" };
+const PHASES = { grad: ["0000-00", "2028-12", "Graduação"], mest: ["2029-01", "2031-02", "Mestrado"], dout: ["2031-03", "9999-99", "Doutorado"] };
+let state = load();
+const view = { area: null, status: "all", phase: null, q: "" };
+let current = null;
+
+function load() {
+  const empty = { status: {}, custom: {}, notes: {}, edits: {}, linksAdded: [], linksRemoved: [] };
+  try { const raw = localStorage.getItem(KEY); if (raw) return Object.assign(empty, JSON.parse(raw)); } catch (e) {}
+  return empty;
+}
+function save() { try { localStorage.setItem(KEY, JSON.stringify(state)); } catch (e) {} fillBackup(); }
+
+const esc = s => String(s ?? "").replace(/[&<>"]/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]));
+const fmtWhen = w => { if (!w) return "sem data"; const [y, m] = w.split("-"); return MONTHS[+m - 1] + "/" + y; };
+const pairKey = (a, b) => a < b ? a + "|" + b : b + "|" + a;
+const frontById = id => FRONTS.find(f => f.id === id);
+
+function allItems() {
+  const out = [];
+  FRONTS.forEach(f => {
+    f.items.forEach(([id, text, when, def]) => {
+      const e = state.edits[id] || {};
+      out.push({ id, front: f.id, text: e.text ?? text, when: e.when ?? when, origText: text, origWhen: when, def: def || "todo", custom: false });
+    });
+    (state.custom[f.id] || []).forEach(c => {
+      const e = state.edits[c.id] || {};
+      out.push({ id: c.id, front: f.id, text: e.text ?? c.text, when: e.when ?? c.when, origText: c.text, origWhen: c.when, def: "todo", custom: true });
+    });
+  });
+  return out;
+}
+let ITEMS = [], BY = {};
+function index() { ITEMS = allItems(); BY = Object.fromEntries(ITEMS.map(i => [i.id, i])); }
+const statusOf = it => state.status[it.id] || it.def;
+const phaseOf = w => !w ? null : Object.keys(PHASES).find(k => w >= PHASES[k][0] && w <= PHASES[k][1]);
+
+function linkSet() {
+  const s = new Set(BASE_LINKS.map(([a, b]) => pairKey(a, b)));
+  state.linksAdded.forEach(k => s.add(k));
+  state.linksRemoved.forEach(k => s.delete(k));
+  return [...s].map(k => k.split("|")).filter(([a, b]) => BY[a] && BY[b]);
+}
+function linksOf(id) { return linkSet().filter(([a, b]) => a === id || b === id).map(([a, b]) => a === id ? b : a); }
+
+function matches(it) {
+  const s = statusOf(it);
+  if (view.area && it.front !== view.area) return false;
+  if (view.status === "open" && s === "done") return false;
+  if ((view.status === "doing" || view.status === "done") && s !== view.status) return false;
+  if (view.phase && phaseOf(it.when) !== view.phase) return false;
+  if (view.q) {
+    const q = view.q.toLowerCase();
+    const hay = (it.text + " " + (state.notes[it.id] || "") + " " + frontById(it.front).title).toLowerCase();
+    if (!hay.includes(q)) return false;
+  }
+  return true;
+}
+
+function render() {
+  index();
+  const links = linkSet();
+
+  /* Totais */
+  const done = ITEMS.filter(i => statusOf(i) === "done").length;
+  const pct = ITEMS.length ? Math.round(done / ITEMS.length * 100) : 0;
+  document.getElementById("overallPct").textContent = pct + "%";
+  document.getElementById("overallBar").style.width = pct + "%";
+  document.getElementById("overallCount").textContent = `${done} de ${ITEMS.length} itens · ${links.length} ligações`;
+
+  /* Etapas */
+  Object.keys(PHASES).forEach(k => {
+    const its = ITEMS.filter(i => phaseOf(i.when) === k);
+    document.getElementById("ph-" + k).textContent = `${its.filter(i => statusOf(i) === "done").length}/${its.length}`;
+    document.querySelector(`.seg[data-phase="${k}"]`).setAttribute("aria-pressed", view.phase === k ? "true" : "false");
+  });
+
+  /* Chips de área */
+  const ac = document.getElementById("areaChips");
+  ac.innerHTML = `<button class="chip" type="button" data-area="" aria-pressed="${!view.area}">Todas as áreas</button>` +
+    FRONTS.map(f => {
+      const its = ITEMS.filter(i => i.front === f.id);
+      const open = its.filter(i => statusOf(i) !== "done").length;
+      return `<button class="chip" type="button" data-area="${f.id}" aria-pressed="${view.area === f.id}" style="--c:var(${f.c})"><i class="dot"></i>${esc(f.short)}<span class="n">${open}</span></button>`;
+    }).join("");
+  document.querySelectorAll("#statusChips .chip").forEach(c => c.setAttribute("aria-pressed", c.dataset.f === view.status ? "true" : "false"));
+
+  /* Frentes */
+  const root = document.getElementById("fronts");
+  root.classList.toggle("single", !!view.area);
+  let shownTotal = 0;
+  root.innerHTML = FRONTS.filter(f => !view.area || f.id === view.area).map(f => {
+    const its = ITEMS.filter(i => i.front === f.id);
+    const shown = its.filter(matches).sort((a, b) => (a.when || "9999").localeCompare(b.when || "9999"));
+    shownTotal += shown.length;
+    if (!shown.length && (view.phase || view.q || view.status !== "all") && !view.area) return "";
+    const nDone = its.filter(i => statusOf(i) === "done").length;
+    const p = its.length ? Math.round(nDone / its.length * 100) : 0;
+    return `<article class="front" style="--c:var(${f.c})" id="front-${f.id}">
+      <div class="front-head">
+        <h3><button class="linklike" type="button" data-area="${f.id}" title="Ver só esta área">${esc(f.title)}</button></h3>
+        <p>${esc(f.sub)}</p>
+      </div>
+      <div class="front-meta"><div class="bar"><span style="width:${p}%"></span></div><span>${nDone}/${its.length}</span></div>
+      <ul class="items">${shown.length ? shown.map(it => itemRow(it)).join("") : `<li class="empty">Nada neste filtro.</li>`}</ul>
+      <form class="add" data-front="${f.id}">
+        <input type="text" id="add-${f.id}" placeholder="Novo item nesta área" aria-label="Novo item em ${esc(f.title)}" required>
+        <input type="month" id="when-${f.id}" aria-label="Mês">
+        <button class="btn" type="submit">Adicionar</button>
+      </form>
+    </article>`;
+  }).join("") || `<p class="empty">Nenhum item com esses filtros.</p>`;
+
+  const filtered = view.area || view.phase || view.q || view.status !== "all";
+  document.getElementById("showing").textContent = filtered ? `Mostrando ${shownTotal} de ${ITEMS.length} itens` : `${ITEMS.length} itens em ${FRONTS.length} áreas`;
+  document.getElementById("clearAll").hidden = !filtered;
+
+  /* Próximos passos (respeitam área e etapa) */
+  const pend = ITEMS.filter(i => statusOf(i) !== "done" && (!view.area || i.front === view.area) && (!view.phase || phaseOf(i.when) === view.phase))
+    .sort((a, b) => (a.when || "9999").localeCompare(b.when || "9999") || (statusOf(a) === "doing" ? -1 : 1));
+  const scope = [view.area && frontById(view.area).short, view.phase && PHASES[view.phase][2]].filter(Boolean).join(" · ");
+  document.getElementById("nextScope").textContent = scope || "todas as áreas";
+  document.getElementById("nextList").innerHTML = pend.slice(0, 6).map(p => {
+    const f = frontById(p.front);
+    return `<li><button type="button" data-open="${p.id}" style="--c:var(${f.c})">
+      <i class="st" data-s="${statusOf(p)}" style="width:14px;height:14px;pointer-events:none"></i>
+      <span class="t">${esc(p.text)}<small>${esc(f.short)}</small></span>
+      <span class="when">${fmtWhen(p.when)}</span></button></li>`;
+  }).join("") || `<li class="empty">Nada pendente aqui.</li>`;
+
+  drawMap(links);
+  renderGoals();
+}
+
+function itemRow(it) {
+  const s = statusOf(it);
+  const ls = linksOf(it.id).map(id => BY[id]);
+  const chips = ls.slice(0, 4).map(o => {
+    const f = frontById(o.front);
+    return `<button type="button" class="lk" data-jump="${o.id}" style="--c:var(${f.c})" title="Ir para: ${esc(o.text)}"><i class="dot"></i><span>${esc(o.text.length > 34 ? o.text.slice(0, 32) + "…" : o.text)}</span></button>`;
+  }).join("") + (ls.length > 4 ? `<button type="button" class="lk" data-open="${it.id}">+${ls.length - 4}</button>` : "");
+  return `<li class="item ${s}" id="it-${it.id}">
+    <button class="st" type="button" data-cycle="${it.id}" data-s="${s}" aria-label="${esc(it.text)}: ${LABEL[s]}. Clique para mudar." title="${LABEL[s]} · clique para mudar"></button>
+    <div class="body">
+      <button class="linklike open" type="button" data-open="${it.id}">${esc(it.text)}${state.notes[it.id] ? ' <span class="note-mark" title="Tem notas">✎</span>' : ""}</button>
+      ${chips ? `<div class="links">${chips}</div>` : ""}
+    </div>
+    <span class="when">${fmtWhen(it.when)}</span>
+  </li>`;
+}
+
+/* Mapa das áreas */
+function drawMap(links) {
+  const svg = document.getElementById("map");
+  const W = 440, H = 300, cx = W / 2, cy = H / 2 + 6, R = 108;
+  const NAME = { ic: "IC 2026", curvas: "Curvas", prod: "Produção", elon: "Elon Lages", verao: "Verão 2027", ext: "Extensão", lang: "Idiomas", pos: "Pós-graduação", tcc: "TCC 2028", grad: "Graduação" };
+  const pos = {};
+  FRONTS.forEach((f, i) => { const a = -Math.PI / 2 + i * 2 * Math.PI / FRONTS.length; pos[f.id] = [cx + R * Math.cos(a) * 1.05, cy + R * Math.sin(a)]; });
+  const count = {};
+  links.forEach(([a, b]) => { const fa = BY[a].front, fb = BY[b].front; if (fa !== fb) { const k = pairKey(fa, fb); count[k] = (count[k] || 0) + 1; } });
+  let edges = "";
+  Object.entries(count).forEach(([k, n]) => {
+    const [a, b] = k.split("|"); const [x1, y1] = pos[a], [x2, y2] = pos[b];
+    const on = view.area && (a === view.area || b === view.area);
+    edges += `<line class="edge ${on ? "on" : ""}" x1="${x1}" y1="${y1}" x2="${x2}" y2="${y2}" stroke-width="${1.5 + n * 1.2}" ${view.area && !on ? 'opacity="0.35"' : ""}><title>${frontById(a).short} ↔ ${frontById(b).short}: ${n} ligação(ões)</title></line>`;
+    if (on) edges += `<text class="edge-label" x="${(x1 + x2) / 2}" y="${(y1 + y2) / 2 - 3}" text-anchor="middle">${n}</text>`;
+  });
+  const nodes = FRONTS.map(f => {
+    const [x, y] = pos[f.id];
+    const its = ITEMS.filter(i => i.front === f.id);
+    const d = its.filter(i => statusOf(i) === "done").length;
+    const anchor = x < cx - 20 ? "end" : x > cx + 20 ? "start" : "middle";
+    const tx = anchor === "end" ? x - 18 : anchor === "start" ? x + 18 : x;
+    const ty = anchor === "middle" ? (y < cy ? y - 30 : y + 28) : y - 2;
+    return `<g class="node ${view.area === f.id ? "sel" : ""}" data-area="${f.id}" tabindex="0" role="button" aria-label="${esc(f.title)}: ${d} de ${its.length} feitos">
+      <circle cx="${x}" cy="${y}" r="12" style="stroke:var(${f.c})"></circle>
+      <text x="${tx}" y="${ty}" text-anchor="${anchor}">${esc(NAME[f.id])}</text>
+      <text class="cnt" x="${tx}" y="${ty + 13}" text-anchor="${anchor}">${d}/${its.length} feitos</text>
+    </g>`;
+  }).join("");
+  svg.innerHTML = edges + nodes;
+}
+
+/* Navegação entre itens */
+function jumpTo(id) {
+  const it = BY[id]; if (!it) return;
+  const el0 = document.getElementById("it-" + id);
+  if (!el0) { view.area = it.front; view.status = "all"; view.phase = null; view.q = ""; document.getElementById("search").value = ""; render(); }
+  const el = document.getElementById("it-" + id);
+  if (!el) return;
+  el.scrollIntoView({ behavior: matchMedia("(prefers-reduced-motion: reduce)").matches ? "auto" : "smooth", block: "center" });
+  el.classList.add("flash"); setTimeout(() => el.classList.remove("flash"), 1400);
+  const b = el.querySelector(".open"); if (b) b.focus({ preventScroll: true });
+}
+
+/* Painel de detalhe */
+const dlg = document.getElementById("dlg");
+function openItem(id) {
+  index(); const it = BY[id]; if (!it) return;
+  current = id;
+  const f = frontById(it.front);
+  const area = document.getElementById("dArea");
+  area.innerHTML = `<i class="dot"></i>${esc(f.title)}`; area.style.setProperty("--c", `var(${f.c})`);
+  document.getElementById("dTitle").value = it.text;
+  document.getElementById("dWhen").value = it.when || "";
+  document.getElementById("dPhase").value = it.when ? PHASES[phaseOf(it.when)][2] : "—";
+  document.getElementById("dNotes").value = state.notes[id] || "";
+  document.getElementById("dDelete").hidden = !it.custom;
+  document.getElementById("dReset").hidden = it.custom || (it.text === it.origText && it.when === it.origWhen);
+  paintDlgStatus(); paintDlgLinks(); paintItemGoals();
+  if (!dlg.open) { try { dlg.showModal(); } catch (e) { dlg.setAttribute("open", ""); } }
+}
+function paintDlgStatus() {
+  const s = statusOf(BY[current]);
+  document.querySelectorAll("#dStatus button").forEach(b => b.setAttribute("aria-pressed", b.dataset.s === s ? "true" : "false"));
+}
+function paintDlgLinks() {
+  const ls = linksOf(current).map(id => BY[id]);
+  document.getElementById("dLinks").innerHTML = ls.map(o => {
+    const f = frontById(o.front);
+    return `<li style="--c:var(${f.c})"><i class="dot"></i>
+      <button type="button" class="linklike" data-dgo="${o.id}">${esc(o.text)} <span class="muted" style="font-size:.8rem">· ${esc(f.short)} · ${fmtWhen(o.when)}</span></button>
+      <button type="button" class="x" data-unlink="${o.id}" aria-label="Desfazer ligação com ${esc(o.text)}">✕</button></li>`;
+  }).join("") || `<li class="muted" style="grid-template-columns:1fr">Nenhuma ligação ainda.</li>`;
+  const linked = new Set(ls.map(o => o.id).concat(current));
+  document.getElementById("dLinkSel").innerHTML = `<option value="">Ligar a outro item…</option>` + FRONTS.map(f =>
+    `<optgroup label="${esc(f.short)}">${ITEMS.filter(i => i.front === f.id && !linked.has(i.id)).map(i => `<option value="${i.id}">${esc(i.text)}</option>`).join("")}</optgroup>`).join("");
+}
+function setEdit(field, value) {
+  const it = BY[current];
+  const e = state.edits[current] = state.edits[current] || {};
+  const orig = field === "text" ? it.origText : it.origWhen;
+  if (value === orig) delete e[field]; else e[field] = value;
+  if (!Object.keys(e).length) delete state.edits[current];
+  save();
+}
+
+dlg.addEventListener("close", () => { current = null; render(); if (curView === "dia") renderDay(); });
+dlg.addEventListener("click", e => { if (e.target === dlg) dlg.close(); });
+document.getElementById("dTitle").addEventListener("input", e => { if (current && e.target.value.trim()) setEdit("text", e.target.value.trim()); });
+document.getElementById("dWhen").addEventListener("change", e => {
+  if (!current) return; setEdit("when", e.target.value); index();
+  document.getElementById("dPhase").value = e.target.value ? PHASES[phaseOf(e.target.value)][2] : "—";
+});
+document.getElementById("dNotes").addEventListener("input", e => {
+  if (!current) return; const v = e.target.value; if (v.trim()) state.notes[current] = v; else delete state.notes[current]; save();
+});
+document.getElementById("dStatus").addEventListener("click", e => {
+  const b = e.target.closest("button[data-s]"); if (!b || !current) return;
+  state.status[current] = b.dataset.s; save(); index(); paintDlgStatus();
+});
+document.getElementById("dLinkAdd").addEventListener("click", () => {
+  const v = document.getElementById("dLinkSel").value; if (!v || !current) return;
+  const k = pairKey(current, v);
+  state.linksRemoved = state.linksRemoved.filter(x => x !== k);
+  if (!BASE_LINKS.some(([a, b]) => pairKey(a, b) === k) && !state.linksAdded.includes(k)) state.linksAdded.push(k);
+  save(); paintDlgLinks();
+});
+document.getElementById("dLinks").addEventListener("click", e => {
+  const go = e.target.closest("[data-dgo]");
+  if (go) { const id = go.dataset.dgo; openItem(id); return; }
+  const un = e.target.closest("[data-unlink]");
+  if (un) {
+    const k = pairKey(current, un.dataset.unlink);
+    state.linksAdded = state.linksAdded.filter(x => x !== k);
+    if (BASE_LINKS.some(([a, b]) => pairKey(a, b) === k) && !state.linksRemoved.includes(k)) state.linksRemoved.push(k);
+    save(); paintDlgLinks();
+  }
+});
+document.getElementById("dArea").addEventListener("click", () => { const f = BY[current].front; dlg.close(); location.hash = "objetivos"; setView({ area: f }); });
+document.getElementById("dReset").addEventListener("click", () => { delete state.edits[current]; save(); openItem(current); });
+let delArmed = false;
+document.getElementById("dDelete").addEventListener("click", e => {
+  if (!delArmed) { delArmed = true; e.target.textContent = "Clique de novo para remover"; setTimeout(() => { delArmed = false; e.target.textContent = "Remover item"; }, 3500); return; }
+  const it = BY[current]; delArmed = false; e.target.textContent = "Remover item";
+  state.custom[it.front] = (state.custom[it.front] || []).filter(c => c.id !== it.id);
+  ["status", "notes", "edits"].forEach(k => delete state[k][it.id]);
+  state.linksAdded = state.linksAdded.filter(k => !k.split("|").includes(it.id));
+  save(); dlg.close();
+});
+
+/* Cliques gerais */
+function setView(patch) { Object.assign(view, patch); render(); document.getElementById("areaChips").scrollIntoView({ block: "nearest" }); }
+document.addEventListener("click", e => {
+  if ((dlg.open && dlg.contains(e.target)) || (gdlg.open && gdlg.contains(e.target)) || (edlg.open && edlg.contains(e.target))) return;
+  const cyc = e.target.closest("[data-cycle]");
+  if (cyc) {
+    const id = cyc.dataset.cycle; const order = ["todo", "doing", "done"];
+    state.status[id] = order[(order.indexOf(cyc.dataset.s) + 1) % 3]; save(); render();
+    const again = document.querySelector(`[data-cycle="${id}"]`); if (again) again.focus(); return;
+  }
+  const op = e.target.closest("[data-open]"); if (op) { openItem(op.dataset.open); return; }
+  const jp = e.target.closest("[data-jump]"); if (jp) { jumpTo(jp.dataset.jump); return; }
+  const ar = e.target.closest("[data-area]");
+  if (ar) { const a = ar.dataset.area || null; setView({ area: view.area === a ? null : a }); return; }
+  const ph = e.target.closest("[data-phase]");
+  if (ph) { const p = ph.dataset.phase; setView({ phase: view.phase === p ? null : p }); return; }
+  const sc = e.target.closest("#statusChips .chip"); if (sc) { setView({ status: sc.dataset.f }); return; }
+});
+document.getElementById("map").addEventListener("keydown", e => {
+  const n = e.target.closest(".node"); if (n && (e.key === "Enter" || e.key === " ")) { e.preventDefault(); const a = n.dataset.area; setView({ area: view.area === a ? null : a }); }
+});
+document.getElementById("overallBtn").addEventListener("click", () => setView({ status: view.status === "open" ? "all" : "open" }));
+document.getElementById("clearAll").addEventListener("click", () => { document.getElementById("search").value = ""; setView({ area: null, status: "all", phase: null, q: "" }); });
+document.getElementById("search").addEventListener("input", e => { view.q = e.target.value.trim(); render(); });
+document.addEventListener("submit", e => {
+  const form = e.target.closest("form.add"); if (!form) return;
+  e.preventDefault();
+  const f = form.dataset.front;
+  const text = form.querySelector('input[type="text"]').value.trim();
+  const when = form.querySelector('input[type="month"]').value;
+  if (!text) return;
+  (state.custom[f] = state.custom[f] || []).push({ id: "c" + Date.now(), text, when });
+  save(); render();
+  const inp = document.getElementById("add-" + f); if (inp) inp.focus();
+});
+
+/* Backup */
+function fillBackup() { document.getElementById("backupBox").value = JSON.stringify(state); }
+const msg = t => { const m = document.getElementById("backupMsg"); m.textContent = t; setTimeout(() => { m.textContent = ""; }, 4000); };
+document.getElementById("btnCopy").addEventListener("click", () => {
+  const box = document.getElementById("backupBox");
+  (navigator.clipboard ? navigator.clipboard.writeText(box.value) : Promise.reject())
+    .then(() => msg("Backup copiado.")).catch(() => { box.focus(); box.select(); msg("Texto selecionado: copie com Ctrl+C."); });
+});
+document.getElementById("btnRestore").addEventListener("click", () => {
+  try {
+    const s = JSON.parse(document.getElementById("backupBox").value);
+    if (!s || typeof s !== "object") throw 0;
+    state = Object.assign({ status: {}, custom: {}, notes: {}, edits: {}, linksAdded: [], linksRemoved: [] }, s);
+    save(); render(); renderDay(); msg("Tudo restaurado.");
+  } catch (e) { msg("Esse texto não é um backup válido. Cole o texto copiado por \"Copiar backup\"."); }
+});
+let resetArmed = false;
+document.getElementById("btnReset").addEventListener("click", e => {
+  if (!resetArmed) { resetArmed = true; e.target.textContent = "Clique de novo para confirmar"; setTimeout(() => { resetArmed = false; e.target.textContent = "Voltar ao estado inicial"; }, 4000); return; }
+  state = { status: {}, custom: {}, notes: {}, edits: {}, linksAdded: [], linksRemoved: [] };
+  save(); render(); renderDay(); resetArmed = false; e.target.textContent = "Voltar ao estado inicial"; msg("Progresso apagado.");
+});
+
+/* ===== Objetivos ===== */
+const GOALS = [
+  ["g1","month","2026-11","Fechar o relatório final da IC",["ic1"]],
+  ["g2","month","2026-11","Fazer bem as apresentações de novembro: Conjuntos Algébricos e Bézout",["cv2","cv3"]],
+  ["g3","month","2026-11","Garantir as cartas e as inscrições do verão",["vr3"]],
+  ["g4","month","2026-11","Fazer a prova da Elon Lages Lima",["el1","el2"]],
+  ["g5","month","2026-11","Terminar o curso de lógica em inglês (LEMI)",["lg1"]],
+  ["g6","month","2026-12","Entregar o plano da IC 2027 e conversar com o Herivelto",["cv4","ps2","cv1"]],
+  ["g7","month","2026-12","Fechar a extensão do semestre com o relatório",["ex1","ex3","ex6"]],
+  ["g8","month","2026-12","Lattes e página acadêmica em dia",["pr6","pr5","el3"]],
+  ["g9","month","2026-12","Resolver o verão: auxílio do ICMC e decisão sobre a Unicamp",["vr4","vr5"]],
+  ["g10","month","2026-12","Avançar o texto do minicurso de Galois",["pr4"]],
+  ["g11","sem","2026-2","Encerrar a IC de Sylow com relatório e apresentações",["ic1","ic2","ic3","ic4"]],
+  ["g12","sem","2026-2","Fechar as disciplinas do semestre com nota ≥ 9",[]],
+  ["g13","sem","2026-2","Começar curvas algébricas pelo Fulton",["cv1","cv2","cv3"]],
+  ["g14","sem","2027-1","Verão em São Carlos com bom desempenho",["vr6","vr7"]],
+  ["g15","sem","2027-1","IC 2027 rodando: Washington e Stichtenoth",["cv5","cv6","cv7"]],
+  ["g16","sem","2027-1","Entrar no Paraná Fala Inglês e ler matemática em inglês toda semana",["lg2","lg3"]],
+  ["g17","sem","2027-2","Prova Extramuros e notas do núcleo",["ps4","ps3"]],
+  ["g18","sem","2027-2","Começar a segunda língua",["lg6"]],
+  ["g19","year","2026","Concluir e apresentar a primeira IC",["ic1","ic2","ic3","ic4","pr1","pr3"]],
+  ["g20","year","2026","Primeiro contato com a área de curvas",["ps1","ps2","cv1"]],
+  ["g21","year","2027","Inglês B2",["lg5"]],
+  ["g22","year","2027","IC em curvas sobre corpos finitos e códigos AG",["cv4","cv7","cv8"]],
+  ["g23","year","2027","Cursar uma disciplina de pós num verão",["vr6","vr7"]],
+  ["g24","year","2027","Média ≥ 9,5",["ps3"]],
+  ["g25","year","2028","Aprovação num mestrado forte, com orientador definido",["ps6","ps7","ps8","ps9"]],
+  ["g26","stage","grad","Sair da graduação com IC em curvas, inglês B2 e vaga num mestrado forte",["cv7","lg5","ps9"]],
+  ["g27","stage","mest","Estágio no exterior e dissertação virando preprint",["ps11","ps13","ps14"]],
+  ["g28","stage","dout","Doutorado no exterior em curvas e códigos",["ps15","ps17"]],
+  ["g29","month","2026-11","Provas de novembro: PO (24), Física (27), Cálculo (30) e Probabilidade (3/12)",["gr1"]],
+  ["g30","month","2026-11","Formulários do PIC e relatório da IC enviados no prazo",["ex7","ic5","ic6"]],
+  ["g31","month","2027-01","Verão: acompanhar o curso todo dia e seguir no Washington",["vr6","cv5"]],
+  ["g32","month","2027-02","Fechar o verão e organizar 2027 (matrícula e projetos)",["vr7","gr2","ex13","cv6"]],
+  ["g33","month","2027-03","Começar 2027 com rotina: monitoria, inglês, caderno de IC e tema dos eventos",["gr3","lg2","cv10","ex8","pr7"]],
+  ["g34","month","2027-04","Submeter o projeto da IC 2027–28",["cv9","pr19"]],
+  ["g35","month","2027-05","SIGMAT: inscrição e resumo enviados",["pr8","ex9","cv12"]],
+  ["g36","month","2027-06","J3M e IV ENCPOS: inscrições e resumos enviados",["pr9","pr10","cv7"]],
+  ["g37","month","2027-07","Fechar o 1º semestre e os relatórios",["gr7","gr4","ex11"]],
+  ["g38","month","2027-08","Resumo do EAIC e material das apresentações prontos",["pr11","pr12","cv13","gr5"]],
+  ["g39","month","2027-09","Abrir a conversa do TCC e a Elon 2027",["tc1","cv16","el5"]],
+  ["g40","month","2027-10","Mês das apresentações: SIGMAT, IV ENCPOS e EAIC",["pr13","pr14","pr15","pr16"]],
+  ["g41","month","2027-11","J3M, Extramuros e inscrições nos verões de 2028",["pr17","ps4","vr10","el6"]],
+  ["g42","month","2027-12","Tema do TCC definido e Lattes em dia",["tc2","pr18","gr8","gr6"]],
+  ["g43","sem","2027-1","Inscrever e submeter trabalhos para SIGMAT, J3M e IV ENCPOS",["pr7","pr8","pr9","pr10"]],
+  ["g44","sem","2027-2","Apresentar em SIGMAT, EAIC, IV ENCPOS e J3M",["pr13","pr15","pr16","pr17"]],
+  ["g45","sem","2028-1","Projeto e primeiros capítulos do TCC",["tc3","tc4","tc5","tc6","tc7"]],
+  ["g46","sem","2028-2","Defender o TCC e fazer as inscrições do mestrado",["tc10","tc11","tc13","ps9"]],
+  ["g47","year","2028","Concluir o TCC e formar",["tc13","tc14","gr11"]],
+  ["g48","year","2027","Quatro apresentações em eventos",["pr13","pr15","pr16","pr17"]],
+  ["g49","month","2028-03","Projeto do TCC aprovado pelo orientador",["tc4","tc5","gr9"]],
+  ["g50","month","2028-09","Versão completa do TCC e documentos do mestrado prontos",["tc10","gr12"]],
+  ["g51","month","2028-10","Inscrições do mestrado e TCC na banca",["ps9","tc11"]],
+  ["g52","month","2028-11","Defesa do TCC e Extramuros",["tc12","tc13","ps19"]],
+  ["g53","month","2028-12","Formatura e escolha do mestrado",["tc14","gr11","ps20"]]
+];
+const HZ = { month: "Mês", sem: "Semestre", year: "Ano", stage: "Etapa" };
+const MONTHS_FULL = ["janeiro","fevereiro","março","abril","maio","junho","julho","agosto","setembro","outubro","novembro","dezembro"];
+const STAGES = ["grad", "mest", "dout"];
+const gview = { h: "month", p: null };
+let gcur = null;
+
+function GS() {
+  state.goals = Object.assign({ custom: [], edits: {}, removed: [], links: {}, manual: {}, notes: {} }, state.goals || {});
+  return state.goals;
+}
+function nowKey(h) {
+  const d = new Date(), y = d.getFullYear(), m = d.getMonth() + 1;
+  if (h === "month") return y + "-" + String(m).padStart(2, "0");
+  if (h === "sem") return y + "-" + (m <= 6 ? 1 : 2);
+  if (h === "year") return String(y);
+  return phaseOf(y + "-" + String(m).padStart(2, "0")) || "grad";
+}
+function periodLabel(h, p) {
+  if (h === "month") { const [y, m] = p.split("-"); return MONTHS_FULL[+m - 1] + " de " + y; }
+  if (h === "sem") { const [y, s] = p.split("-"); return s + "º semestre de " + y; }
+  if (h === "year") return p;
+  return PHASES[p][2];
+}
+function stepPeriod(h, p, d) {
+  if (h === "month") { let [y, m] = p.split("-").map(Number); m += d; if (m < 1) { m = 12; y--; } if (m > 12) { m = 1; y++; } return y + "-" + String(m).padStart(2, "0"); }
+  if (h === "sem") { let [y, s] = p.split("-").map(Number); s += d; if (s < 1) { s = 2; y--; } if (s > 2) { s = 1; y++; } return y + "-" + s; }
+  if (h === "year") return String(+p + d);
+  const i = Math.min(2, Math.max(0, STAGES.indexOf(p) + d)); return STAGES[i];
+}
+function inPeriod(when, h, p) {
+  if (!when) return false;
+  if (h === "month") return when === p;
+  if (h === "sem") { const [y, s] = p.split("-"); const m = +when.slice(5, 7); return when.startsWith(y) && (s === "1" ? m <= 6 : m >= 7); }
+  if (h === "year") return when.startsWith(p);
+  return phaseOf(when) === p;
+}
+function periodContains(h, p, h2, p2) {
+  /* o período (h2,p2), mais curto, cai dentro de (h,p)? */
+  const first = h2 === "month" ? p2 : h2 === "sem" ? p2.slice(0, 4) + (p2.endsWith("1") ? "-01" : "-07") : h2 === "year" ? p2 + "-01" : null;
+  return first ? inPeriod(first, h, p) : false;
+}
+function goalsAll() {
+  const g = GS(); const out = [];
+  GOALS.forEach(([id, h, p, text, items]) => {
+    if (g.removed.includes(id)) return;
+    const e = g.edits[id] || {};
+    out.push({ id, h: e.h || h, p: e.p || p, text: e.text || text, items: g.links[id] || items, custom: false });
+  });
+  g.custom.forEach(c => { const e = g.edits[c.id] || {}; out.push({ id: c.id, h: e.h || c.h, p: e.p || c.p, text: e.text || c.text, items: g.links[c.id] || [], custom: true }); });
+  out.forEach(o => { o.items = o.items.filter(i => BY[i]); });
+  return out;
+}
+function goalProgress(go) {
+  const g = GS(); const man = g.manual[go.id];
+  if (go.items.length) {
+    const d = go.items.filter(i => statusOf(BY[i]) === "done").length;
+    const any = go.items.some(i => statusOf(BY[i]) === "doing");
+    const st = man === "done" || d === go.items.length ? "done" : (d || any) ? "doing" : "todo";
+    return { d, n: go.items.length, pct: st === "done" ? 1 : d / go.items.length, st };
+  }
+  const st = man || "todo";
+  return { d: st === "done" ? 1 : 0, n: 1, pct: st === "done" ? 1 : st === "doing" ? 0.5 : 0, st, manualOnly: true };
+}
+function ring(pr) {
+  const C = 2 * Math.PI * 15;
+  const txt = pr.manualOnly ? (pr.st === "done" ? "✓" : pr.st === "doing" ? "½" : "") : (pr.st === "done" ? "✓" : `${pr.d}/${pr.n}`);
+  return `<svg viewBox="0 0 36 36" aria-hidden="true"><circle class="trk" cx="18" cy="18" r="15"></circle><circle class="val" cx="18" cy="18" r="15" stroke-dasharray="${(pr.pct * C).toFixed(1)} ${C.toFixed(1)}"></circle></svg><span>${txt}</span>`;
+}
+function itemChip(o) {
+  const f = frontById(o.front);
+  return `<button type="button" class="lk" data-open="${o.id}" style="--c:var(${f.c})" title="${esc(o.text)} · ${LABEL[statusOf(o)]}"><i class="st" data-s="${statusOf(o)}" style="width:10px;height:10px;border-width:2px;pointer-events:none"></i><span>${esc(o.text.length > 34 ? o.text.slice(0, 32) + "…" : o.text)}</span></button>`;
+}
+
+function renderGoals() {
+  if (!gview.p) gview.p = nowKey(gview.h);
+  const all = goalsAll();
+  document.querySelectorAll("#gTabs button").forEach(b => b.setAttribute("aria-selected", b.dataset.h === gview.h ? "true" : "false"));
+  document.getElementById("gLabel").textContent = periodLabel(gview.h, gview.p);
+  const isNow = gview.p === nowKey(gview.h);
+  document.getElementById("gNow").hidden = isNow;
+  const list = all.filter(g => g.h === gview.h && g.p === gview.p);
+  const prs = list.map(goalProgress);
+  const doneN = prs.filter(p => p.st === "done").length;
+
+  /* Resumo + objetivos menores dentro deste período */
+  const order = ["month", "sem", "year", "stage"];
+  const inner = order.slice(0, order.indexOf(gview.h)).map(h2 => {
+    const sub = all.filter(g => g.h === h2 && (gview.h === "stage" ? (h2 === "year" ? ["01", "07"].some(mm => phaseOf(g.p + "-" + mm) === gview.p) : inPeriod(h2 === "month" ? g.p : g.p.slice(0, 4) + (g.p.endsWith("1") ? "-01" : "-07"), "stage", gview.p)) : periodContains(gview.h, gview.p, h2, g.p)));
+    if (!sub.length) return "";
+    const sd = sub.filter(g => goalProgress(g).st === "done").length;
+    return `<button type="button" class="linklike" data-gswitch="${h2}">${sub.length} ${({month:"mensais",sem:"semestrais",year:"anuais"})[h2]} (${sd} cumpridos)</button>`;
+  }).filter(Boolean);
+  document.getElementById("gSum").innerHTML =
+    `<span>${list.length ? `${doneN} de ${list.length} objetivos cumpridos${isNow ? " · período atual" : ""}` : "Nenhum objetivo neste período ainda."}</span>` +
+    (inner.length ? `<span>Dentro deste período: ${inner.join(" · ")}</span>` : "");
+
+  document.getElementById("gList").innerHTML = list.map((g, i) => {
+    const pr = prs[i];
+    const label = pr.manualOnly ? `${LABEL[pr.st]} · clique para mudar` : `${pr.d} de ${pr.n} itens feitos`;
+    return `<li class="goal ${pr.st}">
+      <button type="button" class="ring ${pr.st}" ${pr.manualOnly ? `data-gcycle="${g.id}"` : `data-gopen="${g.id}"`} aria-label="${esc(g.text)}: ${label}" title="${label}">${ring(pr)}</button>
+      <div style="display:grid;gap:2px;min-width:0">
+        <button type="button" class="linklike gt" data-gopen="${g.id}">${esc(g.text)}${GS().notes[g.id] ? ' <span class="note-mark">✎</span>' : ""}</button>
+        <span class="gmeta">${pr.manualOnly ? "marcado à mão" : `${pr.d}/${pr.n} itens`}</span>
+      </div>
+      ${g.items.length ? `<div class="links">${g.items.map(id => itemChip(BY[id])).join("")}</div>` : ""}
+    </li>`;
+  }).join("") || `<li class="empty">Defina abaixo o que você quer cumprir em ${periodLabel(gview.h, gview.p)}. Os itens com prazo no período aparecem logo abaixo para ajudar.</li>`;
+
+  /* Itens com prazo neste período que ainda não estão em nenhum objetivo dele */
+  const covered = new Set(list.flatMap(g => g.items));
+  const due = ITEMS.filter(i => inPeriod(i.when, gview.h, gview.p) && statusOf(i) !== "done" && !covered.has(i.id))
+    .sort((a, b) => (a.when || "").localeCompare(b.when || ""));
+  document.getElementById("gDue").innerHTML = due.length
+    ? `<span class="eyebrow">Itens com prazo neste período fora dos objetivos (${due.length})</span><div class="links">${due.slice(0, 10).map(itemChip).join("")}${due.length > 10 ? `<span class="muted" style="font-size:.8rem">+${due.length - 10}</span>` : ""}</div>`
+    : "";
+}
+
+/* Painel do objetivo */
+const gdlg = document.getElementById("gdlg");
+function openGoal(id) {
+  index(); gcur = id;
+  const go = goalsAll().find(g => g.id === id); if (!go) return;
+  document.getElementById("gHz").textContent = HZ[go.h] + " · " + periodLabel(go.h, go.p);
+  document.getElementById("gTitle").value = go.text;
+  document.getElementById("gH").value = go.h;
+  paintPeriodInput(go.h, go.p);
+  document.getElementById("gNotes").value = GS().notes[id] || "";
+  paintGoalStatus(); paintGoalItems();
+  if (!gdlg.open) { try { gdlg.showModal(); } catch (e) { gdlg.setAttribute("open", ""); } }
+}
+function paintPeriodInput(h, p) {
+  const w = document.getElementById("gPWrap");
+  if (h === "month") { w.innerHTML = `<input type="month" id="gP" value="${p.length === 7 ? p : nowKey("month")}">`; return; }
+  let opts = [];
+  if (h === "sem") for (let y = 2025; y <= 2031; y++) opts.push(y + "-1", y + "-2");
+  if (h === "year") for (let y = 2025; y <= 2032; y++) opts.push(String(y));
+  if (h === "stage") opts = STAGES.slice();
+  if (!opts.includes(p)) p = nowKey(h);
+  w.innerHTML = `<select id="gP">${opts.map(o => `<option value="${o}" ${o === p ? "selected" : ""}>${periodLabel(h, o)}</option>`).join("")}</select>`;
+}
+function setGoalEdit(field, value) {
+  const g = GS(); const e = g.edits[gcur] = g.edits[gcur] || {}; e[field] = value; save();
+  const go = goalsAll().find(x => x.id === gcur);
+  document.getElementById("gHz").textContent = HZ[go.h] + " · " + periodLabel(go.h, go.p);
+}
+function paintGoalStatus() {
+  const go = goalsAll().find(g => g.id === gcur); const pr = goalProgress(go); const g = GS();
+  const w = document.getElementById("gStatusWrap");
+  if (go.items.length) {
+    w.innerHTML = `<span class="eyebrow">Progresso</span>
+      <div class="bar"><span style="width:${Math.round(pr.pct * 100)}%"></span></div>
+      <span class="muted" style="font-size:.9rem">${pr.d} de ${pr.n} itens feitos${pr.st === "done" && pr.d < pr.n ? " · marcado como cumprido" : ""}</span>
+      <label class="check"><input type="checkbox" id="gForce" ${g.manual[gcur] === "done" ? "checked" : ""}> Considerar cumprido mesmo sem todos os itens</label>`;
+  } else {
+    const s = g.manual[gcur] || "todo";
+    w.innerHTML = `<span class="eyebrow">Status</span><div class="seg3" role="group" aria-label="Status do objetivo">${["todo", "doing", "done"].map(k =>
+      `<button type="button" data-gs="${k}" data-s="${k}" aria-pressed="${s === k}"><i class="st" data-s="${k}" style="width:14px;height:14px"></i>${LABEL[k]}</button>`).join("")}</div>
+      <span class="muted" style="font-size:.85rem">Sem itens ligados, o status é marcado à mão. Ligando itens, o progresso passa a ser calculado.</span>`;
+  }
+}
+function paintGoalItems() {
+  const go = goalsAll().find(g => g.id === gcur);
+  document.getElementById("gItems").innerHTML = go.items.map(id => {
+    const o = BY[id]; const f = frontById(o.front);
+    return `<li style="--c:var(${f.c})"><i class="st" data-s="${statusOf(o)}" style="width:14px;height:14px;pointer-events:none"></i><i class="dot"></i>
+      <button type="button" class="linklike" data-gitem="${o.id}">${esc(o.text)} <span class="muted" style="font-size:.8rem">· ${esc(f.short)} · ${fmtWhen(o.when)}</span></button>
+      <button type="button" class="x" data-gunitem="${o.id}" aria-label="Tirar ${esc(o.text)} do objetivo">✕</button></li>`;
+  }).join("") || `<li class="muted" style="grid-template-columns:1fr">Nenhum item ainda.</li>`;
+  const has = new Set(go.items);
+  const sug = ITEMS.filter(i => !has.has(i.id) && inPeriod(i.when, go.h, go.p));
+  document.getElementById("gItemSel").innerHTML = `<option value="">Adicionar item…</option>` +
+    (sug.length ? `<optgroup label="Com prazo neste período">${sug.map(i => `<option value="${i.id}">${esc(i.text)}</option>`).join("")}</optgroup>` : "") +
+    FRONTS.map(f => `<optgroup label="${esc(f.short)}">${ITEMS.filter(i => i.front === f.id && !has.has(i.id)).map(i => `<option value="${i.id}">${esc(i.text)}</option>`).join("")}</optgroup>`).join("");
+}
+function setGoalItems(id, items) { GS().links[id] = items; save(); }
+
+gdlg.addEventListener("close", () => { gcur = null; render(); if (curView === "dia") renderDay(); });
+gdlg.addEventListener("click", e => {
+  if (e.target === gdlg) { gdlg.close(); return; }
+  const gi = e.target.closest("[data-gitem]");
+  if (gi) { const id = gi.dataset.gitem; gdlg.close(); openItem(id); return; }
+  const un = e.target.closest("[data-gunitem]");
+  if (un) { const go = goalsAll().find(g => g.id === gcur); setGoalItems(gcur, go.items.filter(i => i !== un.dataset.gunitem)); paintGoalStatus(); paintGoalItems(); return; }
+  const gs = e.target.closest("[data-gs]");
+  if (gs) { GS().manual[gcur] = gs.dataset.gs; save(); paintGoalStatus(); }
+});
+gdlg.addEventListener("change", e => {
+  if (!gcur) return;
+  if (e.target.id === "gForce") { if (e.target.checked) GS().manual[gcur] = "done"; else delete GS().manual[gcur]; save(); paintGoalStatus(); }
+  if (e.target.id === "gH") { const h = e.target.value; const p = nowKey(h); setGoalEdit("h", h); setGoalEdit("p", p); paintPeriodInput(h, p); }
+  if (e.target.id === "gP" && e.target.value) setGoalEdit("p", e.target.value);
+});
+document.getElementById("gTitle").addEventListener("input", e => { if (gcur && e.target.value.trim()) setGoalEdit("text", e.target.value.trim()); });
+document.getElementById("gNotes").addEventListener("input", e => { if (!gcur) return; const g = GS(); if (e.target.value.trim()) g.notes[gcur] = e.target.value; else delete g.notes[gcur]; save(); });
+document.getElementById("gItemAdd").addEventListener("click", () => {
+  const v = document.getElementById("gItemSel").value; if (!v || !gcur) return;
+  const go = goalsAll().find(g => g.id === gcur); setGoalItems(gcur, go.items.concat(v)); paintGoalStatus(); paintGoalItems();
+});
+let gDelArmed = false;
+document.getElementById("gDelete").addEventListener("click", e => {
+  if (!gDelArmed) { gDelArmed = true; e.target.textContent = "Clique de novo para remover"; setTimeout(() => { gDelArmed = false; e.target.textContent = "Remover objetivo"; }, 3500); return; }
+  gDelArmed = false; e.target.textContent = "Remover objetivo";
+  const g = GS();
+  if (gcur.startsWith("gc")) g.custom = g.custom.filter(c => c.id !== gcur); else if (!g.removed.includes(gcur)) g.removed.push(gcur);
+  ["edits", "links", "manual", "notes"].forEach(k => delete g[k][gcur]);
+  save(); gdlg.close();
+});
+
+/* Objetivos no painel do item */
+function paintItemGoals() {
+  const gl = goalsAll().filter(g => g.items.includes(current));
+  document.getElementById("dGoals").innerHTML = gl.map(g => {
+    const pr = goalProgress(g);
+    return `<li style="grid-template-columns:auto 1fr auto"><i class="st" data-s="${pr.st}" style="width:14px;height:14px;pointer-events:none"></i>
+      <button type="button" class="linklike" data-dgoal="${g.id}">${esc(g.text)} <span class="muted" style="font-size:.8rem">· ${HZ[g.h]} · ${esc(periodLabel(g.h, g.p))}</span></button>
+      <button type="button" class="x" data-dungoal="${g.id}" aria-label="Tirar do objetivo">✕</button></li>`;
+  }).join("") || `<li class="muted" style="grid-template-columns:1fr">Ainda não conta para nenhum objetivo.</li>`;
+  const others = goalsAll().filter(g => !g.items.includes(current));
+  document.getElementById("dGoalSel").innerHTML = `<option value="">Ligar a um objetivo…</option>` +
+    ["month", "sem", "year", "stage"].map(h => `<optgroup label="${HZ[h]}">${others.filter(g => g.h === h).map(g => `<option value="${g.id}">${esc(periodLabel(g.h, g.p))} · ${esc(g.text)}</option>`).join("")}</optgroup>`).join("");
+}
+document.getElementById("dGoals").addEventListener("click", e => {
+  const go = e.target.closest("[data-dgoal]"); if (go) { const id = go.dataset.dgoal; dlg.close(); openGoal(id); return; }
+  const un = e.target.closest("[data-dungoal]");
+  if (un) { const g = goalsAll().find(x => x.id === un.dataset.dungoal); setGoalItems(g.id, g.items.filter(i => i !== current)); paintItemGoals(); }
+});
+document.getElementById("dGoalAdd").addEventListener("click", () => {
+  const v = document.getElementById("dGoalSel").value; if (!v || !current) return;
+  const g = goalsAll().find(x => x.id === v); setGoalItems(v, g.items.concat(current)); paintItemGoals();
+});
+
+/* Controles da seção de objetivos */
+document.getElementById("gTabs").addEventListener("click", e => { const b = e.target.closest("[data-h]"); if (!b) return; gview.h = b.dataset.h; gview.p = nowKey(gview.h); renderGoals(); });
+document.getElementById("gPrev").addEventListener("click", () => { gview.p = stepPeriod(gview.h, gview.p, -1); renderGoals(); });
+document.getElementById("gNext").addEventListener("click", () => { gview.p = stepPeriod(gview.h, gview.p, 1); renderGoals(); });
+document.getElementById("gNow").addEventListener("click", () => { gview.p = nowKey(gview.h); renderGoals(); });
+document.getElementById("gSum").addEventListener("click", e => {
+  const b = e.target.closest("[data-gswitch]"); if (!b) return;
+  const h2 = b.dataset.gswitch;
+  const all = goalsAll().filter(g => g.h === h2).map(g => g.p).sort();
+  const nk = nowKey(h2);
+  const firstInside = all.find(p => gview.h === "stage" ? true : periodContains(gview.h, gview.p, h2, p));
+  gview.p = periodContains(gview.h, gview.p, h2, nk) ? nk : (firstInside || nk); gview.h = h2; renderGoals();
+});
+document.getElementById("gList").addEventListener("click", e => {
+  const c = e.target.closest("[data-gcycle]");
+  if (c) { const g = GS(); const order = ["todo", "doing", "done"]; const s = g.manual[c.dataset.gcycle] || "todo"; g.manual[c.dataset.gcycle] = order[(order.indexOf(s) + 1) % 3]; save(); renderGoals(); const again = document.querySelector(`[data-gcycle="${c.dataset.gcycle}"]`); if (again) again.focus(); return; }
+  const o = e.target.closest("[data-gopen]"); if (o) openGoal(o.dataset.gopen);
+});
+document.getElementById("gAdd").addEventListener("submit", e => {
+  e.preventDefault();
+  const t = document.getElementById("gNew").value.trim(); if (!t) return;
+  GS().custom.push({ id: "gc" + Date.now(), h: gview.h, p: gview.p, text: t });
+  document.getElementById("gNew").value = ""; save(); renderGoals();
+});
+
+/* Linha do tempo */
+(function timeline() {
+  const start = new Date(2025, 0, 1).getTime(), end = new Date(2032, 0, 1).getTime();
+  const pos = d => ((d - start) / (end - start)) * 100;
+  document.getElementById("nowMark").style.left = pos(Math.min(Math.max(Date.now(), start), end)) + "%";
+  const ys = document.getElementById("years");
+  for (let y = 2025; y <= 2031; y++) { const s = document.createElement("span"); s.style.left = pos(new Date(y, 0, 1).getTime()) + "%"; s.textContent = y; ys.appendChild(s); }
+})();
+
+
+/* ===================================================================
+   DIA A DIA — calendário, disciplinas, avaliações e tarefas
+   Tudo fica em state.day (mesma chave e mesmo backup da trajetória).
+   =================================================================== */
+const TZ = "America/Sao_Paulo";
+const pad = n => String(n).padStart(2, "0");
+const isoD = d => d.getFullYear() + "-" + pad(d.getMonth() + 1) + "-" + pad(d.getDate());
+const parseD = s => { const [y, m, d] = s.split("-").map(Number); return new Date(y, m - 1, d); };
+const addDays = (s, n) => { const d = parseD(s); d.setDate(d.getDate() + n); return isoD(d); };
+const today = () => isoD(new Date());
+const dowOf = s => parseD(s).getDay();
+const mondayOf = s => addDays(s, -((dowOf(s) + 6) % 7));
+const DOW = ["dom", "seg", "ter", "qua", "qui", "sex", "sáb"];
+const DOW_FULL = ["domingo", "segunda", "terça", "quarta", "quinta", "sexta", "sábado"];
+const daysBetween = (a, b) => Math.round((parseD(b) - parseD(a)) / 864e5);
+const fmtD = s => { const d = parseD(s); return pad(d.getDate()) + "/" + pad(d.getMonth() + 1); };
+const longD = s => { const d = parseD(s); return DOW_FULL[d.getDay()] + ", " + d.getDate() + " de " + MONTHS_FULL[d.getMonth()]; };
+const norm = s => String(s || "").toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "");
+const fmtN = n => (Math.round(n * 10) / 10).toFixed(1).replace(".", ",");
+const parseN = s => { if (s === "" || s == null) return null; const v = parseFloat(String(s).replace(",", ".")); return isNaN(v) ? null : v; };
+const addMin = (hm, m) => { let [h, mi] = hm.split(":").map(Number); mi += m; h += Math.floor(mi / 60); mi %= 60; return pad(Math.min(h, 23)) + ":" + pad(mi); };
+const uid = (p = "n") => p + Date.now().toString(36) + Math.random().toString(36).slice(2, 6);
+const semOf = s => s.slice(0, 4) + "-" + (+s.slice(5, 7) <= 6 ? 1 : 2);
+
+const TYPES = {
+  prova: { l: "Prova", ev: 1 }, trabalho: { l: "Trabalho", ev: 1 }, lista: { l: "Lista", ev: 1 }, seminario: { l: "Seminário", ev: 1 },
+  tarefa: { l: "Tarefa" }, estudo: { l: "Estudo" }, aula: { l: "Aula" }, reuniao: { l: "Reunião" }, evento: { l: "Evento" }
+};
+const isEval = e => !!(TYPES[e.type] || {}).ev;
+const checkable = e => !e.recur && (isEval(e) || e.type === "tarefa");
+const DCOLORS = ["--d1", "--d2", "--d3", "--d4", "--d5", "--d6", "--d7", "--d8"];
+
+function seedDay() {
+  const S = [
+    ["2026-11-16","13:50","14:45","po","Estudar PO"],["2026-11-16","15:05","16:50","po","Trabalho de PO"],
+    ["2026-11-17","13:00","14:45","prob","Estudar Probabilidade"],["2026-11-17","15:05","16:50","ic","Preparar a apresentação da IC"],
+    ["2026-11-18","13:00","14:45","po","Estudar PO"],["2026-11-18","15:05","16:15","ic","Apresentação da IC: finalizar e ensaiar"],
+    ["2026-11-20","13:00","14:45","po","Trabalho de PO (finalizar)"],["2026-11-20","15:05","16:50","po","PO: resolver prova antiga"],
+    ["2026-11-21","13:00","14:45","po","Revisar PO"],["2026-11-21","15:05","16:50","prob","Estudar Probabilidade"],
+    ["2026-11-22","13:00","14:45","po","PO: revisar e fechar o trabalho"],["2026-11-22","15:05","16:50","prob","Estudar Probabilidade"],
+    ["2026-11-23","13:00","14:45","po","PO: revisão final"],["2026-11-23","15:05","16:50","fis","Estudar Física"],
+    ["2026-11-24","13:00","14:45","po","PO: revisão leve antes da prova"],["2026-11-24","15:05","16:50","fis","Estudar Física"],
+    ["2026-11-25","13:00","14:45","fis","Estudar Física"],["2026-11-25","15:05","16:50","fis","Trabalho de Física"],
+    ["2026-11-27","13:00","14:45","fis","Física: revisão final"],
+    ["2026-11-28","13:00","14:45","prob","Estudar Probabilidade"],["2026-11-28","15:05","16:50","prob","Trabalho de Probabilidade"],
+    ["2026-11-29","13:00","14:45","prob","Trabalho de Probabilidade"],["2026-11-29","15:05","16:50","prob","Estudar Probabilidade"],
+    ["2026-11-30","13:00","14:45","prob","Probabilidade: exercícios"],["2026-11-30","15:05","16:50","prob","Probabilidade: exercícios"],
+    ["2026-12-01","13:00","14:45","prob","Probabilidade: exercícios"],["2026-12-01","15:05","16:50","prob","Probabilidade: prova antiga"],
+    ["2026-12-02","13:00","14:45","prob","Probabilidade: revisar dúvidas"],["2026-12-02","15:05","16:50","prob","Probabilidade: prova antiga"]
+  ];
+  const E = S.map(([date, start, end, who, title], i) => Object.assign({ id: "s" + (i + 1), type: "estudo", title, date, start, end, ing: 1 }, who === "ic" ? { area: "ic" } : { disc: who }));
+  const note = "Na Google Agenda é um bloco de trabalho; confirme a data de entrega e corrija aqui.";
+  E.push(
+    { id: "e1", type: "trabalho", title: "Trabalho de PO", date: "2026-11-23", disc: "po", weight: 1, ing: 1, notes: "Entrega 23/11." },
+    { id: "e2", type: "prova", title: "Prova 2 de PO", date: "2026-11-24", disc: "po", weight: 1, ing: 1 },
+    { id: "e3", type: "trabalho", title: "Trabalho de Física", date: "2026-11-25", disc: "fis", weight: 1, ing: 1, notes: note },
+    { id: "e4", type: "prova", title: "Prova de Física", date: "2026-11-27", disc: "fis", weight: 1, ing: 1 },
+    { id: "e5", type: "trabalho", title: "Trabalho de Probabilidade", date: "2026-11-29", disc: "prob", weight: 1, ing: 1, notes: note },
+    { id: "e6", type: "prova", title: "Prova de Cálculo", date: "2026-11-30", disc: "calc", weight: 1, ing: 1 },
+    { id: "e7", type: "prova", title: "Prova de Probabilidade", date: "2026-12-03", disc: "prob", weight: 1, ing: 1 },
+    { id: "t1", type: "tarefa", title: "PIC: preencher os formulários", date: "2026-11-16", start: "13:00", end: "13:45", area: "ext", item: "ex7", ing: 1, notes: "Prazo hoje." },
+    { id: "t2", type: "tarefa", title: "Apresentar a IC na reunião", date: "2026-11-19", area: "ic", item: "ic6", ing: 1 },
+    { id: "t3", type: "tarefa", title: "Preencher o relatório da IC", date: "2026-11-27", area: "ic", item: "ic5", ing: 1 },
+    { id: "v1", type: "evento", title: "LEMI: Propositional Logic – Encontro 6", date: "2026-11-18", start: "17:00", end: "18:40", area: "lang", item: "lg1", ing: 1, notes: "UEPG. Prof. Pedro Jeferson Miranda." },
+    { id: "v2", type: "evento", title: "PIC: Aula 02 – Ciclo 8", date: "2026-11-18", area: "ext", ing: 1 },
+    { id: "v3", type: "evento", title: "Defesa Ana", date: "2026-11-19", ing: 1 },
+    { id: "v4", type: "evento", title: "Feriado", date: "2026-11-20" },
+    { id: "r1", type: "reuniao", title: "Reunião IC", date: "2026-11-19", recur: "weekly", days: [4], area: "ic", ing: 1 },
+    { id: "r2", type: "aula", title: "Aulas", date: "2026-11-16", start: "17:30", end: "22:10", recur: "weekly", days: [1, 2, 3, 4, 5], routine: 1, skip: ["2026-11-20"], notes: "Rotina do semestre. Ajuste os dias e o “até” quando o semestre acabar." }
+  );
+  return {
+    v: 1,
+    discs: [
+      { id: "po", name: "Pesquisa Operacional", short: "PO", c: "--d1", sem: "2026-2", al: ["po", "pesquisa"] },
+      { id: "prob", name: "Teoria das Probabilidades", short: "Probabilidade", c: "--d2", sem: "2026-2", al: ["prob", "probabilidade", "probabilidades"] },
+      { id: "fis", name: "Física 1", short: "Física", c: "--d3", sem: "2026-2", al: ["fisica", "fis"] },
+      { id: "calc", name: "Cálculo 3", short: "Cálculo", c: "--d4", sem: "2026-2", al: ["calculo", "calc"] }
+    ],
+    entries: E,
+    cfg: {}
+  };
+}
+const CFG0 = { pass: 7, target: 9, routine: true, google: true, view: "semana", gcalSrc: "", clientId: "", sem: "" };
+function DS() {
+  if (!state.day || !Array.isArray(state.day.entries)) { state.day = seedDay(); try { localStorage.setItem(KEY, JSON.stringify(state)); } catch (e) {} }
+  state.day.cfg = Object.assign({}, CFG0, state.day.cfg || {});
+  state.day.discs = state.day.discs || [];
+  return state.day;
+}
+const discOf = e => e && e.disc ? DS().discs.find(d => d.id === e.disc) : null;
+const entryById = id => DS().entries.find(x => x.id === id);
+
+/* ---------- Eventos puxados do Google (cache separado, não entra no backup) ---------- */
+const GKEY = "trajetoria-jvz-gcal";
+let gcache = (() => { try { return JSON.parse(localStorage.getItem(GKEY)) || null; } catch (e) { return null; } })();
+const letters = s => norm(s).replace(/[^a-z0-9]/g, "");
+
+function occurs(e, d) {
+  if (!e.date) return false;
+  if (e.recur === "weekly") return d >= e.date && (!e.until || d <= e.until) && (e.days || []).includes(dowOf(d)) && !(e.skip || []).includes(d);
+  return e.date === d;
+}
+function entriesOn(d, opt = {}) {
+  const ds = DS();
+  const showRt = opt.routine != null ? opt.routine : ds.cfg.routine;
+  const list = ds.entries.filter(e => occurs(e, d) && (showRt || !e.routine));
+  if (ds.cfg.google && gcache && opt.google !== false) {
+    const mine = ds.entries.filter(e => occurs(e, d));
+    gcache.events.filter(g => g.date === d).forEach(g => {
+      const dup = mine.some(e => letters(e.title) === letters(g.title) || ((e.start || "") === (g.start || "") && e.ing && (e.start || letters(e.title).includes(letters(g.title).slice(0, 8)))));
+      if (!dup) list.push(Object.assign({ g: 1, type: "evento" }, g));
+    });
+  }
+  return list.sort((a, b) => (a.start || "").localeCompare(b.start || "") || (isEval(b) - isEval(a)));
+}
+function ecol(e) {
+  const dc = discOf(e); if (dc) return `var(${dc.c})`;
+  if (e.area) { const f = frontById(e.area); if (f) return `var(${f.c})`; }
+  if (e.g) return "var(--muted)";
+  return e.type === "evento" ? "var(--k3)" : "var(--k8)";
+}
+function evRow(e, d, opt = {}) {
+  const t = TYPES[e.type] || TYPES.evento;
+  const time = e.start ? e.start + (e.end ? "–" + e.end : "") : "dia todo";
+  const ck = checkable(e) && !e.g
+    ? `<button type="button" class="ck" data-etog="${e.id}" aria-pressed="${!!e.done}" aria-label="${esc(e.title)}: ${e.done ? "feito" : "marcar como feito"}"></button>`
+    : `<span class="ck ghost" aria-hidden="true"></span>`;
+  const badge = t.ev ? `<b class="badge">${t.l}</b>` : "";
+  const when = opt.showDate ? `${DOW[dowOf(d)]} ${fmtD(d)} · ` : "";
+  const inner = `<span class="ev-time">${when}${time}${e.g ? " · Google" : ""}</span><span class="ev-t">${badge}${esc(e.title)}${e.notes ? ' <span class="note-mark">✎</span>' : ""}</span>`;
+  return `<li class="ev${e.done ? " done" : ""}${e.routine ? " rt" : ""}${t.ev ? " eval" : ""}${e.g ? " gc" : ""}${opt.late ? " late" : ""}" style="--c:${ecol(e)}">${ck}${e.g
+    ? (e.link ? `<a class="ev-open" href="${esc(e.link)}" target="_blank" rel="noopener">${inner}</a>` : `<span class="ev-open">${inner}</span>`)
+    : `<button type="button" class="ev-open" data-eopen="${e.id}" data-edate="${d}">${inner}</button>`}</li>`;
+}
+
+/* ---------- Médias ---------- */
+function discStats(dc) {
+  const evs = DS().entries.filter(e => isEval(e) && e.disc === dc.id).sort((a, b) => (a.date || "9").localeCompare(b.date || "9"));
+  let sw = 0, sg = 0, rw = 0;
+  evs.forEach(e => { const w = e.weight == null ? 1 : +e.weight; if (e.grade != null) { sw += w; sg += w * e.grade; } else rw += w; });
+  return { evs, avg: sw ? sg / sw : null, sw, sg, rw, need: T => rw ? (T * (sw + rw) - sg) / rw : null };
+}
+function needText(st) {
+  const { pass, target } = DS().cfg;
+  if (!st.evs.length) return "Nenhuma avaliação cadastrada.";
+  if (!st.rw) return st.avg == null ? "Sem notas." : `Média final ${fmtN(st.avg)} · ${st.avg >= pass ? "aprovado" : "abaixo da média de aprovação"}${st.avg >= target ? " · meta batida" : ""}.`;
+  const part = (T, nome) => { const n = st.need(T); return n <= 0 ? `${nome} ${fmtN(T)} já garantida` : n > 10 ? `${nome} ${fmtN(T)} fora de alcance` : `para ${nome} ${fmtN(T)}: <b>${fmtN(n)}</b> nas que faltam`; };
+  return `${part(target, "a meta")} · ${part(pass, "a média")}`;
+}
+
+/* ---------- Visões ---------- */
+const dview = { anchor: null, focus: null };
+function curSem() { return DS().cfg.sem || semOf(today()); }
+
+function renderDay() {
+  index();
+  const ds = DS(), t = today();
+  if (!dview.anchor) dview.anchor = t;
+  const sub = ds.cfg.view;
+  document.querySelectorAll("#dTabs button").forEach(b => b.setAttribute("aria-selected", b.dataset.dsub === sub ? "true" : "false"));
+  document.getElementById("showRoutine").checked = !!ds.cfg.routine;
+  document.getElementById("showGoogle").checked = !!ds.cfg.google;
+  document.getElementById("gToggleWrap").hidden = !gcache;
+  renderToday();
+  const body = document.getElementById("dBody");
+  const nav = document.getElementById("dNav");
+  nav.hidden = !(sub === "semana" || sub === "mes");
+  if (sub === "semana") renderWeek(body);
+  else if (sub === "mes") renderMonth(body);
+  else if (sub === "disc") renderDiscs(body);
+  else if (sub === "tarefas") renderTasks(body);
+  else renderGEmbed(body);
+  renderTrajMonth();
+}
+
+function renderToday() {
+  const ds = DS(), t = today(), d = parseD(t);
+  document.getElementById("tdWeekday").textContent = DOW_FULL[d.getDay()] + " · hoje";
+  document.getElementById("tdDate").textContent = d.getDate() + " de " + MONTHS_FULL[d.getMonth()];
+  const late = ds.entries.filter(e => checkable(e) && !e.done && e.date && e.date < t).sort((a, b) => a.date.localeCompare(b.date));
+  const list = entriesOn(t, { routine: true });
+  document.getElementById("tdList").innerHTML =
+    (late.length ? `<li class="sub">Atrasado</li>` + late.map(e => evRow(e, e.date, { showDate: true, late: true })).join("") + `<li class="sub">Hoje</li>` : "") +
+    (list.map(e => evRow(e, t)).join("") || `<li class="none">Nada marcado para hoje.</li>`);
+  const lim = addDays(t, 30);
+  const next = ds.entries.filter(e => isEval(e) && !e.done && e.date && e.date >= t && e.date <= lim).sort((a, b) => a.date.localeCompare(b.date));
+  document.getElementById("tdNext").innerHTML = next.map(e => {
+    const n = daysBetween(t, e.date);
+    const blocks = e.disc ? ds.entries.filter(x => x.type === "estudo" && x.disc === e.disc && x.date >= t && x.date <= e.date).length : 0;
+    return `<li style="--c:${ecol(e)}"><span class="cd"><b>${n === 0 ? "hoje" : n === 1 ? "amanhã" : n}</b>${n > 1 ? "<small>dias</small>" : ""}</span>
+      <button type="button" class="linklike" data-eopen="${e.id}" data-edate="${e.date}"><b class="badge">${TYPES[e.type].l}</b>${esc(e.title)}
+      <small>${DOW[dowOf(e.date)]} ${fmtD(e.date)}${e.disc ? ` · ${blocks ? blocks + " bloco" + (blocks > 1 ? "s" : "") + " de estudo até lá" : "nenhum bloco de estudo marcado"}` : ""}</small></button></li>`;
+  }).join("") || `<li class="none">Nenhuma prova ou entrega nos próximos 30 dias.</li>`;
+}
+
+function renderWeek(body) {
+  const t = today(), start = mondayOf(dview.anchor);
+  document.getElementById("dLabel").textContent = `${fmtD(start)} a ${fmtD(addDays(start, 6))}`;
+  document.getElementById("dToday").hidden = start === mondayOf(t);
+  let html = `<div class="week">`;
+  for (let i = 0; i < 7; i++) {
+    const d = addDays(start, i), list = entriesOn(d);
+    html += `<section class="wday${d === t ? " is-today" : ""}${d === dview.focus ? " flash" : ""}" id="wd-${d}">
+      <header><span class="eyebrow">${DOW[dowOf(d)]}</span><b>${parseD(d).getDate()}</b><button type="button" class="plus" data-eadd="${d}" aria-label="Adicionar em ${longD(d)}" title="Adicionar neste dia">+</button></header>
+      <ul class="evs">${list.map(e => evRow(e, d)).join("") || `<li class="none">livre</li>`}</ul></section>`;
+  }
+  body.innerHTML = html + `</div>`;
+  if (dview.focus) { const el = document.getElementById("wd-" + dview.focus); dview.focus = null; if (el) { el.scrollIntoView({ block: "nearest" }); setTimeout(() => el.classList.remove("flash"), 1400); } }
+}
+
+function renderMonth(body) {
+  const t = today(), a = parseD(dview.anchor), y = a.getFullYear(), m = a.getMonth();
+  document.getElementById("dLabel").textContent = MONTHS_FULL[m] + " de " + y;
+  document.getElementById("dToday").hidden = t.slice(0, 7) === dview.anchor.slice(0, 7);
+  const first = isoD(new Date(y, m, 1)), gs = mondayOf(first);
+  const dim = new Date(y, m + 1, 0).getDate(), weeks = Math.ceil((daysBetween(gs, first) + dim) / 7);
+  let html = `<div class="month"><div class="mh">seg</div><div class="mh">ter</div><div class="mh">qua</div><div class="mh">qui</div><div class="mh">sex</div><div class="mh">sáb</div><div class="mh">dom</div>`;
+  for (let i = 0; i < weeks * 7; i++) {
+    const d = addDays(gs, i), inM = +d.slice(5, 7) === m + 1;
+    const list = entriesOn(d, { routine: false });
+    const imp = list.filter(e => e.type !== "estudo"), nst = list.length - imp.length;
+    html += `<button type="button" class="mc${inM ? "" : " out"}${d === t ? " is-today" : ""}" data-mday="${d}" aria-label="${longD(d)}: ${imp.length} compromisso(s)">
+      <span class="mn">${parseD(d).getDate()}</span>
+      ${imp.slice(0, 3).map(e => `<span class="mi${isEval(e) ? " eval" : ""}${e.done ? " done" : ""}" style="--c:${ecol(e)}">${esc(e.title)}</span>`).join("")}
+      ${imp.length > 3 ? `<span class="more">+${imp.length - 3}</span>` : ""}${nst ? `<span class="sdots" title="${nst} bloco(s) de estudo">${"•".repeat(Math.min(nst, 4))}</span>` : ""}</button>`;
+  }
+  body.innerHTML = html + `</div><p class="muted small">Clique num dia para abrir a semana. Pontinhos = blocos de estudo.</p>`;
+}
+
+function renderDiscs(body) {
+  const ds = DS(), sem = curSem();
+  const sems = [...new Set(ds.discs.map(d => d.sem).concat(sem))].sort();
+  const discs = ds.discs.filter(d => d.sem === sem);
+  const avgs = discs.map(d => discStats(d).avg).filter(v => v != null);
+  body.innerHTML = `<div class="disc-top">
+      <label class="inline">Semestre <select id="semSel">${sems.map(s => `<option value="${s}" ${s === sem ? "selected" : ""}>${s.replace("-", "/")}</option>`).join("")}</select></label>
+      <label class="inline">Média de aprovação <input type="text" inputmode="decimal" data-cfg="pass" value="${fmtN(ds.cfg.pass)}" size="3"></label>
+      <label class="inline">Sua meta <input type="text" inputmode="decimal" data-cfg="target" value="${fmtN(ds.cfg.target)}" size="3"></label>
+      <span class="muted small">${avgs.length ? `Média do semestre até agora: <b>${fmtN(avgs.reduce((a, b) => a + b, 0) / avgs.length)}</b>` : "Lance as notas para ver a média."}</span>
+    </div>
+    <p class="muted small" style="margin:0">A média é ponderada pelos pesos. Confira no regulamento da UEPG a média de aprovação e a regra de exame, e ajuste acima.</p>
+    <div class="discs">${discs.map(discCard).join("")}</div>
+    <form class="dnew" id="discNew"><input type="text" id="dnName" placeholder="Nova disciplina (ex.: Anéis e Corpos)" required><input type="text" id="dnShort" placeholder="Apelido (ex.: Anéis)"><button class="btn" type="submit">Adicionar disciplina</button></form>`;
+}
+function discCard(dc) {
+  const st = discStats(dc);
+  return `<article class="disc" style="--c:var(${dc.c})">
+    <header><i class="dot"></i><input class="dname" type="text" data-dname="${dc.id}" value="${esc(dc.name)}" aria-label="Nome da disciplina">
+      <span class="avg" title="Média ponderada das notas lançadas">${st.avg == null ? "—" : fmtN(st.avg)}</span></header>
+    <div class="tscroll"><table class="evt"><thead><tr><th>Avaliação</th><th>Data</th><th>Peso</th><th>Nota</th></tr></thead><tbody>
+      ${st.evs.map(e => `<tr${e.grade != null ? ' class="graded"' : ""}><td><button type="button" class="linklike" data-eopen="${e.id}" data-edate="${e.date || ""}">${esc(e.title)}</button></td>
+        <td class="mono">${e.date ? fmtD(e.date) : "—"}</td>
+        <td><input type="text" inputmode="decimal" data-ew="${e.id}" value="${e.weight == null ? "1" : fmtN(e.weight).replace(",0", "")}" aria-label="Peso de ${esc(e.title)}"></td>
+        <td><input type="text" inputmode="decimal" data-eg="${e.id}" value="${e.grade == null ? "" : fmtN(e.grade)}" placeholder="—" aria-label="Nota de ${esc(e.title)}"></td></tr>`).join("") || `<tr><td colspan="4" class="muted">Nenhuma avaliação ainda.</td></tr>`}
+    </tbody></table></div>
+    <p class="need">${needText(st)}</p>
+    <form class="dadd" data-dadd="${dc.id}">
+      <select name="type" aria-label="Tipo">${["prova", "trabalho", "lista", "seminario"].map(k => `<option value="${k}">${TYPES[k].l}</option>`).join("")}</select>
+      <input name="title" type="text" placeholder="Ex.: Prova 3" aria-label="Título">
+      <input name="date" type="date" aria-label="Data">
+      <input name="w" type="text" inputmode="decimal" value="1" aria-label="Peso" title="Peso">
+      <button class="btn" type="submit">+</button>
+    </form>
+    <div class="row small">
+      <span class="muted">Cor</span>${DCOLORS.map(c => `<button type="button" class="swatch" data-dcolor="${dc.id}" data-c="${c}" style="--c:var(${c})" aria-pressed="${dc.c === c}" aria-label="Cor ${c.slice(3)}"></button>`).join("")}
+      <button type="button" class="linklike danger-t" data-ddel="${dc.id}">Remover</button>
+    </div>
+  </article>`;
+}
+
+function renderTasks(body) {
+  const ds = DS(), t = today(), wk = addDays(t, 7);
+  const pool = ds.entries.filter(e => !e.recur && (e.type === "tarefa" || (isEval(e) && e.type !== "prova")));
+  const open = pool.filter(e => !e.done);
+  const G = [
+    ["Atrasadas", open.filter(e => e.date && e.date < t), true],
+    ["Hoje", open.filter(e => e.date === t)],
+    ["Próximos 7 dias", open.filter(e => e.date > t && e.date <= wk)],
+    ["Depois", open.filter(e => e.date > wk)],
+    ["Sem data", open.filter(e => !e.date)]
+  ];
+  const done = pool.filter(e => e.done).sort((a, b) => (b.date || "").localeCompare(a.date || "")).slice(0, 15);
+  body.innerHTML = `<p class="muted small" style="margin:0">Tarefas e entregas (trabalhos, listas, seminários). Use o “Adicionar rápido” acima: <span class="mono">ler Fulton §1.4 sex</span>, <span class="mono">lista 5 prob 02/12</span>.</p>` +
+    G.filter(g => g[1].length).map(([n, l, late]) => `<h3 class="tg">${n} <span class="muted">${l.length}</span></h3><ul class="evs flat">${l.sort((a, b) => (a.date || "9").localeCompare(b.date || "9")).map(e => evRow(e, e.date || t, { showDate: !!e.date, late })).join("")}</ul>`).join("") +
+    (open.length ? "" : `<p class="none">Nenhuma tarefa pendente.</p>`) +
+    (done.length ? `<details class="tdone"><summary>Feitas (${done.length})</summary><ul class="evs flat">${done.map(e => evRow(e, e.date || t, { showDate: !!e.date })).join("")}</ul></details>` : "") +
+    `<form class="dnew" id="taskNew"><input type="text" id="tnText" placeholder="Nova tarefa sem data" required><button class="btn" type="submit">Adicionar</button></form>`;
+}
+
+function renderGEmbed(body) {
+  const src = DS().cfg.gcalSrc;
+  body.innerHTML = src
+    ? `<div class="gframe"><iframe title="Google Agenda" loading="lazy" src="https://calendar.google.com/calendar/embed?src=${encodeURIComponent(src)}&ctz=${encodeURIComponent(TZ)}&mode=WEEK&showPrint=0&showTitle=0&showTz=0&hl=pt_BR"></iframe></div>
+       <p class="muted small">Se ficar em branco ou pedir login: entre na sua conta Google neste navegador e permita cookies de calendar.google.com. <button type="button" class="linklike" id="gsrcClear">Trocar a agenda</button> · <a href="https://calendar.google.com/calendar/r/week" target="_blank" rel="noopener">Abrir a Google Agenda</a></p>`
+    : `<div class="gempty"><p>Mostre aqui a sua Google Agenda (só leitura, precisa de internet e da conta logada neste navegador).</p>
+       <form class="dnew" id="gsrcForm"><input type="text" id="gsrcIn" placeholder="seu e-mail do Google (ID da agenda)" autocomplete="email" required><button class="btn" type="submit">Mostrar agenda</button></form>
+       <p class="muted small">O e-mail fica salvo só neste navegador, não no arquivo. Para editar a agenda pelo app, veja <a href="#conectar">Claude e agenda</a>.</p></div>`;
+}
+
+function renderTrajMonth() {
+  const mk = nowKey("month");
+  const due = ITEMS.filter(i => statusOf(i) !== "done" && i.when && i.when <= mk).sort((a, b) => a.when.localeCompare(b.when));
+  const lateN = due.filter(i => i.when < mk).length;
+  const gl = goalsAll().filter(g => g.h === "month" && g.p === mk), gd = gl.filter(g => goalProgress(g).st === "done").length;
+  document.getElementById("trajMonth").innerHTML = `<div class="panel-head"><h2>Da trajetória em ${MONTHS_FULL[+mk.slice(5) - 1]}</h2>
+      <a href="#objetivos" class="small">${gl.length ? `${gd} de ${gl.length} objetivos do mês cumpridos` : "Ver objetivos"} →</a></div>
+    ${due.length ? `<div class="links">${due.map(itemChip).join("")}</div>${lateN ? `<p class="muted small" style="margin:0">${lateN} item(ns) de meses anteriores ainda abertos aparecem junto.</p>` : ""}` : `<p class="none">Tudo da trajetória deste mês está feito.</p>`}`;
+}
+
+/* ---------- Adicionar rápido ---------- */
+const TYPE_WORDS = { prova: "prova", p1: "prova", p2: "prova", p3: "prova", exame: "prova", trabalho: "trabalho", entrega: "trabalho", entregar: "trabalho", lista: "lista", seminario: "seminario", apresentacao: "seminario", tarefa: "tarefa", fazer: "tarefa", estudar: "estudo", estudo: "estudo", revisar: "estudo", aula: "aula", reuniao: "reuniao", evento: "evento" };
+const DROP_TYPE = new Set(["tarefa", "fazer", "evento"]);
+const WD = { dom: 0, domingo: 0, seg: 1, segunda: 1, terca: 2, "ter.": 2, qua: 3, quarta: 3, qui: 4, quinta: 4, sex: 5, sexta: 5, sab: 6, sabado: 6 };
+function discKeys(dc) {
+  const stop = new Set(["teoria", "introducao", "fundamentos", "topicos", "das", "dos", "de", "da", "do", "e", "1", "2", "3", "4"]);
+  return [...new Set([dc.id, norm(dc.short)].concat(dc.al || [], norm(dc.name).split(/\s+/).filter(w => w.length > 3 && !stop.has(w))).filter(Boolean))];
+}
+function parseQuick(raw) {
+  const ds = DS(), t = today();
+  const tok = raw.trim().split(/\s+/).filter(Boolean), used = tok.map(() => false);
+  const out = { type: "tarefa" };
+  const n = i => norm(tok[i] || "").replace(/[,;]+$/, "");
+  if (tok.length && TYPE_WORDS[n(0)]) { out.type = TYPE_WORDS[n(0)]; if (DROP_TYPE.has(n(0))) used[0] = true; }
+  for (let i = 0; i < tok.length; i++) {
+    if (used[i]) continue;
+    const w = n(i);
+    let m;
+    if ((m = w.match(/^(\d{1,2})\/(\d{1,2})(?:\/(\d{2,4}))?$/))) {
+      let y = m[3] ? (+m[3] < 100 ? 2000 + +m[3] : +m[3]) : +t.slice(0, 4);
+      let d = `${y}-${pad(+m[2])}-${pad(+m[1])}`;
+      if (!m[3] && daysBetween(t, d) < -60) d = `${y + 1}-${pad(+m[2])}-${pad(+m[1])}`;
+      if (!isNaN(parseD(d))) { out.date = d; used[i] = true; if (i > 0 && ["em", "dia", "no", "na", "ate"].includes(n(i - 1))) used[i - 1] = true; }
+    } else if (w === "hoje") { out.date = t; used[i] = true; }
+    else if (w === "amanha") { out.date = addDays(t, 1); used[i] = true; }
+    else if (WD[w.replace(/-feira$/, "")] != null && !out.date) {
+      const k = WD[w.replace(/-feira$/, "")]; out.date = addDays(t, (k - dowOf(t) + 7) % 7); used[i] = true;
+      if (i > 0 && ["na", "no", "ate", "de"].includes(n(i - 1))) used[i - 1] = true;
+    } else if (w === "dia" && /^\d{1,2}$/.test(n(i + 1))) {
+      const dd = +n(i + 1); let d = t.slice(0, 8) + pad(dd); if (d < t) { const x = parseD(t); d = isoD(new Date(x.getFullYear(), x.getMonth() + 1, dd)); }
+      out.date = d; used[i] = used[i + 1] = true;
+    } else if ((m = w.match(/^(\d{1,2})(?:h|:)(\d{2})?(?:(?:-|–|a)(\d{1,2})(?:h|:)?(\d{2})?)?$/)) && +m[1] < 24) {
+      out.start = pad(+m[1]) + ":" + (m[2] || "00"); if (m[3]) out.end = pad(+m[3]) + ":" + (m[4] || "00"); used[i] = true;
+      if (i > 0 && ["as", "às", "a"].includes(n(i - 1))) used[i - 1] = true;
+    } else if (w === "peso" && parseN(n(i + 1)) != null) { out.weight = parseN(n(i + 1)); used[i] = used[i + 1] = true; }
+    else if ((m = w.match(/^peso(\d+(?:[.,]\d+)?)$/))) { out.weight = parseN(m[1]); used[i] = true; }
+    else if (w.startsWith("#") && frontById(w.slice(1))) { out.area = w.slice(1); used[i] = true; }
+    else if (!out.disc) { const dc = ds.discs.find(d => d.sem === curSem() && discKeys(d).includes(w)) || ds.discs.find(d => discKeys(d).includes(w)); if (dc) { out.disc = dc.id; tok[i] = dc.short; } }
+  }
+  let title = tok.filter((_, i) => !used[i]).join(" ").replace(/\s+(de|da|do|para|pra|na|no|em|às|as)$/i, "").trim();
+  if (!title) { const dc = out.disc && ds.discs.find(d => d.id === out.disc); title = TYPES[out.type].l + (dc ? " de " + dc.short : ""); }
+  out.title = title.charAt(0).toUpperCase() + title.slice(1);
+  if (isEval(out) && out.weight == null) out.weight = 1;
+  if (!out.date && out.type !== "tarefa") out.date = t;
+  return out;
+}
+function quickPreview(q) {
+  const dc = q.disc && DS().discs.find(d => d.id === q.disc);
+  return `<b>${TYPES[q.type].l}</b> · “${esc(q.title)}” · ${q.date ? longD(q.date) : "sem data"}${q.start ? " · " + q.start + (q.end ? "–" + q.end : "") : ""}${dc ? " · " + esc(dc.short) : ""}${q.area ? " · " + esc(frontById(q.area).short) : ""}${q.weight != null && isEval(q) ? " · peso " + fmtN(q.weight).replace(",0", "") : ""}`;
+}
+
+/* ---------- Painel de entrada ---------- */
+const edlg = document.getElementById("edlg");
+let ecur = null, edate = null, eDelArmed = false;
+function newEntry(patch) { const e = Object.assign({ id: uid(), type: "tarefa", title: "" }, patch); DS().entries.push(e); save(); return e; }
+function openEntry(id, date) {
+  index(); const e = entryById(id); if (!e) return;
+  ecur = id; edate = date || e.date || "";
+  const $ = s => document.getElementById(s);
+  $("eTitle").value = e.title || "";
+  $("eType").innerHTML = Object.entries(TYPES).map(([k, v]) => `<option value="${k}" ${k === e.type ? "selected" : ""}>${v.l}</option>`).join("");
+  $("eDisc").innerHTML = `<option value="">—</option>` + DS().discs.slice().sort((a, b) => b.sem.localeCompare(a.sem)).map(d => `<option value="${d.id}" ${d.id === e.disc ? "selected" : ""}>${esc(d.short)} · ${d.sem.replace("-", "/")}</option>`).join("");
+  $("eArea").innerHTML = `<option value="">—</option>` + FRONTS.map(f => `<option value="${f.id}" ${f.id === e.area ? "selected" : ""}>${esc(f.short)}</option>`).join("");
+  $("eItem").innerHTML = `<option value="">Nenhum</option>` + FRONTS.map(f => `<optgroup label="${esc(f.short)}">${ITEMS.filter(i => i.front === f.id).map(i => `<option value="${i.id}" ${i.id === e.item ? "selected" : ""}>${esc(i.text)}</option>`).join("")}</optgroup>`).join("");
+  $("eDate").value = e.date || ""; $("eStart").value = e.start || ""; $("eEnd").value = e.end || "";
+  $("eWeight").value = e.weight == null ? "" : fmtN(e.weight).replace(",0", "");
+  $("eGrade").value = e.grade == null ? "" : fmtN(e.grade);
+  $("eWeekly").checked = e.recur === "weekly";
+  $("eDays").innerHTML = [1, 2, 3, 4, 5, 6, 0].map(k => `<label class="check"><input type="checkbox" data-eday="${k}" ${(e.days || []).includes(k) ? "checked" : ""}>${DOW[k]}</label>`).join("");
+  $("eUntil").value = e.until || "";
+  $("eDone").checked = !!e.done;
+  $("eNotes").value = e.notes || "";
+  $("eDel").textContent = "Excluir"; eDelArmed = false;
+  paintEntryVis();
+  if (!edlg.open) { try { edlg.showModal(); } catch (er) { edlg.setAttribute("open", ""); } }
+  if (!e.title) setTimeout(() => $("eTitle").focus(), 30);
+}
+function paintEntryVis() {
+  const e = entryById(ecur); if (!e) return;
+  const $ = s => document.getElementById(s);
+  const ev = isEval(e);
+  $("eEvalRow").hidden = !ev;
+  $("eDaysWrap").hidden = e.recur !== "weekly";
+  $("eDoneWrap").hidden = !checkable(e);
+  $("eSkip").hidden = !(e.recur === "weekly" && edate && occurs(e, edate));
+  $("eSkip").textContent = edate ? `Não acontece em ${fmtD(edate)}` : "";
+  $("eKind").textContent = (TYPES[e.type] || TYPES.evento).l + (e.ing ? " · já está na Google Agenda" : "");
+  $("eKind").style.setProperty("--c", ecol(e));
+  const gl = $("eGcal");
+  if (e.date) { gl.hidden = false; gl.href = gTemplate(e, e.recur ? e.date : (edate || e.date)); } else gl.hidden = true;
+  $("eItemGo").hidden = !e.item || !BY[e.item];
+}
+function setEntry(field, v) {
+  const e = entryById(ecur); if (!e) return;
+  if (v === "" || v == null || (Array.isArray(v) && !v.length)) delete e[field]; else e[field] = v;
+  if (field === "grade" && v != null && v !== "") e.done = true;
+  if (field === "recur" && v === "weekly" && !(e.days || []).length && e.date) e.days = [dowOf(e.date)];
+  save(); paintEntryVis();
+}
+edlg.addEventListener("input", ev => {
+  const id = ev.target.id, v = ev.target.value;
+  if (id === "eTitle") setEntry("title", v);
+  if (id === "eNotes") setEntry("notes", v);
+  if (id === "eWeight") setEntry("weight", parseN(v));
+  if (id === "eGrade") { const g = parseN(v); setEntry("grade", g == null ? null : Math.max(0, Math.min(10, g))); }
+});
+edlg.addEventListener("change", ev => {
+  const el = ev.target, id = el.id, v = el.value;
+  const map = { eType: "type", eDisc: "disc", eArea: "area", eItem: "item", eDate: "date", eStart: "start", eEnd: "end", eUntil: "until" };
+  if (map[id]) setEntry(map[id], v);
+  if (id === "eWeekly") setEntry("recur", el.checked ? "weekly" : "");
+  if (id === "eDone") setEntry("done", el.checked ? true : "");
+  if (el.dataset.eday != null) setEntry("days", [...edlg.querySelectorAll("[data-eday]:checked")].map(x => +x.dataset.eday));
+  if (id === "eType") { const e = entryById(ecur); if (isEval(e) && e.weight == null) e.weight = 1; document.getElementById("eWeight").value = e.weight == null ? "" : e.weight; }
+});
+edlg.addEventListener("click", ev => {
+  if (ev.target === edlg) { edlg.close(); return; }
+  const t = ev.target.closest("button,a"); if (!t) return;
+  if (t.id === "eSkip") { const e = entryById(ecur); e.skip = (e.skip || []).concat(edate); save(); edlg.close(); }
+  if (t.id === "eItemGo") { const it = entryById(ecur).item; edlg.close(); openItem(it); }
+  if (t.id === "eDel") {
+    if (!eDelArmed) { eDelArmed = true; t.textContent = "Clique de novo para excluir"; setTimeout(() => { eDelArmed = false; t.textContent = "Excluir"; }, 3500); return; }
+    DS().entries = DS().entries.filter(x => x.id !== ecur); save(); edlg.close();
+  }
+});
+edlg.addEventListener("close", () => {
+  const e = entryById(ecur);
+  if (e && !String(e.title || "").trim()) { DS().entries = DS().entries.filter(x => x.id !== ecur); save(); }
+  ecur = null; renderDay();
+});
+
+/* ---------- Cliques e formulários do Dia a dia ---------- */
+let lastQuick = null;
+document.addEventListener("click", ev => {
+  if ((dlg.open && dlg.contains(ev.target)) || (gdlg.open && gdlg.contains(ev.target)) || (edlg.open && edlg.contains(ev.target))) return;
+  const ds = DS();
+  const tg = ev.target.closest("[data-etog]");
+  if (tg) { const e = entryById(tg.dataset.etog); if (e) { e.done = !e.done; if (!e.done) delete e.done; save(); renderDay(); } return; }
+  const op = ev.target.closest("[data-eopen]"); if (op) { openEntry(op.dataset.eopen, op.dataset.edate); return; }
+  const ad = ev.target.closest("[data-eadd]"); if (ad) { const e = newEntry({ date: ad.dataset.eadd }); openEntry(e.id, e.date); return; }
+  const md = ev.target.closest("[data-mday]"); if (md) { ds.cfg.view = "semana"; dview.anchor = md.dataset.mday; dview.focus = md.dataset.mday; save(); renderDay(); return; }
+  const sb = ev.target.closest("[data-dsub]"); if (sb) { ds.cfg.view = sb.dataset.dsub; save(); renderDay(); return; }
+  const sw = ev.target.closest("[data-dcolor]"); if (sw) { const dc = ds.discs.find(d => d.id === sw.dataset.dcolor); dc.c = sw.dataset.c; save(); renderDay(); return; }
+  const dd = ev.target.closest("[data-ddel]");
+  if (dd) {
+    if (dd.dataset.armed !== "1") { dd.dataset.armed = "1"; dd.textContent = "Clique de novo: remove a disciplina e as avaliações dela"; setTimeout(() => { if (dd.isConnected) { dd.dataset.armed = ""; dd.textContent = "Remover"; } }, 4000); return; }
+    const id = dd.dataset.ddel; ds.discs = ds.discs.filter(d => d.id !== id); ds.entries = ds.entries.filter(e => !(isEval(e) && e.disc === id)); ds.entries.forEach(e => { if (e.disc === id) delete e.disc; }); save(); renderDay(); return;
+  }
+  if (ev.target.id === "gsrcClear") { ds.cfg.gcalSrc = ""; save(); renderDay(); return; }
+  if (ev.target.id === "qUndo" && lastQuick) { ds.entries = ds.entries.filter(e => e.id !== lastQuick); lastQuick = null; save(); renderDay(); document.getElementById("qPrev").innerHTML = "Desfeito."; return; }
+  if (ev.target.id === "qMore") { const raw = document.getElementById("qIn").value.trim(); const q = raw ? parseQuick(raw) : { type: "tarefa", title: "", date: today() }; const e = newEntry(q); document.getElementById("qIn").value = ""; document.getElementById("qPrev").innerHTML = ""; openEntry(e.id, e.date); return; }
+});
+document.getElementById("dPrev").addEventListener("click", () => stepDay(-1));
+document.getElementById("dNext").addEventListener("click", () => stepDay(1));
+document.getElementById("dToday").addEventListener("click", () => { dview.anchor = today(); renderDay(); });
+function stepDay(k) {
+  const v = DS().cfg.view;
+  if (v === "semana") dview.anchor = addDays(dview.anchor, 7 * k);
+  else { const a = parseD(dview.anchor); dview.anchor = isoD(new Date(a.getFullYear(), a.getMonth() + k, 1)); }
+  renderDay();
+}
+document.getElementById("showRoutine").addEventListener("change", e => { DS().cfg.routine = e.target.checked; save(); renderDay(); });
+document.getElementById("showGoogle").addEventListener("change", e => { DS().cfg.google = e.target.checked; save(); renderDay(); });
+document.getElementById("qIn").addEventListener("input", e => {
+  const v = e.target.value.trim();
+  document.getElementById("qPrev").innerHTML = v ? "Vai criar: " + quickPreview(parseQuick(v)) : "";
+});
+document.getElementById("quick").addEventListener("submit", e => {
+  e.preventDefault();
+  const inp = document.getElementById("qIn"), v = inp.value.trim(); if (!v) return;
+  const q = parseQuick(v), ne = newEntry(q); lastQuick = ne.id;
+  inp.value = "";
+  if (q.date && DS().cfg.view === "semana") dview.anchor = q.date;
+  if (q.date) dview.focus = DS().cfg.view === "semana" ? q.date : null;
+  renderDay();
+  document.getElementById("qPrev").innerHTML = `Criado: ${quickPreview(q)} · <button type="button" class="linklike" data-eopen="${ne.id}" data-edate="${q.date || ""}">editar</button> · <button type="button" class="linklike" id="qUndo">desfazer</button>`;
+});
+document.getElementById("view-dia").addEventListener("change", e => {
+  const el = e.target, ds = DS();
+  if (el.id === "semSel") { ds.cfg.sem = el.value; save(); renderDay(); return; }
+  if (el.dataset.cfg) { const v = parseN(el.value); if (v != null) { ds.cfg[el.dataset.cfg] = Math.max(0, Math.min(10, v)); save(); } renderDay(); return; }
+  if (el.dataset.dname) { const dc = ds.discs.find(d => d.id === el.dataset.dname); if (el.value.trim()) { dc.name = el.value.trim(); save(); } return; }
+  if (el.dataset.ew) { const x = entryById(el.dataset.ew); const v = parseN(el.value); if (v == null) delete x.weight; else x.weight = Math.max(0, v); save(); renderDay(); return; }
+  if (el.dataset.eg) { const x = entryById(el.dataset.eg); const v = parseN(el.value); if (v == null) delete x.grade; else { x.grade = Math.max(0, Math.min(10, v)); x.done = true; } save(); renderDay(); return; }
+});
+document.getElementById("view-dia").addEventListener("submit", e => {
+  const f = e.target; const ds = DS();
+  if (f.id === "quick") return;
+  e.preventDefault();
+  if (f.dataset.dadd) {
+    const type = f.type.value, title = f.title.value.trim() || TYPES[type].l, date = f.date.value, w = parseN(f.w.value);
+    newEntry({ type, title, date: date || undefined, disc: f.dataset.dadd, weight: w == null ? 1 : w }); renderDay(); return;
+  }
+  if (f.id === "discNew") {
+    const name = document.getElementById("dnName").value.trim(); if (!name) return;
+    const short = document.getElementById("dnShort").value.trim() || name.split(" ")[0];
+    const used = ds.discs.map(d => d.c); const c = DCOLORS.find(x => !used.includes(x)) || DCOLORS[ds.discs.length % DCOLORS.length];
+    ds.discs.push({ id: uid("d"), name, short, c, sem: curSem() }); save(); renderDay(); return;
+  }
+  if (f.id === "taskNew") { const t = document.getElementById("tnText").value.trim(); if (t) { newEntry({ title: t }); renderDay(); } return; }
+  if (f.id === "gsrcForm") { const v = document.getElementById("gsrcIn").value.trim(); if (v) { ds.cfg.gcalSrc = v; save(); renderDay(); } return; }
+});
+
+/* ===================================================================
+   GOOGLE AGENDA — link por evento, .ics e sincronização opcional
+   =================================================================== */
+function gTitle(e) {
+  const l = (TYPES[e.type] || TYPES.evento).l;
+  return isEval(e) && !norm(e.title).includes(norm(l)) ? l + " · " + e.title : e.title;
+}
+function rrule(e) { const B = ["SU", "MO", "TU", "WE", "TH", "FR", "SA"]; return "FREQ=WEEKLY;BYDAY=" + (e.days && e.days.length ? e.days : [dowOf(e.date)]).map(i => B[i]).join(",") + (e.until ? ";UNTIL=" + e.until.replace(/-/g, "") + "T235959" : ""); }
+function firstOcc(e) { if (e.recur !== "weekly") return e.date; for (let i = 0; i < 7; i++) { const d = addDays(e.date, i); if ((e.days || []).includes(dowOf(d))) return d; } return e.date; }
+function gDates(e, d) {
+  const D = d.replace(/-/g, "");
+  if (!e.start) return D + "/" + addDays(d, 1).replace(/-/g, "");
+  return `${D}T${e.start.replace(":", "")}00/${D}T${(e.end || addMin(e.start, 60)).replace(":", "")}00`;
+}
+function gTemplate(e, d) {
+  const day = e.recur ? firstOcc(e) : (d || e.date);
+  return "https://calendar.google.com/calendar/render?action=TEMPLATE&text=" + encodeURIComponent(gTitle(e)) + "&dates=" + gDates(e, day) + "&ctz=" + encodeURIComponent(TZ) +
+    (e.notes ? "&details=" + encodeURIComponent(e.notes) : "") + (e.recur === "weekly" ? "&recur=" + encodeURIComponent("RRULE:" + rrule(e)) : "");
+}
+const icsEsc = s => String(s).replace(/\\/g, "\\\\").replace(/;/g, "\\;").replace(/,/g, "\\,").replace(/\r?\n/g, "\\n");
+function icsEntries(o) {
+  const t = today();
+  return DS().entries.filter(e => e.date && (o.incG || !e.ing) && (o.incRoutine || !e.routine) && (o.all || e.recur || e.date >= t));
+}
+function buildICS(o) {
+  const L = ["BEGIN:VCALENDAR", "VERSION:2.0", "PRODID:-//Trajetoria JVZ//PT-BR", "CALSCALE:GREGORIAN", "METHOD:PUBLISH", "X-WR-TIMEZONE:" + TZ];
+  const stamp = new Date().toISOString().replace(/[-:]/g, "").replace(/\.\d+/, "");
+  icsEntries(o).forEach(e => {
+    const d0 = firstOcc(e), D = d0.replace(/-/g, "");
+    L.push("BEGIN:VEVENT", "UID:" + e.id + "@trajetoria-jvz", "DTSTAMP:" + stamp, "SUMMARY:" + icsEsc(gTitle(e)));
+    if (!e.start) L.push("DTSTART;VALUE=DATE:" + D, "DTEND;VALUE=DATE:" + addDays(d0, 1).replace(/-/g, ""));
+    else L.push(`DTSTART;TZID=${TZ}:${D}T${e.start.replace(":", "")}00`, `DTEND;TZID=${TZ}:${D}T${(e.end || addMin(e.start, 60)).replace(":", "")}00`);
+    if (e.recur === "weekly") {
+      L.push("RRULE:" + rrule(e));
+      (e.skip || []).forEach(s => L.push(e.start ? `EXDATE;TZID=${TZ}:${s.replace(/-/g, "")}T${e.start.replace(":", "")}00` : "EXDATE;VALUE=DATE:" + s.replace(/-/g, "")));
+    }
+    if (e.notes) L.push("DESCRIPTION:" + icsEsc(e.notes));
+    L.push("END:VEVENT");
+  });
+  L.push("END:VCALENDAR");
+  return L.join("\r\n") + "\r\n";
+}
+function download(name, text, type) {
+  const url = URL.createObjectURL(new Blob([text], { type }));
+  const a = document.createElement("a"); a.href = url; a.download = name; document.body.appendChild(a); a.click();
+  setTimeout(() => { URL.revokeObjectURL(url); a.remove(); }, 1000);
+}
+
+/* Sincronização direta (precisa de site https + Client ID do Google Cloud) */
+let gToken = null;
+const gMsg = t => { document.getElementById("gSyncMsg").textContent = t; };
+function gisLoad() {
+  return new Promise((res, rej) => {
+    if (window.google && google.accounts && google.accounts.oauth2) return res();
+    const s = document.createElement("script"); s.src = "https://accounts.google.com/gsi/client"; s.async = true;
+    s.onload = () => res(); s.onerror = () => rej(new Error("não carregou o login do Google (sem internet?)"));
+    document.head.appendChild(s);
+  });
+}
+async function gConnect() {
+  if (!/^https?:$/.test(location.protocol)) throw new Error("a sincronização direta só funciona com o app num site (ex.: GitHub Pages), não abrindo o arquivo do computador");
+  const cid = DS().cfg.clientId; if (!cid) throw new Error("cole o Client ID primeiro");
+  await gisLoad();
+  await new Promise((res, rej) => {
+    const c = google.accounts.oauth2.initTokenClient({ client_id: cid, scope: "https://www.googleapis.com/auth/calendar.events", callback: r => r.error ? rej(new Error(r.error)) : (gToken = r.access_token, res()) });
+    c.requestAccessToken();
+  });
+}
+async function gApi(path, opt = {}) {
+  if (!gToken) await gConnect();
+  const r = await fetch("https://www.googleapis.com/calendar/v3/" + path, Object.assign({}, opt, { headers: { Authorization: "Bearer " + gToken, "Content-Type": "application/json" } }));
+  if (r.status === 401) { gToken = null; throw new Error("sessão expirou, clique de novo"); }
+  if (!r.ok) throw new Error("Google respondeu " + r.status);
+  return r.json();
+}
+async function gPull() {
+  const t = today(), from = addDays(t, -7), to = addDays(t, 42);
+  const q = `calendars/primary/events?singleEvents=true&orderBy=startTime&maxResults=250&timeMin=${encodeURIComponent(parseD(from).toISOString())}&timeMax=${encodeURIComponent(parseD(to).toISOString())}`;
+  const j = await gApi(q);
+  const events = (j.items || []).filter(x => x.status !== "cancelled").map(x => {
+    const s = x.start || {}, en = x.end || {};
+    return s.date ? { id: "g_" + x.id, title: x.summary || "(sem título)", date: s.date, link: x.htmlLink }
+      : { id: "g_" + x.id, title: x.summary || "(sem título)", date: s.dateTime.slice(0, 10), start: s.dateTime.slice(11, 16), end: (en.dateTime || "").slice(11, 16), link: x.htmlLink };
+  });
+  gcache = { at: new Date().toISOString(), from, to, events };
+  try { localStorage.setItem(GKEY, JSON.stringify(gcache)); } catch (e) {}
+  return events.length;
+}
+async function gPush() {
+  const t = today();
+  const list = DS().entries.filter(e => e.date && !e.ing && !e.gid && !e.routine && (e.recur || e.date >= t));
+  let n = 0;
+  for (const e of list) {
+    const d0 = firstOcc(e);
+    const body = { summary: gTitle(e), description: e.notes || "",
+      start: e.start ? { dateTime: `${d0}T${e.start}:00`, timeZone: TZ } : { date: d0 },
+      end: e.start ? { dateTime: `${d0}T${e.end || addMin(e.start, 60)}:00`, timeZone: TZ } : { date: addDays(d0, 1) } };
+    if (e.recur === "weekly") body.recurrence = ["RRULE:" + rrule(e)];
+    const r = await gApi("calendars/primary/events", { method: "POST", body: JSON.stringify(body) });
+    e.gid = r.id; e.ing = 1; n++; save();
+  }
+  return n;
+}
+
+/* ===================================================================
+   PONTE COM O CLAUDE — pedido com contexto → resposta em JSON → aplicar
+   =================================================================== */
+const TEMPLATES = {
+  semana: { l: "Planejar a semana", ask: "Monte meu plano de estudo para os próximos 7 dias. Distribua os blocos da tarde entre as disciplinas, priorizando as provas e entregas mais próximas e o que estiver atrasado. Não marque nada em horário de aula nem na quinta à tarde. Devolva os blocos como itens do tipo \"estudo\" no JSON, com a tarefa concreta no título (ex.: \"Probabilidade: lista 4, exercícios 1–6\")." },
+  revisao: { l: "Revisão da semana", ask: "Faça uma revisão curta da minha semana: o que está atrasado, o que está em risco nas próximas duas semanas (provas sem blocos de estudo, entregas sem preparo) e três ações concretas. O que deveria virar tarefa, inclua no JSON; o que já terminou, coloque em \"concluir\"." },
+  prova: { l: "Plano para uma prova", ask: "Monte um plano de estudo até a {prova}: o que revisar em cada bloco da tarde até a data, com uma prova antiga cronometrada nos últimos dias. Devolva os blocos no JSON como \"estudo\"." },
+  texto: { l: "Transformar texto em itens", ask: "Abaixo está um texto (plano de ensino, edital, e-mail ou anotação). Extraia provas, entregas, prazos e eventos com data e devolva tudo no JSON. Se for um edital da trajetória (IC, eventos, mestrado), use \"itens\" em vez de \"novos\".\n\nTEXTO:\n{texto}" },
+  traj: { l: "Passos que faltam na trajetória", ask: "Olhe a minha trajetória e os objetivos atuais e sugira os passos intermediários que estão faltando para os próximos três meses, como itens novos (\"itens\") e, se fizer sentido, objetivos do mês (\"objetivos\")." },
+  agenda: { l: "Conferir com a Google Agenda", ask: "Você tem acesso à minha Google Agenda neste chat. Compare a agenda das próximas três semanas com a lista abaixo. Crie na agenda as provas e entregas que estiverem faltando (evento de dia inteiro) e me devolva no JSON, em \"novos\", o que está na agenda e não está no app." }
+};
+function ctxText() {
+  index(); const ds = DS(), t = today(), L = [];
+  L.push(`## Contexto do meu app de organização (gerado em ${longD(t)} de ${t.slice(0, 4)})`);
+  L.push("Sou o João Vinícius, Matemática Aplicada na UEPG. Aulas à noite (17h30–22h10, seg–sex). Estudo à tarde em dois blocos (13h00–14h45 e 15h05–16h50); na quinta tem reunião de IC e não tem bloco de estudo; domingo é dia normal de estudo. Probabilidade é a matéria em que tenho mais dificuldade.");
+  const sem = curSem(), discs = ds.discs.filter(d => d.sem === sem);
+  L.push(`\n### Disciplinas de ${sem.replace("-", "/")} (id · nome · média até agora) — aprovação ${fmtN(ds.cfg.pass)}, minha meta ${fmtN(ds.cfg.target)}`);
+  discs.forEach(d => { const s = discStats(d); L.push(`- ${d.id} · ${d.name} · ${s.avg == null ? "sem notas" : fmtN(s.avg)}`); });
+  L.push("\n### Próximos 21 dias (id · dia · horário · tipo · título)");
+  for (let i = 0; i < 21; i++) {
+    const d = addDays(t, i);
+    entriesOn(d, { routine: false }).forEach(e => L.push(`- ${e.g ? "google" : e.id} · ${DOW[dowOf(d)]} ${fmtD(d)} · ${e.start ? e.start + (e.end ? "–" + e.end : "") : "dia todo"} · ${(TYPES[e.type] || TYPES.evento).l}${discOf(e) ? " (" + discOf(e).short + ")" : ""} · ${e.title}${e.done ? " [feito]" : ""}`));
+  }
+  const late = ds.entries.filter(e => checkable(e) && !e.done && e.date && e.date < t);
+  if (late.length) { L.push("\n### Atrasados"); late.forEach(e => L.push(`- ${e.id} · ${fmtD(e.date)} · ${e.title}`)); }
+  const nd = ds.entries.filter(e => checkable(e) && !e.done && !e.date);
+  if (nd.length) { L.push("\n### Tarefas sem data"); nd.forEach(e => L.push(`- ${e.id} · ${e.title}`)); }
+  const mk = nowKey("month"), nk = stepPeriod("month", mk, 2);
+  L.push(`\n### Trajetória: itens abertos até ${periodLabel("month", nk)} (id · mês · área · status · texto)`);
+  ITEMS.filter(i => statusOf(i) !== "done" && i.when && i.when <= nk).sort((a, b) => a.when.localeCompare(b.when))
+    .forEach(i => L.push(`- ${i.id} · ${i.when} · ${frontById(i.front).short} · ${LABEL[statusOf(i)]} · ${i.text}`));
+  L.push("\n### Objetivos atuais");
+  goalsAll().filter(g => (g.h === "month" && g.p === mk) || (g.h === "sem" && g.p === nowKey("sem")) || (g.h === "year" && g.p === nowKey("year"))).forEach(g => {
+    const pr = goalProgress(g); L.push(`- ${HZ[g.h]} ${periodLabel(g.h, g.p)} · ${g.text} · ${pr.st === "done" ? "cumprido" : pr.manualOnly ? LABEL[pr.st] : pr.d + "/" + pr.n + " itens"}`);
+  });
+  return L.join("\n");
+}
+function jsonSpec() {
+  const ds = DS();
+  return `Responda normalmente e, no fim, inclua UM bloco \`\`\`json com as mudanças para eu colar no app. Formato (omita o que não usar):
+{"novos":[{"tipo":"prova|trabalho|lista|seminario|tarefa|estudo|aula|reuniao|evento","titulo":"","data":"AAAA-MM-DD","inicio":"HH:MM","fim":"HH:MM","disciplina":"<id>","area":"<id>","peso":1,"notas":""}],
+ "concluir":["<id de algo da lista acima>"],
+ "status":{"<id de item da trajetória>":"todo|doing|done"},
+ "itens":[{"area":"<id>","texto":"","mes":"AAAA-MM"}],
+ "objetivos":[{"horizonte":"month|sem|year","periodo":"AAAA-MM | AAAA-1 | AAAA","texto":"","itens":["<id de item>"]}]}
+IDs de disciplina: ${ds.discs.filter(d => d.sem === curSem()).map(d => d.id + " (" + d.short + ")").join(", ") || "nenhuma"}.
+IDs de área: ${FRONTS.map(f => f.id + " (" + f.short + ")").join(", ")}.`;
+}
+function buildPrompt() {
+  const k = document.getElementById("cTpl").value, T = TEMPLATES[k];
+  let ask = T.ask;
+  if (k === "prova") { const e = entryById(document.getElementById("cProva").value); ask = ask.replace("{prova}", e ? `${e.title} (${longD(e.date)})` : "próxima prova"); }
+  if (k === "texto") ask = ask.replace("{texto}", document.getElementById("cTexto").value.trim() || "(cole o texto aqui)");
+  const extra = document.getElementById("cExtra").value.trim();
+  return `${ask}${extra ? "\n\nAlém disso: " + extra : ""}\n\n${jsonSpec()}\n\n${ctxText()}`;
+}
+const okDate = s => /^\d{4}-\d{2}-\d{2}$/.test(s || "") ? s : undefined;
+const okTime = s => /^\d{2}:\d{2}$/.test(s || "") ? s : undefined;
+function okPeriod(h, p) { p = String(p || ""); return (h === "month" && /^\d{4}-\d{2}$/.test(p)) || (h === "sem" && /^\d{4}-[12]$/.test(p)) || (h === "year" && /^\d{4}$/.test(p)) || (h === "stage" && STAGES.includes(p)); }
+let pendingOps = [];
+function parseClaude(txt) {
+  const m = txt.match(/```(?:json)?\s*([\s\S]*?)```/i);
+  const body = m ? m[1] : txt.slice(txt.indexOf("{"), txt.lastIndexOf("}") + 1);
+  const j = JSON.parse(body); index();
+  const ds = DS(), ops = [];
+  (j.novos || []).forEach(n => {
+    if (!n || !n.titulo) return;
+    const type = TYPES[n.tipo] ? n.tipo : "tarefa";
+    const e = { type, title: String(n.titulo), date: okDate(n.data), start: okTime(n.inicio), end: okTime(n.fim),
+      disc: ds.discs.some(d => d.id === n.disciplina) ? n.disciplina : undefined, area: frontById(n.area) ? n.area : undefined,
+      weight: isEval({ type }) ? (parseN(n.peso) ?? 1) : undefined, notes: n.notas || undefined };
+    Object.keys(e).forEach(k => e[k] === undefined && delete e[k]);
+    ops.push({ k: "new", e, label: `Novo · ${TYPES[type].l}: ${e.title}${e.date ? " · " + DOW[dowOf(e.date)] + " " + fmtD(e.date) : ""}${e.start ? " " + e.start + (e.end ? "–" + e.end : "") : ""}` });
+  });
+  (j.concluir || []).forEach(id => {
+    const e = entryById(id);
+    if (e) ops.push({ k: "done", id, label: `Concluir: ${e.title}` });
+    else if (BY[id]) ops.push({ k: "status", id, s: "done", label: `Trajetória · feito: ${BY[id].text}` });
+  });
+  Object.entries(j.status || {}).forEach(([id, s]) => { if (BY[id] && LABEL[s]) ops.push({ k: "status", id, s, label: `Trajetória · ${LABEL[s]}: ${BY[id].text}` }); });
+  (j.itens || []).forEach(it => { if (it && frontById(it.area) && it.texto) ops.push({ k: "item", f: it.area, text: String(it.texto), when: /^\d{4}-\d{2}$/.test(it.mes || "") ? it.mes : "", label: `Novo item em ${frontById(it.area).short}: ${it.texto}${it.mes ? " · " + fmtWhen(it.mes) : ""}` }); });
+  (j.objetivos || []).forEach(g => { if (g && HZ[g.horizonte] && g.texto && okPeriod(g.horizonte, g.periodo)) ops.push({ k: "goal", h: g.horizonte, p: String(g.periodo), text: String(g.texto), items: (g.itens || []).filter(i => BY[i]), label: `Novo objetivo (${periodLabel(g.horizonte, String(g.periodo))}): ${g.texto}` }); });
+  return ops;
+}
+function applyOps(ops) {
+  const ds = DS(); let n = 0;
+  ops.forEach((o, i) => {
+    if (o.k === "new") { ds.entries.push(Object.assign({ id: uid() + i }, o.e)); n++; }
+    if (o.k === "done") { const e = entryById(o.id); if (e) { e.done = true; n++; } }
+    if (o.k === "status") { state.status[o.id] = o.s; n++; }
+    if (o.k === "item") { (state.custom[o.f] = state.custom[o.f] || []).push({ id: "c" + Date.now() + i, text: o.text, when: o.when }); n++; }
+    if (o.k === "goal") { const id = "gc" + Date.now() + i; GS().custom.push({ id, h: o.h, p: o.p, text: o.text }); if (o.items.length) GS().links[id] = o.items; n++; }
+  });
+  save(); render(); renderDay();
+  return n;
+}
+
+/* ---------- Tela "Claude e agenda" ---------- */
+function renderConnect() {
+  const ds = DS(), t = today();
+  const provas = ds.entries.filter(e => isEval(e) && e.date && e.date >= t).sort((a, b) => a.date.localeCompare(b.date));
+  const sel = document.getElementById("cProva"), keep = sel.value;
+  sel.innerHTML = provas.map(e => `<option value="${e.id}">${esc(e.title)} · ${fmtD(e.date)}</option>`).join("") || `<option value="">Nenhuma prova futura</option>`;
+  if (keep) sel.value = keep;
+  const k = document.getElementById("cTpl").value;
+  document.getElementById("cProvaWrap").hidden = k !== "prova";
+  document.getElementById("cTextoWrap").hidden = k !== "texto";
+  document.getElementById("cClientId").value = ds.cfg.clientId || "";
+  document.getElementById("gCacheInfo").textContent = gcache ? `Última leitura: ${new Date(gcache.at).toLocaleString("pt-BR")} · ${gcache.events.length} eventos` : "Nenhum evento lido ainda.";
+  const nIcs = icsEntries({ incG: document.getElementById("icsG").checked, incRoutine: document.getElementById("icsR").checked, all: false }).length;
+  document.getElementById("icsCount").textContent = `${nIcs} evento(s) no arquivo`;
+  const proto = /^https?:$/.test(location.protocol);
+  document.getElementById("syncWhere").textContent = proto ? `Endereço atual para cadastrar no Google: ${location.origin}` : "Você está abrindo o arquivo do computador: aqui a sincronização direta não funciona, mas o .ics e o botão por evento funcionam.";
+}
+const cMsg = (id, t) => { const m = document.getElementById(id); m.textContent = t; clearTimeout(m._t); m._t = setTimeout(() => { m.textContent = ""; }, 6000); };
+function copyText(text, boxId, msgId) {
+  const box = document.getElementById(boxId); box.value = text;
+  (navigator.clipboard ? navigator.clipboard.writeText(text) : Promise.reject())
+    .then(() => cMsg(msgId, "Copiado. Cole numa conversa com o Claude."))
+    .catch(() => { box.hidden = false; box.focus(); box.select(); cMsg(msgId, "Texto selecionado abaixo: copie com Ctrl+C."); });
+}
+document.getElementById("cTpl").addEventListener("change", renderConnect);
+document.getElementById("cCopy").addEventListener("click", () => copyText(buildPrompt(), "cOut", "cMsg"));
+document.getElementById("cShow").addEventListener("click", () => { const b = document.getElementById("cOut"); b.value = buildPrompt(); b.hidden = !b.hidden; });
+document.getElementById("cRead").addEventListener("click", () => {
+  const box = document.getElementById("cIn"), prev = document.getElementById("cPreview");
+  try {
+    pendingOps = parseClaude(box.value);
+    if (!pendingOps.length) { prev.innerHTML = `<p class="muted">A resposta não tem mudanças no formato do app.</p>`; return; }
+    prev.innerHTML = `<ul class="ops">${pendingOps.map((o, i) => `<li><label class="check"><input type="checkbox" data-op="${i}" checked> ${esc(o.label)}</label></li>`).join("")}</ul>
+      <div class="row"><button type="button" class="btn solid" id="cApply">Aplicar ${pendingOps.length} mudança(s)</button><button type="button" class="btn" id="cCancel">Cancelar</button></div>`;
+  } catch (e) { prev.innerHTML = `<p class="warn">Não encontrei um JSON válido. Cole a resposta inteira do Claude (com o bloco \`\`\`json).</p>`; }
+});
+document.getElementById("cPreview").addEventListener("click", e => {
+  if (e.target.id === "cCancel") { pendingOps = []; document.getElementById("cPreview").innerHTML = ""; }
+  if (e.target.id === "cApply") {
+    const chosen = [...document.querySelectorAll("[data-op]:checked")].map(x => pendingOps[+x.dataset.op]);
+    const n = applyOps(chosen); pendingOps = [];
+    document.getElementById("cIn").value = "";
+    document.getElementById("cPreview").innerHTML = `<p class="ok">${n} mudança(s) aplicadas. <a href="#dia">Ver no Dia a dia</a> · <a href="#objetivos">Ver nos Objetivos</a></p>`;
+  }
+});
+document.getElementById("icsG").addEventListener("change", renderConnect);
+document.getElementById("icsR").addEventListener("change", renderConnect);
+document.getElementById("icsBtn").addEventListener("click", () => {
+  const o = { incG: document.getElementById("icsG").checked, incRoutine: document.getElementById("icsR").checked, all: false };
+  if (!icsEntries(o).length) { cMsg("icsMsg", "Nada novo para exportar."); return; }
+  download(`agenda-${today()}.ics`, buildICS(o), "text/calendar");
+  cMsg("icsMsg", "Arquivo baixado. Importe na Google Agenda: Configurações → Importar e exportar.");
+});
+document.getElementById("cClientId").addEventListener("change", e => { DS().cfg.clientId = e.target.value.trim(); save(); });
+document.getElementById("gPullBtn").addEventListener("click", async () => {
+  gMsg("Conectando…");
+  try { const n = await gPull(); gMsg(`${n} eventos lidos do Google (de uma semana atrás até daqui a 6 semanas). Eles aparecem no Dia a dia.`); renderConnect(); }
+  catch (e) { gMsg("Não deu: " + e.message + "."); }
+});
+document.getElementById("gPushBtn").addEventListener("click", async () => {
+  gMsg("Enviando…");
+  try { const n = await gPush(); gMsg(n ? `${n} evento(s) criados na sua Google Agenda.` : "Nada novo para enviar."); renderConnect(); }
+  catch (e) { gMsg("Não deu: " + e.message + "."); }
+});
+document.getElementById("gForget").addEventListener("click", () => { gcache = null; try { localStorage.removeItem(GKEY); } catch (e) {} renderConnect(); gMsg("Eventos do Google apagados deste navegador."); });
+
+/* Backup em arquivo */
+document.getElementById("btnDown").addEventListener("click", () => download(`trajetoria-backup-${today()}.json`, JSON.stringify(state, null, 1), "application/json"));
+document.getElementById("fileIn").addEventListener("change", e => {
+  const f = e.target.files[0]; if (!f) return;
+  f.text().then(txt => { document.getElementById("backupBox").value = txt; document.getElementById("btnRestore").click(); e.target.value = ""; });
+});
+
+/* ---------- Navegação entre as áreas ---------- */
+const VIEWS = ["dia", "objetivos", "conectar"];
+let curView = null;
+function route() {
+  let v = (location.hash || "").slice(1); if (!VIEWS.includes(v)) v = "dia";
+  document.querySelectorAll(".view").forEach(s => { s.hidden = s.id !== "view-" + v; });
+  document.querySelectorAll("[data-view]").forEach(a => { if (a.dataset.view === v) a.setAttribute("aria-current", "page"); else a.removeAttribute("aria-current"); });
+  if (v === "dia") renderDay(); else if (v === "objetivos") render(); else renderConnect();
+  if (curView && curView !== v) window.scrollTo(0, 0);
+  curView = v;
+}
+addEventListener("hashchange", route);
+
+/* ---------- Instalar como app (só num site https) ---------- */
+function pwa() {
+  if (!/^https?:$/.test(location.protocol)) return;
+  const l = document.createElement("link"); l.rel = "manifest"; l.href = "manifest.webmanifest"; document.head.appendChild(l);
+  if ("serviceWorker" in navigator) navigator.serviceWorker.register("sw.js").catch(() => {});
+}
+
+index(); render(); route(); fillBackup(); pwa();
+</script>
+</body>
+</html>
