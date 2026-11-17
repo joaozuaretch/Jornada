@@ -1668,6 +1668,8 @@ function DS() {
   if (!state.day || !Array.isArray(state.day.entries)) { state.day = seedDay(); try { localStorage.setItem(KEY, JSON.stringify(state)); } catch (e) {} }
   state.day.cfg = Object.assign({}, CFG0, state.day.cfg || {});
   state.day.discs = state.day.discs || [];
+  const SEEDCH = { po: [68, "101297"], prob: [68, "101296"], fis: [102, "102339"], calc: [102, "101295"] };
+  state.day.discs.forEach(d => { const k = SEEDCH[d.id]; if (k && d.sem === "2026-2") { if (d.ch == null) d.ch = k[0]; if (!d.code) d.code = k[1]; } });
   return state.day;
 }
 const discOf = e => e && e.disc ? DS().discs.find(d => d.id === e.disc) : null;
@@ -1722,6 +1724,11 @@ function discStats(dc) {
   let sw = 0, sg = 0, rw = 0;
   evs.forEach(e => { const w = e.weight == null ? 1 : +e.weight; if (e.grade != null) { sw += w; sg += w * e.grade; } else rw += w; });
   return { evs, avg: sw ? sg / sw : null, sw, sg, rw, need: T => rw ? (T * (sw + rw) - sg) / rw : null };
+}
+function globalAvg() {
+  let w = 0, s = 0, n = 0;
+  DS().discs.forEach(d => { const st = discStats(d); if (st.avg == null || st.rw) return; const ch = d.ch || 68; w += ch; s += ch * st.avg; n++; });
+  return n ? { avg: s / w, n } : null;
 }
 function needText(st) {
   const { pass, target } = DS().cfg;
@@ -1819,7 +1826,7 @@ function renderDiscs(body) {
       <label class="inline">Semestre <select id="semSel">${sems.map(s => `<option value="${s}" ${s === sem ? "selected" : ""}>${s.replace("-", "/")}</option>`).join("")}</select></label>
       <label class="inline">Média de aprovação <input type="text" inputmode="decimal" data-cfg="pass" value="${fmtN(ds.cfg.pass)}" size="3"></label>
       <label class="inline">Sua meta <input type="text" inputmode="decimal" data-cfg="target" value="${fmtN(ds.cfg.target)}" size="3"></label>
-      <span class="muted small">${avgs.length ? `Média do semestre até agora: <b>${fmtN(avgs.reduce((a, b) => a + b, 0) / avgs.length)}</b>` : "Lance as notas para ver a média."}</span>
+      <span class="muted small">${avgs.length ? `Média do semestre até agora: <b>${fmtN(avgs.reduce((a, b) => a + b, 0) / avgs.length)}</b>` : "Lance as notas para ver a média."}${(() => { const g = globalAvg(); return g ? ` · Média global: <b>${fmtN(g.avg)}</b> <span title="Disciplinas com todas as notas lançadas, ponderadas pela carga horária">(${g.n} concluídas)</span>` : ""; })()}</span>
     </div>
     <p class="muted small" style="margin:0">A média é ponderada pelos pesos. Confira no regulamento da UEPG a média de aprovação e a regra de exame, e ajuste acima.</p>
     <div class="discs">${discs.map(discCard).join("")}</div>
@@ -2216,6 +2223,7 @@ function ctxText() {
   const sem = curSem(), discs = ds.discs.filter(d => d.sem === sem);
   L.push(`\n### Disciplinas de ${sem.replace("-", "/")} (id · nome · média até agora) — aprovação ${fmtN(ds.cfg.pass)}, minha meta ${fmtN(ds.cfg.target)}`);
   discs.forEach(d => { const s = discStats(d); L.push(`- ${d.id} · ${d.name} · ${s.avg == null ? "sem notas" : fmtN(s.avg)}`); });
+  const ga = globalAvg(); if (ga) L.push(`Média global (${ga.n} disciplinas concluídas, ponderada pela carga horária): ${fmtN(ga.avg)}`);
   L.push("\n### Próximos 21 dias (id · dia · horário · tipo · título)");
   for (let i = 0; i < 21; i++) {
     const d = addDays(t, i);
@@ -2239,7 +2247,7 @@ function jsonSpec() {
   const ds = DS();
   return `Responda normalmente e, no fim, inclua UM bloco \`\`\`json com as mudanças para eu colar no app. Formato (omita o que não usar):
 {"disciplinas":[{"id":"<curto, ex.: edo>","nome":"","apelido":"","semestre":"AAAA-1|AAAA-2","codigo":"","ch":68}],
- "novos":[{"tipo":"prova|trabalho|lista|seminario|tarefa|estudo|aula|reuniao|evento","titulo":"","data":"AAAA-MM-DD","inicio":"HH:MM","fim":"HH:MM","disciplina":"<id>","area":"<id>","peso":1,"notas":""}],
+ "novos":[{"tipo":"prova|trabalho|lista|seminario|tarefa|estudo|aula|reuniao|evento","titulo":"","data":"AAAA-MM-DD","inicio":"HH:MM","fim":"HH:MM","disciplina":"<id>","area":"<id>","peso":1,"nota":null,"notas":""}],
  "concluir":["<id de algo da lista acima>"],
  "status":{"<id de item da trajetória>":"todo|doing|done"},
  "itens":[{"area":"<id>","texto":"","mes":"AAAA-MM"}],
@@ -2281,8 +2289,9 @@ function parseClaude(txt) {
     const e = { type, title: String(n.titulo), date: okDate(n.data), start: okTime(n.inicio), end: okTime(n.fim),
       disc: ds.discs.some(d => d.id === n.disciplina) || newIds.has(n.disciplina) ? n.disciplina : undefined, area: frontById(n.area) ? n.area : undefined,
       weight: isEval({ type }) ? (parseN(n.peso) ?? 1) : undefined, notes: n.notas || undefined };
+    if (isEval(e) && parseN(n.nota) != null) { e.grade = Math.max(0, Math.min(10, parseN(n.nota))); e.done = true; }
     Object.keys(e).forEach(k => e[k] === undefined && delete e[k]);
-    ops.push({ k: "new", e, label: `Novo · ${TYPES[type].l}: ${e.title}${e.date ? " · " + DOW[dowOf(e.date)] + " " + fmtD(e.date) : ""}${e.start ? " " + e.start + (e.end ? "–" + e.end : "") : ""}` });
+    ops.push({ k: "new", e, label: `Novo · ${TYPES[type].l}: ${e.title}${e.disc ? " (" + e.disc + ")" : ""}${e.grade != null ? " · nota " + fmtN(e.grade) : ""}${e.date ? " · " + DOW[dowOf(e.date)] + " " + fmtD(e.date) : ""}${e.start ? " " + e.start + (e.end ? "–" + e.end : "") : ""}` });
   });
   (j.concluir || []).forEach(id => {
     const e = entryById(id);
