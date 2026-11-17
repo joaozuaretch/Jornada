@@ -842,7 +842,7 @@ const FRONTS = [
   ]},
   { id: "grad", short: "Graduação", title: "Graduação e monitorias", sub: "Disciplinas, médias, monitorias e formatura (dez/2028)", c: "--k10", items: [
     ["gr1","Fechar 2026-2: Física 1, Cálculo 3, Probabilidades e Pesquisa Operacional","2026-12","doing"],
-    ["gr2","Matrícula de 2027: Anéis e Corpos, Análise Real, EDO, Variáveis Complexas","2027-02"],
+    ["gr2","Matrícula de 2027-1: EDO, Análise Real I, Processos Estocásticos e Física Geral II","2027-02"],
     ["gr3","Edital de monitoria 2027-1 (Álgebra Linear 1 ou Discreta)","2027-03"],
     ["gr4","Monitoria 2027-1: relatório e certificado","2027-07"],
     ["gr7","Fechar 2027-1 com média ≥ 9","2027-07"],
@@ -873,7 +873,7 @@ const FRONTS = [
   { id: "pos", short: "Mestrado e doutorado", title: "Rumo ao mestrado e ao doutorado", sub: "Mestrado 2029–2030; doutorado no exterior a partir de 2031", c: "--k8", items: [
     ["ps1","E-mail ao Tizziotti (UFU) sobre curvas e códigos AG","2026-10","done"],
     ["ps2","Conversar com o Herivelto: onde orienta em 2029, tema e grupo de fora","2026-12"],
-    ["ps3","Média ≥ 9,5 e ≥ 9 em Anéis e Corpos, Análise Real, EDO e Variáveis Complexas","2027-12"],
+    ["ps3","Média ≥ 9,5 e ≥ 9 em Análise Real I e II, EDO e Análise Complexa","2027-12"],
     ["ps4","Prova Extramuros valendo","2027-11"],
     ["ps5","Checar direito a cidadania de algum país da UE","2027-06"],
     ["ps6","Verão 2028: uma disciplina de Álgebra de mestrado","2028-02"],
@@ -1725,7 +1725,7 @@ function discStats(dc) {
 }
 function needText(st) {
   const { pass, target } = DS().cfg;
-  if (!st.evs.length) return "Nenhuma avaliação cadastrada.";
+  if (!st.evs.length) return "";
   if (!st.rw) return st.avg == null ? "Sem notas." : `Média final ${fmtN(st.avg)} · ${st.avg >= pass ? "aprovado" : "abaixo da média de aprovação"}${st.avg >= target ? " · meta batida" : ""}.`;
   const part = (T, nome) => { const n = st.need(T); return n <= 0 ? `${nome} ${fmtN(T)} já garantida` : n > 10 ? `${nome} ${fmtN(T)} fora de alcance` : `para ${nome} ${fmtN(T)}: <b>${fmtN(n)}</b> nas que faltam`; };
   return `${part(target, "a meta")} · ${part(pass, "a média")}`;
@@ -1823,20 +1823,21 @@ function renderDiscs(body) {
     </div>
     <p class="muted small" style="margin:0">A média é ponderada pelos pesos. Confira no regulamento da UEPG a média de aprovação e a regra de exame, e ajuste acima.</p>
     <div class="discs">${discs.map(discCard).join("")}</div>
-    <form class="dnew" id="discNew"><input type="text" id="dnName" placeholder="Nova disciplina (ex.: Anéis e Corpos)" required><input type="text" id="dnShort" placeholder="Apelido (ex.: Anéis)"><button class="btn" type="submit">Adicionar disciplina</button></form>`;
+    <form class="dnew" id="discNew"><input type="text" id="dnName" placeholder="Nova disciplina (ex.: Teoria dos Grafos)" required><input type="text" id="dnShort" placeholder="Apelido (ex.: Grafos)"><button class="btn" type="submit">Adicionar disciplina</button></form>`;
 }
 function discCard(dc) {
   const st = discStats(dc);
   return `<article class="disc" style="--c:var(${dc.c})">
     <header><i class="dot"></i><input class="dname" type="text" data-dname="${dc.id}" value="${esc(dc.name)}" aria-label="Nome da disciplina">
       <span class="avg" title="Média ponderada das notas lançadas">${st.avg == null ? "—" : fmtN(st.avg)}</span></header>
+    ${dc.code || dc.ch ? `<span class="muted small mono" style="margin-top:-6px">${[dc.code, dc.ch ? dc.ch + " h" : ""].filter(Boolean).join(" · ")}</span>` : ""}
     <div class="tscroll"><table class="evt"><thead><tr><th>Avaliação</th><th>Data</th><th>Peso</th><th>Nota</th></tr></thead><tbody>
       ${st.evs.map(e => `<tr${e.grade != null ? ' class="graded"' : ""}><td><button type="button" class="linklike" data-eopen="${e.id}" data-edate="${e.date || ""}">${esc(e.title)}</button></td>
         <td class="mono">${e.date ? fmtD(e.date) : "—"}</td>
         <td><input type="text" inputmode="decimal" data-ew="${e.id}" value="${e.weight == null ? "1" : fmtN(e.weight).replace(",0", "")}" aria-label="Peso de ${esc(e.title)}"></td>
         <td><input type="text" inputmode="decimal" data-eg="${e.id}" value="${e.grade == null ? "" : fmtN(e.grade)}" placeholder="—" aria-label="Nota de ${esc(e.title)}"></td></tr>`).join("") || `<tr><td colspan="4" class="muted">Nenhuma avaliação ainda.</td></tr>`}
     </tbody></table></div>
-    <p class="need">${needText(st)}</p>
+    ${st.evs.length ? `<p class="need">${needText(st)}</p>` : ""}
     <form class="dadd" data-dadd="${dc.id}">
       <select name="type" aria-label="Tipo">${["prova", "trabalho", "lista", "seminario"].map(k => `<option value="${k}">${TYPES[k].l}</option>`).join("")}</select>
       <input name="title" type="text" placeholder="Ex.: Prova 3" aria-label="Título">
@@ -2237,7 +2238,8 @@ function ctxText() {
 function jsonSpec() {
   const ds = DS();
   return `Responda normalmente e, no fim, inclua UM bloco \`\`\`json com as mudanças para eu colar no app. Formato (omita o que não usar):
-{"novos":[{"tipo":"prova|trabalho|lista|seminario|tarefa|estudo|aula|reuniao|evento","titulo":"","data":"AAAA-MM-DD","inicio":"HH:MM","fim":"HH:MM","disciplina":"<id>","area":"<id>","peso":1,"notas":""}],
+{"disciplinas":[{"id":"<curto, ex.: edo>","nome":"","apelido":"","semestre":"AAAA-1|AAAA-2","codigo":"","ch":68}],
+ "novos":[{"tipo":"prova|trabalho|lista|seminario|tarefa|estudo|aula|reuniao|evento","titulo":"","data":"AAAA-MM-DD","inicio":"HH:MM","fim":"HH:MM","disciplina":"<id>","area":"<id>","peso":1,"notas":""}],
  "concluir":["<id de algo da lista acima>"],
  "status":{"<id de item da trajetória>":"todo|doing|done"},
  "itens":[{"area":"<id>","texto":"","mes":"AAAA-MM"}],
@@ -2261,12 +2263,23 @@ function parseClaude(txt) {
   const m = txt.match(/```(?:json)?\s*([\s\S]*?)```/i);
   const body = m ? m[1] : txt.slice(txt.indexOf("{"), txt.lastIndexOf("}") + 1);
   const j = JSON.parse(body); index();
-  const ds = DS(), ops = [];
+  const ds = DS(), ops = [], newIds = new Set();
+  (j.disciplinas || []).forEach(d => {
+    if (!d || !d.nome || !/^\d{4}-[12]$/.test(d.semestre || "")) return;
+    let id = /^[a-z0-9_-]{2,24}$/.test(d.id || "") ? d.id : uid("d");
+    if (ds.discs.some(x => x.id === id) || newIds.has(id)) { if (ds.discs.some(x => x.id === id && norm(x.name) === norm(d.nome))) return; id = uid("d"); }
+    if (ds.discs.some(x => norm(x.name) === norm(d.nome) && x.sem === d.semestre)) return;
+    newIds.add(id);
+    const dc = { id, name: String(d.nome), short: String(d.apelido || d.nome.split(" ")[0]), sem: d.semestre };
+    if (d.codigo) dc.code = String(d.codigo); if (parseN(d.ch) != null) dc.ch = parseN(d.ch);
+    if (Array.isArray(d.apelidos)) dc.al = d.apelidos.map(norm);
+    ops.push({ k: "disc", d: dc, label: `Nova disciplina · ${d.semestre.replace("-", "/")}: ${d.nome}${dc.ch ? " (" + dc.ch + " h)" : ""}` });
+  });
   (j.novos || []).forEach(n => {
     if (!n || !n.titulo) return;
     const type = TYPES[n.tipo] ? n.tipo : "tarefa";
     const e = { type, title: String(n.titulo), date: okDate(n.data), start: okTime(n.inicio), end: okTime(n.fim),
-      disc: ds.discs.some(d => d.id === n.disciplina) ? n.disciplina : undefined, area: frontById(n.area) ? n.area : undefined,
+      disc: ds.discs.some(d => d.id === n.disciplina) || newIds.has(n.disciplina) ? n.disciplina : undefined, area: frontById(n.area) ? n.area : undefined,
       weight: isEval({ type }) ? (parseN(n.peso) ?? 1) : undefined, notes: n.notas || undefined };
     Object.keys(e).forEach(k => e[k] === undefined && delete e[k]);
     ops.push({ k: "new", e, label: `Novo · ${TYPES[type].l}: ${e.title}${e.date ? " · " + DOW[dowOf(e.date)] + " " + fmtD(e.date) : ""}${e.start ? " " + e.start + (e.end ? "–" + e.end : "") : ""}` });
@@ -2284,6 +2297,7 @@ function parseClaude(txt) {
 function applyOps(ops) {
   const ds = DS(); let n = 0;
   ops.forEach((o, i) => {
+    if (o.k === "disc") { const used = ds.discs.filter(d => d.sem === o.d.sem).map(d => d.c); o.d.c = DCOLORS.find(c => !used.includes(c)) || DCOLORS[ds.discs.length % DCOLORS.length]; ds.discs.push(o.d); n++; }
     if (o.k === "new") { ds.entries.push(Object.assign({ id: uid() + i }, o.e)); n++; }
     if (o.k === "done") { const e = entryById(o.id); if (e) { e.done = true; n++; } }
     if (o.k === "status") { state.status[o.id] = o.s; n++; }
